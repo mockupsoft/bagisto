@@ -7,6 +7,15 @@ use Illuminate\Support\ServiceProvider;
 class CompaniesServiceProvider extends ServiceProvider
 {
     /**
+     * Register application services.
+     * Config merge must be in register() - Bagisto pattern.
+     */
+    public function register(): void
+    {
+        $this->registerConfig();
+    }
+
+    /**
      * Bootstrap application services.
      */
     public function boot(): void
@@ -17,24 +26,16 @@ class CompaniesServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'mockupsoft-companies');
 
-        $this->loadOptionalRoutes(__DIR__.'/../Routes/admin-routes.php');
+        $this->loadRoutesFrom(__DIR__.'/../Routes/admin-routes.php');
     }
 
     /**
-     * Register application services.
+     * Register package config.
      */
-    public function register(): void
+    protected function registerConfig(): void
     {
-        //
-    }
+        $this->mergeConfigFrom(__DIR__.'/../Config/acl.php', 'acl');
 
-    /**
-     * Load routes from file if it exists.
-     */
-    protected function loadOptionalRoutes(string $path): void
-    {
-        if (is_file($path)) {
-            $this->loadRoutesFrom($path);
-        }
+        $this->mergeConfigFrom(__DIR__.'/../Config/menu.php', 'menu.admin');
     }
 }
