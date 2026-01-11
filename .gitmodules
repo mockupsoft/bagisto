@@ -1,0 +1,3 @@
+[submodule "tools/openagents-upstream"]
+	path = tools/openagents-upstream
+	url = https://github.com/darrenhinde/OpenAgents.git
