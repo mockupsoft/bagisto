@@ -1,268 +1,188 @@
-# Bagisto - Agent Workflow Destekli E-Ticaret Platformu
+<p align="center">
+  <a href="http://www.bagisto.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/bagisto/temp-media/0b0984778fae92633f57e625c5494ead1fe320c3/dark-logo-P5H7MBtx.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://bagisto.com/wp-content/themes/bagisto/images/logo.png">
+      <img src="https://bagisto.com/wp-content/themes/bagisto/images/logo.png" alt="Bagisto logo">
+    </picture>
+  </a>
+</p>
 
-Bu repo, [Bagisto](https://github.com/bagisto/bagisto) e-ticaret platformunun **mockupsoft** fork'udur. OpenAgents tabanlı repo-native agent workflow sistemi ile geliştirilmektedir.
+<p align="center">
+    <a href="https://packagist.org/packages/bagisto/bagisto"><img src="https://poser.pugx.org/bagisto/bagisto/d/total.svg" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/bagisto/bagisto"><img src="https://poser.pugx.org/bagisto/bagisto/v/stable.svg" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/bagisto/bagisto"><img src="https://poser.pugx.org/bagisto/bagisto/license.svg" alt="License"></a>
+    <a href="#backers"><img src="https://opencollective.com/bagisto/backers/badge.svg" alt="Backers on Open Collective"></a>
+    <a href="#sponsors"><img src="https://opencollective.com/bagisto/sponsors/badge.svg" alt="Sponsors on Open Collective"></a>
+    <a href="https://www.codetriage.com/bagisto/bagisto"><img src="https://www.codetriage.com/bagisto/bagisto/badges/users.svg" alt="Open Source Helpers"></a>
+</p>
 
----
+<p align="center">
+    <a href="https://twitter.com/intent/follow?screen_name=bagistoshop"><img src="https://img.shields.io/twitter/follow/bagistoshop?style=social"></a>
+    <a href="https://www.youtube.com/channel/UCbrfqnhyiDv-bb9QuZtonYQ"><img src="https://img.shields.io/youtube/channel/subscribers/UCbrfqnhyiDv-bb9QuZtonYQ?style=social"></a>
+</p>
 
-## İçindekiler
+<p align="center">
+    ➡️ <a href="https://bagisto.com/en/">Website</a> | <a href="https://devdocs.bagisto.com/">Documentation</a> | <a href="https://devdocs.bagisto.com/2.3/introduction/installation.html#installation">Installation Guide</a> | <a href="https://devdocs.bagisto.com/2.3/introduction/docker.html">Docker Installation</a>  | <a href="https://forums.bagisto.com/">Forums</a> | <a href="https://www.facebook.com/groups/bagisto/">Community</a> ⬅️
+</p>
 
-- [Genel Bakış](#genel-bakış)
-- [Hızlı Başlangıç](#hızlı-başlangıç)
-- [Agent Workflow Sistemi](#agent-workflow-sistemi)
-- [Proje Yapısı](#proje-yapısı)
-- [Geliştirme Kuralları](#geliştirme-kuralları)
-- [Katkıda Bulunma](#katkıda-bulunma)
-- [Lisans](#lisans)
 
----
+<p align="center" style="display: inline;">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/ar.svg" alt="Arabic" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/de.svg" alt="German" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/us.svg" alt="English" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Spanish" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/ir.svg" alt="Persian" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/it.svg" alt="Italian" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/nl.svg" alt="Dutch" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/pl.svg" alt="Polish" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/pt.svg" alt="Portuguese" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/tr.svg" alt="Turkish" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/eg.svg" alt="Egyptian" width="24" height="24">
+    <img class="flag-img" src="https://flagicons.lipis.dev/flags/4x3/cn.svg" alt="Chinese" width="24" height="24">
+</p>
 
-## Genel Bakış
+<a href="https://www.youtube.com/watch?v=OHbte7hdxYU">
+    <img class="flag-img" src="https://raw.githubusercontent.com/bagisto/temp-media/master/bagisto-featured.png" alt="Chinese" width="100%">
+</a>
 
-### Bu Repo Nedir?
+# Introduction
 
-- **Fork:** `mockupsoft/bagisto` - Geliştirme burada yapılır
-- **Upstream:** `bagisto/bagisto` - Referans ve uyumluluk kaynağı
-- **Workflow:** OpenAgents tabanlı, local-first, küçük patch'lerle geliştirme
+Bagisto is an opensource [laravel eCommerce](https://www.bagisto.com/) framework built on some of the hottest technologies such as [Laravel](https://laravel.com/) (a [PHP](https://secure.php.net/) framework) and [Vue.js](https://vuejs.org/) a progressive Javascript framework.
 
-### Temel Özellikler
+Bagisto can help you cut down your time, cost, and workforce for building online stores or migrating from physical stores to the ever-demanding online world. Your business—whether small or huge—can benefit. The best part, it's straightforward to set it up!
 
-- **Agent Workflow:** Claude Code 2.1 "/skills" davranışını taklit eden yapılandırılmış geliştirme süreci
-- **Local-First:** Ollama + qwen3-coder:30b ile yerel model kullanımı
-- **Küçük Patch'ler:** Her değişiklik max 5-10 dosya, test zorunlu
-- **Onay Kapıları:** Kritik alanlarda (checkout, payment, ACL, auth) Orchestrator onayı gerekli
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/stats.webp)
 
----
+# Getting Started
 
-## Hızlı Başlangıç
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/geting-starded.png)
 
-### 1. Repo'yu Klonlayın
+[Install Bagisto](https://devdocs.bagisto.com/2.3/introduction/installation.html#install-using-gui-installer) with or without Composer (Check [Requirement Details](https://bagisto.com/en/download/))
 
-```bash
-git clone --recurse-submodules https://github.com/mockupsoft/bagisto.git
-cd bagisto
-```
+Follow the [Getting Started with Bagisto](https://www.youtube.com/watch?v=s_DhQrjK8Tw&list=PLe30vg_FG4OS3BU8rHUKQZ2mnX45xwSMc) Tutorial
 
-> **Not:** `--recurse-submodules` flag'i `tools/openagents-upstream` submodule'ünü de indirir.
+You can browse through the Free [Live Demo](https://demo.bagisto.com/)
 
-### 2. Ollama Kurulumu
+## ☁️ Cloud Installation via Amazon AMI
 
-Ollama'yı kurun ve modeli indirin:
+You can also deploy Bagisto quickly using our pre-configured Amazon Machine Image (AMI) available on the AWS Marketplace:
 
-```bash
-ollama pull qwen3-coder:30b
-```
+👉 [**Launch Bagisto on AWS**](https://aws.amazon.com/marketplace/pp/prodview-r3xv62axcqkpa)
 
-Ollama varsayılan olarak `localhost:11434` üzerinden çalışır. Farklıysa OpenCode provider ayarından doğrulayın.
+This AMI allows you to get started with Bagisto on a cloud environment without manual setup. Ideal for scalable production or testing environments.
 
-### 3. Agent Workflow'u Kullanın
+# Accelerate Your Online Store Launch with the Bagisto Starter Pack!
 
-Detaylı kullanım için: [.openagents/QUICKSTART.md](.openagents/QUICKSTART.md)
+Empower your e-commerce journey with the [Bagisto Starter Pack](https://store.webkul.com/bagisto-starter-pack.html), streamlining setup and integration for a seamless online store launch. Get ready to unlock success in the digital marketplace! 
 
----
+# Open Source B2B eCommerce Platform
 
-## Agent Workflow Sistemi
+The [B2B eCommerce Platform](https://bagisto.com/en/b2b-commerce-platform/) enhances your Bagisto store with advanced Business-to-Business (B2B) features. It enables company-based purchasing, multi-user access, quote negotiation, and procurement management — empowering businesses to handle B2B workflows efficiently within a single platform.
 
-### Workflow Akışı
+![Bagisto B2B Ecommerce Image](https://github.com/bagisto/temp-media/blob/master/intro-banner.webp)
 
-```
-┌─────────┐    ┌───────┐    ┌─────────┐    ┌────────┐    ┌─────────┐
-│  PLAN   │ → │ ONAY  │ → │  PATCH  │ → │  TEST  │ → │ REVIEW  │
-└─────────┘    └───────┘    └─────────┘    └────────┘    └─────────┘
-     │              │             │             │             │
-     ▼              ▼             ▼             ▼             ▼
- Architect      Orchestrator  Implementer    Tester      Reviewer
-```
+# Multi Vendor Marketplace
 
-### Skill'ler (Sub-Agent'lar)
+[Multi Vendor Marketplace](https://bagisto.com/en/laravel-multi-vendor-marketplace/) transforms a standard store into a complete marketplace, allowing the admin to manage sellers, commissions, product approvals, and order handling, while giving vendors a dedicated dashboard to manage their catalog, orders, and transactions.
 
-| Skill | Amaç | Dosya |
-|-------|------|-------|
-| **Orchestrator** | PM/Lead rolü, routing, onay kapıları | [orchestrator.md](.openagents/skills/orchestrator.md) |
-| **Repo-Scout** | Dosya/pattern bulma, keşif | [repo-scout.md](.openagents/skills/repo-scout.md) |
-| **Architect** | Tasarım planı, risk analizi | [architect.md](.openagents/skills/architect.md) |
-| **Implementer** | Minimal diff/patch üretimi | [implementer.md](.openagents/skills/implementer.md) |
-| **Tester** | Test çalıştırma, sonuç yorumlama | [tester.md](.openagents/skills/tester.md) |
-| **Reviewer** | Diff review, go/no-go kararı | [reviewer.md](.openagents/skills/reviewer.md) |
-| **Doc-Writer** | Dokümantasyon, PR açıklaması | [doc-writer.md](.openagents/skills/doc-writer.md) |
+![Multi Vendor Marketplace Image](https://github.com/bagisto/temp-media/blob/master/multi-vendor-marketplace.webp)
 
-### Skill Separation Kuralları
+# Multi Tenant eCommerce
 
-- **Implementer** plan yapmaz (sadece verilen planı uygular)
-- **Architect** kod yazmaz (sadece plan üretir)
-- **Reviewer** kod düzeltmez (sadece inceleme yapar)
-- **Orchestrator** dosya düzenlemez (sadece yönlendirir)
-- **Repo-Scout** sadece keşif yapar (değişiklik yok, yorum/refactor önermez)
-- **Tester** kod yazmaz (sadece fix önerisi verir, fix'i Implementer yapar)
+[Multi Tenant eCommerce](https://bagisto.com/en/laravel-multi-tenant-saas/) in Bagisto allows businesses to build a SaaS-based marketplace platform where multiple vendors or merchants can create and manage their own individual stores under a single system.
 
----
+![Multi Tenant eCommerce Image](https://github.com/bagisto/temp-media/blob/master/multi-tenant.webp)
 
-## Proje Yapısı
+# POS 
 
-```
-mockupsoft/bagisto/
-├── AGENTS.md                    # Ana workflow dokümantasyonu
-├── README.md                    # Bu dosya
-├── .gitmodules                  # Submodule konfigürasyonu
-│
-├── .openagents/                 # Agent workflow dosyaları
-│   ├── QUICKSTART.md            # 5 dakikada başlangıç
-│   ├── VERSIONING.md            # Versiyon takibi
-│   │
-│   ├── skills/                  # Skill tanımları (7 dosya)
-│   │   ├── orchestrator.md
-│   │   ├── repo-scout.md
-│   │   ├── architect.md
-│   │   ├── implementer.md
-│   │   ├── tester.md
-│   │   ├── reviewer.md
-│   │   └── doc-writer.md
-│   │
-│   ├── policies/                # Politikalar (3 dosya)
-│   │   ├── patch-policy.md      # Patch kuralları
-│   │   ├── security-policy.md   # Güvenlik kuralları
-│   │   └── php-laravel-style.md # Kod stili
-│   │
-│   ├── playbooks/               # Adım adım süreçler (4 dosya)
-│   │   ├── bagisto-admin-crud.md
-│   │   ├── bagisto-module-skeleton.md
-│   │   ├── bagisto-migration-and-seed.md
-│   │   └── bagisto-bugfix-protocol.md
-│   │
-│   ├── checklists/              # Kontrol listeleri
-│   │   └── laravel-bagisto-change-checklist.md
-│   │
-│   └── templates/               # Çıktı şablonları (4 dosya)
-│       ├── plan-template.md
-│       ├── patch-summary-template.md
-│       ├── review-template.md
-│       └── pr-description-template.md
-│
-└── tools/
-    ├── README.md                # Tools klasörü açıklaması
-    └── openagents-upstream/     # Git submodule (darrenhinde/OpenAgents)
-```
+[Point of Sale](https://bagisto.com/en/laravel-pos/) system manages retail operations efficiently, handling inventory management and fast customer checkout for your store.
 
----
+![POS Image](https://github.com/bagisto/temp-media/blob/master/pos.webp)
 
-## Geliştirme Kuralları
+# Headless Commerce
 
-### Kırmızı Kurallar (İhlal Edilemez)
+The power of headless laravel commerce now comes to Bagisto enabling you to experience seamless and easily scalable storefront performance. Backed by some of the hottest tech stacks, Bagisto commerce can now be used to build powerful headless commerce solutions offering blazing-fast speed and easy customization powered by Next.js
 
-> ⚠️ Aşağıdaki alanlarda değişiklik yapılmadan önce **Orchestrator'dan açık onay** alınmalıdır:
+## Next.js Commerce
 
-| Alan | Risk Seviyesi |
-|------|---------------|
-| Checkout Core | 🔴 Yüksek |
-| Payment Core | 🔴 Yüksek |
-| ACL/Auth | 🔴 Yüksek |
-| DB Migration | 🔴 Yüksek |
-| Role Escalation | 🔴 Yüksek |
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/next.png)
 
-### Patch Kuralları
+Develop and deploy your next headless commerce storefronts with Next JS and Bagisto: [https://github.com/bagisto/nextjs-commerce](https://github.com/bagisto/nextjs-commerce)
 
-- Her patch maksimum **5-10 dosya** içermelidir
-- Her patch sonrası **test zorunludur**
-- Her patch için **risk özeti** yazılmalıdır
-- Büyük değişiklikler küçük patch'lere bölünür
+# Open Source Mobile eCommerce
 
-### Kod Stili
+Revolutionize Your Online Store with Bagisto's Open Source eCommerce Mobile 
 
-- **PSR-12** standartlarına uyum
-- **Laravel conventions** takip edilmeli
-- **Bagisto patterns** kullanılmalı (Repository, DataGrid, etc.)
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/open-source-ecommerce-mobile.png)
 
-Detaylar için: [php-laravel-style.md](.openagents/policies/php-laravel-style.md)
+Mobile eCommerce powered by Flutter & Laravel: https://github.com/bagisto/opensource-ecommerce-mobile-app
 
----
+# AI Powered eCommerce
 
-## Katkıda Bulunma
+You can integrate popular large language models like GPT-5, Gemini 3, Mistral, and LLaMA 4, Grok (xAI),GLM 4.6,Kimi-K2, Qwen 3, Deepseek etc to build [AI-powered eCommerce](https://bagisto.com/en/extensions/laravel-chatbot-using-openai-chatgpt-llm/) applications with Bagisto. Some of the popular use cases where you can make use of LLMs to build AI apps are chatbot, automated product descriptions, customer support, search, and recommendations.
 
-### Workflow
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/ai_powered_ecommerce.png)
 
-1. **Orchestrator'a plan sor:** "Bu değişiklik için plan oluştur"
-2. **Planı incele ve onayla**
-3. **Implementer'dan patch iste:** "Planın 1. adımını uygula"
-4. **Tester'dan test iste:** "Patch'i test et"
-5. **Reviewer'dan review iste:** "Değişiklikleri incele"
+You can incorporate LLM API with your bagisto applications to send and receive queries and ensure proper error handling and rate limiting to prevent overuse of the API
 
-### Örnek Prompt'lar
+# Decentralised eCommerce
 
-```
-Orchestrator olarak davran. Admin paneline yeni bir "Raporlar" modülü eklemek istiyorum.
-Bunun için hangi skill'lerin hangi sırayla çalışacağını belirle.
-```
+Build [decentralised applications](https://bagisto.com/en/services/blockchain-commerce/) with Bagisto on popular blockchains like Ethereum and Solana by integrating smart contracts with the eCommerce platform. You can have decentralised marketplaces, [NFT marketplaces](https://bagisto.com/en/nft-marketplace/), and decentralised e-signing with the laravel eCommerce system.
 
-```
-Architect olarak davran. Admin paneline yeni bir CRUD modülü eklemek için
-dosya bazlı implementasyon planı oluştur.
-```
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/decentralised-ecommerce.png)
 
-```
-Implementer olarak davran. Architect'in planındaki 1. adımı uygula.
-Maximum 5 dosya değiştir ve risk özeti ekle.
-```
+# Commerce For Every Need
+
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/every-need.png)
+
+With Bagisto, you can easily create use cases for various commerce needs like Marketplaces, PWA, Native Mobile Apps, Multi-Tenants systems, Blockchain and many more.
+
+# Built In Extensions
+
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/built_in_extension.png)
+
+Make use of 100+ Bagisto pre-built extensions from [Bagisto Extension Markeptlace](https://bagisto.com/en/extensions/)
+
+# Community
+
+![enter image description here](https://raw.githubusercontent.com/bagisto/temp-media/master/community.png)
+
+Get Bagisto support on [Facebook Group](https://www.facebook.com/groups/bagisto) and [Forum](https://forums.bagisto.com/)
+Would like to help us build the most developer-friendly E-Commerce platform? Start by reading our [Contributing Guide](https://github.com/bagisto/bagisto/blob/master/.github/CONTRIBUTING.md)!
+
+# License
+Bagisto is a fully open-source Laravel eCommerce framework that will always remain free under the [MIT License](https://github.com/bagisto/bagisto/blob/2.3/LICENSE).
+
+# Security Vulnerabilities
+If you think that you have found a security issue in Bagisto, please do not use the issue tracker and do not post it publicly. Instead, all security issues must be sent to [mailto:support@bagisto.com](mailto:support@bagisto.com).
+
+# Contributors
+
+This project is on [Open Collective](https://opencollective.com/bagisto), and it exists thanks to the people who contribute.
+
+<a href="https://github.com/bagisto/bagisto/graphs/contributors"><img src="https://opencollective.com/bagisto/contributors.svg?width=890&button=false"/></a>
+
+# Backers
+
+Thank you to all our backers! 🙏
+
+<a href="https://opencollective.com/bagisto" target="_blank"><img src="https://opencollective.com/bagisto/backers.svg?width=890"></a>
+
+# Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
+
+<a href="https://opencollective.com/bagisto" target="_blank"><img src="https://opencollective.com/bagisto/sponsors.svg?width=890&isActive=true"></a>
 
 ---
 
-## Referanslar
+## Agent Workflow (mockupsoft/bagisto)
 
-### Repo İçi Linkler
+Bu repo OpenAgents tabanli agent workflow sistemi ile gelistirilmektedir.
 
-- [AGENTS.md](AGENTS.md) - Ana workflow dokümantasyonu
-- [.openagents/QUICKSTART.md](.openagents/QUICKSTART.md) - Hızlı başlangıç
-- [.openagents/VERSIONING.md](.openagents/VERSIONING.md) - Versiyon takibi
+- [AGENTS.md](AGENTS.md) - Workflow dokumantasyonu
+- [.openagents/](.openagents/) - Skill, policy, playbook dosyalari
+- [UPSTREAM.md](UPSTREAM.md) - Upstream senkronizasyon rehberi
 
-### Upstream Referanslar
-
-- **OpenAgents:** [darrenhinde/OpenAgents](https://github.com/darrenhinde/OpenAgents) (workflow referansı)
-- **Bagisto Upstream:** [bagisto/bagisto](https://github.com/bagisto/bagisto)
-
-> **Not:** `tools/openagents-upstream` çalışma zamanı bağımlılığı **değildir**. Yalnızca referans amaçlı upstream kopyadır.
-
----
-
-## Model Kullanımı
-
-### Varsayılan: Ollama (Local-First)
-
-| Özellik | Değer |
-|---------|-------|
-| Endpoint | `localhost:11434` (varsayılan) |
-| Model | `qwen3-coder:30b` (önerilen) |
-| Fallback | Claude (sadece açıkça talep edildiğinde) |
-
-### Yavaş Sistem İçin
-
-- Daha küçük coder modelleri kullanılabilir
-- Vendor lock-in yok, cloud push yok
-
----
-
-## Lisans
-
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
-
-Bagisto orijinal projesi de MIT Lisansı altındadır: [bagisto/bagisto](https://github.com/bagisto/bagisto)
-
----
-
-## Neden Bu Yaklaşım?
-
-### Büyük Repo'larda Guardrail'ler
-
-- **Küçük patch'ler:** Review kolaylaşır, hata riski azalır
-- **Onay kapıları:** Kritik alanlarda kontrollü değişiklik
-- **Skill separation:** Her rol kendi sınırları içinde kalır
-- **Test zorunluluğu:** Her değişiklik sonrası doğrulama
-- **Upstream uyumu:** bagisto/bagisto ile uyumluluk korunur
-
-### Local-First Avantajları
-
-- Vendor lock-in yok
-- Data privacy (kod cloud'a gitmez)
-- Düşük maliyet
-- Offline çalışabilme
-
----
-
-*Bu workflow sistemi Claude Code 2.1 "/skills" davranışını taklit eder ve [OpenAgents](https://github.com/darrenhinde/OpenAgents) projesinden ilham almıştır.*
+> **Not:** `tools/openagents-upstream` calisma zamani bagimliligi degildir. Yalnizca referans amacli upstream kopyadir.
