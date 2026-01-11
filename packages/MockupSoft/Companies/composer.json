@@ -1,0 +1,21 @@
+{
+    "name": "mockupsoft/companies",
+    "description": "MockupSoft Companies module for Bagisto",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MockupSoft",
+            "email": "info@mockupsoft.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "MockupSoft\\Companies\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
