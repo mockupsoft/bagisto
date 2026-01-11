@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Hash;
  * - php artisan route:list (requires channel)
  * - Admin panel login and navigation
  * - MockupSoft/Companies module to function
+ *
+ * SECURITY:
+ * - Only runs in local/testing environments OR when DEV_SEEDER_ENABLED=true
+ * - Admin credentials read from environment variables
+ *
+ * Environment Variables:
+ * - DEV_SEEDER_ENABLED: Set to "true" to allow seeding in non-local environments
+ * - DEV_ADMIN_EMAIL: Admin email (default: admin@example.com)
+ * - DEV_ADMIN_PASSWORD: Admin password (default: admin123, warns if using default)
  *
  * Tables touched:
  * - locales: Required for channel default_locale_id FK
@@ -30,17 +40,34 @@ use Illuminate\Support\Facades\Hash;
  *   php artisan migrate:fresh
  *   php artisan db:seed --class=DevBagistoSeeder
  *
- * Default admin credentials:
- *   Email: admin@example.com
- *   Password: admin123
+ * With custom credentials:
+ *   DEV_ADMIN_EMAIL=myemail@example.com DEV_ADMIN_PASSWORD=mysecret php artisan db:seed --class=DevBagistoSeeder
  */
 class DevBagistoSeeder extends Seeder
 {
+    /**
+     * Admin email from environment.
+     */
+    protected string $adminEmail;
+
+    /**
+     * Admin password from environment.
+     */
+    protected string $adminPassword;
+
+    /**
+     * Whether using default password (triggers warning).
+     */
+    protected bool $usingDefaultPassword = false;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+        $this->guardEnvironment();
+        $this->loadCredentials();
+
         $this->seedLocales();
         $this->seedCurrencies();
         $this->seedCategories();
@@ -49,8 +76,55 @@ class DevBagistoSeeder extends Seeder
         $this->seedRoles();
         $this->seedAdmins();
 
-        $this->command->info('DevBagistoSeeder completed successfully.');
-        $this->command->info('Admin login: admin@example.com / admin123');
+        $this->command->info('');
+        $this->command->info('✅ DevBagistoSeeder completed successfully.');
+        $this->command->info("   Admin login: {$this->adminEmail}");
+
+        if ($this->usingDefaultPassword) {
+            $this->command->warn('   ⚠️  Using default password! Set DEV_ADMIN_PASSWORD in .env for security.');
+        }
+    }
+
+    /**
+     * Guard: Only allow seeding in safe environments.
+     *
+     * @throws \RuntimeException
+     */
+    protected function guardEnvironment(): void
+    {
+        $allowedEnvironments = ['local', 'testing'];
+        $currentEnv = App::environment();
+        $seederEnabled = filter_var(env('DEV_SEEDER_ENABLED', false), FILTER_VALIDATE_BOOLEAN);
+
+        if (in_array($currentEnv, $allowedEnvironments)) {
+            $this->command->info("Environment: {$currentEnv} (allowed)");
+
+            return;
+        }
+
+        if ($seederEnabled) {
+            $this->command->warn("Environment: {$currentEnv} (DEV_SEEDER_ENABLED=true, proceeding with caution)");
+
+            return;
+        }
+
+        $this->command->error("❌ DevBagistoSeeder blocked: environment '{$currentEnv}' is not allowed.");
+        $this->command->error('   Set DEV_SEEDER_ENABLED=true in .env to override (not recommended for production).');
+
+        throw new \RuntimeException("DevBagistoSeeder cannot run in '{$currentEnv}' environment.");
+    }
+
+    /**
+     * Load admin credentials from environment.
+     */
+    protected function loadCredentials(): void
+    {
+        $this->adminEmail = env('DEV_ADMIN_EMAIL', 'admin@example.com');
+        $this->adminPassword = env('DEV_ADMIN_PASSWORD', 'admin123');
+
+        if ($this->adminPassword === 'admin123') {
+            $this->usingDefaultPassword = true;
+        }
     }
 
     /**
@@ -94,7 +168,7 @@ class DevBagistoSeeder extends Seeder
      */
     protected function seedCategories(): void
     {
-        $categoryId = DB::table('categories')->updateOrInsert(
+        DB::table('categories')->updateOrInsert(
             ['id' => 1],
             [
                 'position'   => 1,
@@ -106,7 +180,6 @@ class DevBagistoSeeder extends Seeder
             ]
         );
 
-        // Get the actual ID (in case it was inserted)
         $category = DB::table('categories')->where('id', 1)->first();
 
         if ($category) {
@@ -131,7 +204,7 @@ class DevBagistoSeeder extends Seeder
      */
     protected function seedChannels(): void
     {
-        $localeId   = DB::table('locales')->where('code', 'en')->value('id');
+        $localeId = DB::table('locales')->where('code', 'en')->value('id');
         $currencyId = DB::table('currencies')->where('code', 'USD')->value('id');
         $categoryId = DB::table('categories')->first()->id ?? 1;
 
@@ -160,7 +233,7 @@ class DevBagistoSeeder extends Seeder
             ]
         );
 
-        // Link channel to locale (pivot)
+        // Link channel to locale (pivot) - idempotent check
         if (! DB::table('channel_locales')->where('channel_id', $channelId)->where('locale_id', $localeId)->exists()) {
             DB::table('channel_locales')->insert([
                 'channel_id' => $channelId,
@@ -168,7 +241,7 @@ class DevBagistoSeeder extends Seeder
             ]);
         }
 
-        // Link channel to currency (pivot)
+        // Link channel to currency (pivot) - idempotent check
         if (! DB::table('channel_currencies')->where('channel_id', $channelId)->where('currency_id', $currencyId)->exists()) {
             DB::table('channel_currencies')->insert([
                 'channel_id'  => $channelId,
@@ -233,10 +306,10 @@ class DevBagistoSeeder extends Seeder
     protected function seedAdmins(): void
     {
         DB::table('admins')->updateOrInsert(
-            ['email' => 'admin@example.com'],
+            ['email' => $this->adminEmail],
             [
                 'name'       => 'Admin',
-                'password'   => Hash::make('admin123'),
+                'password'   => Hash::make($this->adminPassword),
                 'status'     => 1,
                 'role_id'    => 1,
                 'created_at' => now(),
