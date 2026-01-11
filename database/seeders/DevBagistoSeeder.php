@@ -17,11 +17,15 @@ use Illuminate\Support\Facades\Hash;
  * - MockupSoft/Companies module to function
  *
  * SECURITY:
- * - Only runs in local/testing environments OR when DEV_SEEDER_ENABLED=true
+ * - Only runs in local/testing environments
+ * - Production override requires BOTH:
+ *   - DEV_SEEDER_ENABLED=true
+ *   - DEV_SEEDER_I_KNOW_WHAT_I_AM_DOING=true
  * - Admin credentials read from environment variables
  *
  * Environment Variables:
- * - DEV_SEEDER_ENABLED: Set to "true" to allow seeding in non-local environments
+ * - DEV_SEEDER_ENABLED: First flag for non-local seeding
+ * - DEV_SEEDER_I_KNOW_WHAT_I_AM_DOING: Second confirmation flag (prevents accidents)
  * - DEV_ADMIN_EMAIL: Admin email (default: admin@example.com)
  * - DEV_ADMIN_PASSWORD: Admin password (default: admin123, warns if using default)
  *
@@ -76,17 +80,41 @@ class DevBagistoSeeder extends Seeder
         $this->seedRoles();
         $this->seedAdmins();
 
+        $this->printSuccessMessage();
+    }
+
+    /**
+     * Print success message with useful URLs.
+     */
+    protected function printSuccessMessage(): void
+    {
+        $adminUrl = config('app.admin_url', 'admin');
+        $baseUrl = config('app.url', 'http://localhost');
+
         $this->command->info('');
-        $this->command->info('✅ DevBagistoSeeder completed successfully.');
-        $this->command->info("   Admin login: {$this->adminEmail}");
+        $this->command->info('╔═══════════════════════════════════════════════════════════╗');
+        $this->command->info('║  ✅ DevBagistoSeeder completed successfully!              ║');
+        $this->command->info('╚═══════════════════════════════════════════════════════════╝');
+        $this->command->info('');
+        $this->command->info('   📧 Admin Email:    ' . $this->adminEmail);
+        $this->command->info('   🔐 Password:       ' . ($this->usingDefaultPassword ? 'admin123 (default)' : '********'));
+        $this->command->info('');
+        $this->command->info('   🌐 Admin Panel:    ' . $baseUrl . '/' . $adminUrl);
+        $this->command->info('   🏢 Companies:      ' . $baseUrl . '/' . $adminUrl . '/mockupsoft/companies');
+        $this->command->info('');
 
         if ($this->usingDefaultPassword) {
             $this->command->warn('   ⚠️  Using default password! Set DEV_ADMIN_PASSWORD in .env for security.');
+            $this->command->info('');
         }
     }
 
     /**
      * Guard: Only allow seeding in safe environments.
+     *
+     * For production, requires BOTH flags:
+     * - DEV_SEEDER_ENABLED=true
+     * - DEV_SEEDER_I_KNOW_WHAT_I_AM_DOING=true
      *
      * @throws \RuntimeException
      */
@@ -95,23 +123,50 @@ class DevBagistoSeeder extends Seeder
         $allowedEnvironments = ['local', 'testing'];
         $currentEnv = App::environment();
         $seederEnabled = filter_var(env('DEV_SEEDER_ENABLED', false), FILTER_VALIDATE_BOOLEAN);
+        $confirmFlag = filter_var(env('DEV_SEEDER_I_KNOW_WHAT_I_AM_DOING', false), FILTER_VALIDATE_BOOLEAN);
 
+        // Local/testing: always allowed
         if (in_array($currentEnv, $allowedEnvironments)) {
             $this->command->info("Environment: {$currentEnv} (allowed)");
 
             return;
         }
 
-        if ($seederEnabled) {
-            $this->command->warn("Environment: {$currentEnv} (DEV_SEEDER_ENABLED=true, proceeding with caution)");
+        // Non-local: require BOTH flags
+        if ($seederEnabled && $confirmFlag) {
+            $this->command->warn('');
+            $this->command->warn('╔═══════════════════════════════════════════════════════════╗');
+            $this->command->warn('║  ⚠️  RUNNING DEV SEEDER IN NON-LOCAL ENVIRONMENT!         ║');
+            $this->command->warn('║  Environment: ' . str_pad($currentEnv, 42) . ' ║');
+            $this->command->warn('║  This should NEVER be done in production!                 ║');
+            $this->command->warn('╚═══════════════════════════════════════════════════════════╝');
+            $this->command->warn('');
 
             return;
         }
 
-        $this->command->error("❌ DevBagistoSeeder blocked: environment '{$currentEnv}' is not allowed.");
-        $this->command->error('   Set DEV_SEEDER_ENABLED=true in .env to override (not recommended for production).');
+        // Missing flags: block with helpful message
+        $this->command->error('');
+        $this->command->error('╔═══════════════════════════════════════════════════════════╗');
+        $this->command->error('║  ❌ DevBagistoSeeder BLOCKED                              ║');
+        $this->command->error('╚═══════════════════════════════════════════════════════════╝');
+        $this->command->error('');
+        $this->command->error("   Environment: {$currentEnv} (not allowed)");
+        $this->command->error('');
 
-        throw new \RuntimeException("DevBagistoSeeder cannot run in '{$currentEnv}' environment.");
+        if (! $seederEnabled) {
+            $this->command->error('   Missing: DEV_SEEDER_ENABLED=true');
+        }
+        if (! $confirmFlag) {
+            $this->command->error('   Missing: DEV_SEEDER_I_KNOW_WHAT_I_AM_DOING=true');
+        }
+
+        $this->command->error('');
+        $this->command->error('   Both flags are required to seed in non-local environments.');
+        $this->command->error('   This is NOT recommended for production!');
+        $this->command->error('');
+
+        throw new \RuntimeException("DevBagistoSeeder cannot run in '{$currentEnv}' environment without both override flags.");
     }
 
     /**

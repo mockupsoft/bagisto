@@ -2,6 +2,18 @@
 
 Bu doküman, `mockupsoft/bagisto` projesini sıfırdan çalışır hale getirmek için gereken adımları açıklar.
 
+---
+
+## ⚡ Tek Satır Hızlı Kurulum
+
+```bash
+composer install && cp .env.example .env && php artisan key:generate && php artisan migrate:fresh && php artisan db:seed --class=DevBagistoSeeder
+```
+
+> **Not:** Önce `.env` dosyasındaki DB ayarlarını düzenlemeyi unutmayın!
+
+---
+
 ## Ön Gereksinimler
 
 - PHP 8.2+
@@ -9,7 +21,9 @@ Bu doküman, `mockupsoft/bagisto` projesini sıfırdan çalışır hale getirmek
 - MySQL 8.x
 - Node.js 18+ (opsiyonel, frontend build için)
 
-## Hızlı Başlangıç
+---
+
+## Adım Adım Kurulum
 
 ### 1. Bağımlılıkları Yükle
 
@@ -52,6 +66,48 @@ Password: admin123
 
 ---
 
+## MySQL 8 Authentication Sorunu
+
+MySQL 8.x varsayılan olarak `caching_sha2_password` kullanır. Bazı PHP/PDO sürümleri bu ile uyumsuz olabilir.
+
+### Belirtiler
+
+```
+SQLSTATE[HY000] [1524] Plugin 'mysql_native_password' is not loaded
+```
+
+veya
+
+```
+SQLSTATE[HY000] [2054] The server requested authentication method unknown to the client
+```
+
+### Çözüm 1: MySQL User Auth Method Değiştir
+
+```sql
+-- MySQL'e bağlan
+mysql -u root -p
+
+-- Auth method'u değiştir
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '';
+FLUSH PRIVILEGES;
+```
+
+### Çözüm 2: my.cnf / my.ini Ayarı
+
+```ini
+[mysqld]
+default_authentication_plugin=caching_sha2_password
+```
+
+### Laragon Özel Not
+
+Laragon kullanıyorsanız ve MySQL 8.x yüklediyseniz:
+- `C:\laragon\bin\mysql\mysql-8.x.x\my.ini` dosyasını kontrol edin
+- PHP'nin mysqlnd extension'ının güncel olduğundan emin olun
+
+---
+
 ## DevBagistoSeeder
 
 `DevBagistoSeeder`, Bagisto admin panelinin çalışması için gereken minimum verileri ekler.
@@ -60,13 +116,15 @@ Password: admin123
 
 - **İdempotent:** Birden fazla çalıştırılabilir, duplicate oluşturmaz
 - **Güvenli:** Sadece `local`/`testing` ortamlarında çalışır
+- **Çift Kilit:** Production override için 2 flag gerekir
 - **Yapılandırılabilir:** Environment variable'lar ile özelleştirilebilir
 
 ### Environment Variables
 
 | Variable | Varsayılan | Açıklama |
 |----------|------------|----------|
-| `DEV_SEEDER_ENABLED` | `false` | Production'da seeder'ı zorla etkinleştir (önerilmez) |
+| `DEV_SEEDER_ENABLED` | `false` | Non-local seeding için 1. flag |
+| `DEV_SEEDER_I_KNOW_WHAT_I_AM_DOING` | `false` | Non-local seeding için 2. flag (çift kilit) |
 | `DEV_ADMIN_EMAIL` | `admin@example.com` | Admin kullanıcı email adresi |
 | `DEV_ADMIN_PASSWORD` | `admin123` | Admin kullanıcı şifresi (varsayılan kullanılırsa uyarı verir) |
 
@@ -81,11 +139,15 @@ DEV_ADMIN_PASSWORD=my-secure-password-123
 php artisan db:seed --class=DevBagistoSeeder
 ```
 
-veya tek seferlik:
+### Production Override (ÖNERİLMEZ)
+
+Non-local ortamda çalıştırmak için **her iki flag** gereklidir:
 
 ```bash
-DEV_ADMIN_EMAIL=myemail@company.com DEV_ADMIN_PASSWORD=secret php artisan db:seed --class=DevBagistoSeeder
+DEV_SEEDER_ENABLED=true DEV_SEEDER_I_KNOW_WHAT_I_AM_DOING=true php artisan db:seed --class=DevBagistoSeeder --force
 ```
+
+> ⚠️ **Uyarı:** Bu sadece staging/demo ortamlar için kullanılmalıdır. Production'da asla kullanmayın!
 
 ### Seed Edilen Tablolar
 
@@ -133,10 +195,52 @@ packages/MockupSoft/Companies/
 http://localhost/admin/mockupsoft/companies
 ```
 
-### Route Listesi
+---
+
+## Smoke Test Komutları
+
+Kurulum sonrası her şeyin çalıştığını doğrulamak için:
+
+### 1. Route Kontrolü
 
 ```bash
 php artisan route:list --name=mockupsoft
+```
+
+Beklenen çıktı: 5 route (index, show, store, update, delete)
+
+### 2. Config Merge Kontrolü
+
+```bash
+php artisan tinker --execute="dd(array_keys(array_filter(config('acl'), fn(\$i)=>str_starts_with(\$i['key'],'mockupsoft'))));"
+```
+
+Beklenen: `mockupsoft.companies.*` ACL keys
+
+### 3. Model Binding Kontrolü
+
+```bash
+php artisan tinker --execute="dd(app(\MockupSoft\Companies\Contracts\Company::class) instanceof \MockupSoft\Companies\Models\Company);"
+```
+
+Beklenen: `true`
+
+### 4. Repository Kontrolü
+
+```bash
+php artisan tinker --execute="dd(app(\MockupSoft\Companies\Repositories\CompanyRepository::class)->model());"
+```
+
+Beklenen: `MockupSoft\Companies\Contracts\Company`
+
+### 5. Company Create Testi
+
+```bash
+php artisan tinker --execute="
+\$repo = app(\MockupSoft\Companies\Repositories\CompanyRepository::class);
+\$company = \$repo->create(['name' => 'Test Co', 'email' => 'test@test.com', 'phone' => '555-1234', 'address' => 'Test St']);
+dd(\$company->toArray());
+"
 ```
 
 ---
@@ -168,6 +272,10 @@ php artisan migrate:fresh
 php artisan db:seed --class=DevBagistoSeeder
 ```
 
+### MySQL auth plugin hatası
+
+**Çözüm:** Yukarıdaki "MySQL 8 Authentication Sorunu" bölümüne bakın.
+
 ---
 
 ## Commit Geçmişi
@@ -179,3 +287,10 @@ php artisan db:seed --class=DevBagistoSeeder
 | Patch 2A | Admin CRUD | Routes, Controller, DataGrid, ACL, Menu, Views |
 | Patch 2B | Contract + Proxy | Concord model binding |
 | - | DevBagistoSeeder | Reproducible dev environment |
+| - | Seeder polish | Çift kilit guard + docs |
+
+---
+
+## Versiyon
+
+Bu dokümantasyon `v0.1.0-dev-seeded` milestone'u ile günceldir.
