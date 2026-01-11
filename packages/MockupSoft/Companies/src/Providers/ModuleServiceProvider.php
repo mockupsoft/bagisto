@@ -8,12 +8,13 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
 {
     /**
      * Models to be registered by Concord.
-     * Patch 2'de Contracts eklendiğinde map kurulacak:
-     * \MockupSoft\Companies\Contracts\Company::class => \MockupSoft\Companies\Models\Company::class
+     * Contract => Model mapping for Concord proxy system.
      *
      * @var array
      */
-    protected $models = [];
+    protected $models = [
+        \MockupSoft\Companies\Contracts\Company::class => \MockupSoft\Companies\Models\Company::class,
+    ];
 
     /**
      * Register services.
