@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Throwable;
+use App\Services\Tenant\TenantChannelBootstrapper;
+use App\Services\Tenant\TenantCatalogSeeder;
 
 class TenantDatabaseProvisioner
 {
@@ -16,6 +18,7 @@ class TenantDatabaseProvisioner
         protected TenantConnectionConfigurator $configurator,
     ) {
     }
+
 
     /**
      * Provision by tenant id.
@@ -109,6 +112,12 @@ class TenantDatabaseProvisioner
 
                 try {
                     app(TenantChannelBootstrapper::class)->bootstrapForTenant($tenantDb->tenant_id);
+                } catch (Throwable $e) {
+                    report($e);
+                }
+
+                try {
+                    app(TenantCatalogSeeder::class)->seed();
                 } catch (Throwable $e) {
                     report($e);
                 }
