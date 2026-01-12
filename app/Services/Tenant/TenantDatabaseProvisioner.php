@@ -106,6 +106,12 @@ class TenantDatabaseProvisioner
                     ['key' => 'provisioned_at'],
                     ['value' => now()->toIso8601String(), 'updated_at' => now(), 'created_at' => now()]
                 );
+
+                try {
+                    app(TenantChannelBootstrapper::class)->bootstrapForTenant($tenantDb->tenant_id);
+                } catch (Throwable $e) {
+                    report($e);
+                }
             }
 
             $tenantDb->status = 'ready';
