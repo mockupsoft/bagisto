@@ -4,9 +4,12 @@ namespace App\Providers;
 
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\ParallelTesting;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
+use App\Events\Tenant\TenantProvisioningRequested;
+use App\Listeners\Tenant\DispatchTenantProvisioningJob;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +38,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Event::listen(
+            TenantProvisioningRequested::class,
+            [DispatchTenantProvisioningJob::class, 'handle']
+        );
+
         ParallelTesting::setUpTestDatabase(function (string $database, int $token) {
             Artisan::call('db:seed');
         });
