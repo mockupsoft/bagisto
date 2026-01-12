@@ -22,10 +22,11 @@ use Webkul\Inventory\Models\InventorySourceProxy;
 use Webkul\Product\Contracts\Product as ProductContract;
 use Webkul\Product\Database\Factories\ProductFactory;
 use Webkul\Product\Type\AbstractType;
+use App\Models\Concerns\TenantScopedConnection;
 
 class Product extends Model implements ProductContract
 {
-    use HasFactory, Visitable;
+    use HasFactory, Visitable, TenantScopedConnection;
 
     /**
      * The attributes that are mass assignable.

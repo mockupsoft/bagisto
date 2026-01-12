@@ -64,11 +64,6 @@ class TenantIsolationCatalogTest extends TestCase
         TenantTestContext::setTenantContext($tenantB, $dbB);
         $countB = DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count();
 
-        // If either count is zero or cross-talk happens, flag for Patch-8D.
-        if ($countA !== 1 || $countB !== 1) {
-            $this->markTestIncomplete('Direct model path not fully tenant-scoped yet (expected Patch-8D).');
-        }
-
         $this->assertEquals(1, $countA);
         $this->assertEquals(1, $countB);
     }
