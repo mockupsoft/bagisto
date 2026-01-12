@@ -39,6 +39,18 @@ class TenantIsolationCatalogTest extends TestCase
         // Assert connection points to correct database (tenant A)
         $this->assertSame($dbA->database_name, DB::connection('tenant')->getDatabaseName());
         
+        // Set current channel from tenant DB (required for product creation)
+        $channelA = DB::connection('tenant')->table('channels')->where('code', 'default')->first();
+        if ($channelA) {
+            // Create channel model instance using tenant connection
+            $channelModel = new \Webkul\Core\Models\Channel();
+            $channelModel->setConnection('tenant');
+            $channelModel = $channelModel->find($channelA->id);
+            if ($channelModel) {
+                core()->setCurrentChannel($channelModel);
+            }
+        }
+        
         // Debug: Model connection name + database
         $connA = Product::query()->getConnection();
         $this->assertSame('tenant', $connA->getName(), 'Product connection name mismatch for tenant A');
@@ -49,6 +61,13 @@ class TenantIsolationCatalogTest extends TestCase
             0,
             DB::connection(config('database.default'))->table('products')->where('sku', 'ABC-1')->count(),
             'SKU already exists in GLOBAL DB before tenant A insert'
+        );
+        
+        // Debug: Insert'ten önce tenant DB'de SKU var mı?
+        $this->assertSame(
+            0,
+            DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU already exists in TENANT DB before tenant A insert'
         );
         
         $familyA = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
@@ -66,6 +85,18 @@ class TenantIsolationCatalogTest extends TestCase
         // Assert connection points to correct database (tenant B)
         $this->assertSame($dbB->database_name, DB::connection('tenant')->getDatabaseName());
         
+        // Set current channel from tenant DB (required for product creation)
+        $channelB = DB::connection('tenant')->table('channels')->where('code', 'default')->first();
+        if ($channelB) {
+            // Create channel model instance using tenant connection
+            $channelModel = new \Webkul\Core\Models\Channel();
+            $channelModel->setConnection('tenant');
+            $channelModel = $channelModel->find($channelB->id);
+            if ($channelModel) {
+                core()->setCurrentChannel($channelModel);
+            }
+        }
+        
         // Debug: Model connection name + database
         $connB = Product::query()->getConnection();
         $this->assertSame('tenant', $connB->getName(), 'Product connection name mismatch for tenant B');
@@ -76,6 +107,13 @@ class TenantIsolationCatalogTest extends TestCase
             0,
             DB::connection(config('database.default'))->table('products')->where('sku', 'ABC-1')->count(),
             'SKU already exists in GLOBAL DB before tenant B insert'
+        );
+        
+        // Debug: Insert'ten önce tenant DB'de SKU var mı?
+        $this->assertSame(
+            0,
+            DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU already exists in TENANT DB before tenant B insert'
         );
         
         $familyB = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
@@ -205,6 +243,9 @@ class TenantIsolationCatalogTest extends TestCase
         }
 
         $tenantDb->refresh();
+
+        // Reset tenant database to ensure clean state
+        TenantTestContext::resetTenantDatabase($tenantDb);
 
         return [$tenant, $tenantDb];
     }
