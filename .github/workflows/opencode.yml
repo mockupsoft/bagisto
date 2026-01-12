@@ -55,7 +55,7 @@ jobs:
               && format('SADECE PLAN üret. Kod/patch üretme.\n\nİstek:\n{0}', steps.prompt.outputs.text)
               || format('PATCH üret (unified diff) + TEST PLAN yaz.\n\nİstek:\n{0}', steps.prompt.outputs.text)
             }}
-          model: google/gemini-1.5-pro
+          model: openai/gpt-4o-mini
           use_github_token: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
