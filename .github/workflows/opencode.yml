@@ -26,26 +26,36 @@ jobs:
       - name: Extract prompt
         id: prompt
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           BODY="${{ github.event.comment.body }}"
           BODY="${BODY#*/opencode}"
           BODY="${BODY#*/oc}"
           BODY="$(echo "$BODY" | sed 's/^[[:space:]]*//')"
 
+          if [ "$EVENT_NAME" == "issue_comment" ]; then
+            PROMPT="SADECE PLAN üret. Kod/patch üretme.
+
+İstek:
+${BODY}"
+          else
+            PROMPT="PATCH üret (unified diff) + TEST PLAN yaz.
+
+İstek:
+${BODY}"
+          fi
+
           echo "text<<EOF" >> $GITHUB_OUTPUT
-          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "$PROMPT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Run OpenCode
         uses: anomalyco/opencode/github@latest
         with:
-          prompt: |
-            ${{
-              github.event_name == 'issue_comment'
-              && format('SADECE PLAN üret. Kod/patch üretme.\n\nİstek:\n{0}', steps.prompt.outputs.text)
-              || format('PATCH üret (unified diff) + TEST PLAN yaz.\n\nİstek:\n{0}', steps.prompt.outputs.text)
-            }}
+          prompt: ${{ steps.prompt.outputs.text }}
           model: google/gemini-pro
           use_github_token: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
