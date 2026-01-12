@@ -211,4 +211,34 @@ Detaylı şablonlar için: [templates/](.openagents/templates/)
 
 ---
 
+## OpenCode GitHub Entegrasyonu
+
+Bu repo OpenCode GitHub Action ile entegre edilmiştir. GitHub Issues ve Pull Request'lerde `/opencode` veya `/oc` komutları ile agent'ı tetikleyebilirsiniz.
+
+### Kurulum
+
+1. **GitHub Secrets:** Repository Settings → Secrets and variables → Actions → `GEMINI_API_KEY` ekleyin
+2. **Workflow:** `.github/workflows/opencode.yml` dosyası otomatik olarak yapılandırılmıştır
+3. **Config:** `opencode.json` dosyası OpenCode'a bağlayıcı talimatları sağlar
+
+### Kullanım
+
+- **Issue comment:** `/opencode <istek>` → Sadece PLAN üretilir (kod/patch üretilmez)
+- **PR review comment:** `/opencode <istek>` → PATCH (unified diff) + TEST PLAN üretilir
+
+**Örnek:**
+```
+/opencode Repo-Scout olarak tenant domain resolver ile ilgili dosyaları listele
+```
+
+### Bağlayıcı Talimatlar
+
+OpenCode şu dosyaları bağlayıcı talimat olarak okur:
+- `opencode.json` içindeki `instructions` listesi (AGENTS.md + .openagents/** dosyaları)
+- `README.md` (otomatik)
+
+`.opencode.yaml` varsa dokümantasyon amaçlıdır (OpenCode otomatik okumaz).
+
+---
+
 *Bu doküman `.openagents/` workflow sisteminin ana referans noktasıdır.*
