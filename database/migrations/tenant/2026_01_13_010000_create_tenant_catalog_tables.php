@@ -74,10 +74,23 @@ return new class extends Migration {
 
             $table->index(['product_id', 'locale', 'channel']);
         });
+
+        // Product channels pivot table (required for product-channel relationships)
+        Schema::create('product_channels', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('channel_id');
+            $table->timestamps();
+
+            $table->unique(['product_id', 'channel_id']);
+            $table->index('product_id');
+            $table->index('channel_id');
+        });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('product_channels');
         Schema::dropIfExists('product_flat');
         Schema::dropIfExists('product_attribute_values');
         Schema::dropIfExists('products');

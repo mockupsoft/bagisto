@@ -26,6 +26,39 @@ class TenantIsolationCatalogTest extends TestCase
 
         config()->set('saas.tenant_db.provisioning_enabled', true);
         config()->set('saas.tenant_db.seed_enabled', true);
+
+        // Global channel guarantee (channels stay in global DB)
+        $channel = \Webkul\Core\Models\Channel::first();
+        if (! $channel) {
+            // Create minimal channel if none exists
+            $localeId = \Webkul\Core\Models\Locale::firstOrCreate(
+                ['code' => 'en'],
+                ['name' => 'English', 'direction' => 'ltr']
+            )->id;
+
+            $currencyId = \Webkul\Core\Models\Currency::firstOrCreate(
+                ['code' => 'USD'],
+                ['name' => 'US Dollar', 'symbol' => '$']
+            )->id;
+
+            $categoryId = \Webkul\Category\Models\Category::firstOrCreate(
+                ['id' => 1],
+                ['position' => 1, 'status' => 1, '_lft' => 1, '_rgt' => 2]
+            )->id;
+
+            $channel = \Webkul\Core\Models\Channel::create([
+                'code' => 'default',
+                'name' => 'Default',
+                'hostname' => 'localhost',
+                'theme' => 'default',
+                'root_category_id' => $categoryId,
+                'default_locale_id' => $localeId,
+                'base_currency_id' => $currencyId,
+            ]);
+        }
+
+        // Set current channel to prevent null errors
+        core()->setCurrentChannel($channel);
     }
 
     public function test_same_sku_is_isolated_via_repository(): void
@@ -36,20 +69,17 @@ class TenantIsolationCatalogTest extends TestCase
         $repo = app(ProductRepository::class);
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
+        // Reset tenant database to ensure clean state
+        TenantTestContext::resetTenantDatabase($dbA);
+        
+        // Re-set global channel (channels stay in global DB)
+        $globalChannel = \Webkul\Core\Models\Channel::first();
+        if ($globalChannel) {
+            core()->setCurrentChannel($globalChannel);
+        }
+        
         // Assert connection points to correct database (tenant A)
         $this->assertSame($dbA->database_name, DB::connection('tenant')->getDatabaseName());
-        
-        // Set current channel from tenant DB (required for product creation)
-        $channelA = DB::connection('tenant')->table('channels')->where('code', 'default')->first();
-        if ($channelA) {
-            // Create channel model instance using tenant connection
-            $channelModel = new \Webkul\Core\Models\Channel();
-            $channelModel->setConnection('tenant');
-            $channelModel = $channelModel->find($channelA->id);
-            if ($channelModel) {
-                core()->setCurrentChannel($channelModel);
-            }
-        }
         
         // Debug: Model connection name + database
         $connA = Product::query()->getConnection();
@@ -82,20 +112,17 @@ class TenantIsolationCatalogTest extends TestCase
         );
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
+        // Reset tenant database to ensure clean state
+        TenantTestContext::resetTenantDatabase($dbB);
+        
+        // Re-set global channel (channels stay in global DB)
+        $globalChannel = \Webkul\Core\Models\Channel::first();
+        if ($globalChannel) {
+            core()->setCurrentChannel($globalChannel);
+        }
+        
         // Assert connection points to correct database (tenant B)
         $this->assertSame($dbB->database_name, DB::connection('tenant')->getDatabaseName());
-        
-        // Set current channel from tenant DB (required for product creation)
-        $channelB = DB::connection('tenant')->table('channels')->where('code', 'default')->first();
-        if ($channelB) {
-            // Create channel model instance using tenant connection
-            $channelModel = new \Webkul\Core\Models\Channel();
-            $channelModel->setConnection('tenant');
-            $channelModel = $channelModel->find($channelB->id);
-            if ($channelModel) {
-                core()->setCurrentChannel($channelModel);
-            }
-        }
         
         // Debug: Model connection name + database
         $connB = Product::query()->getConnection();
@@ -166,6 +193,15 @@ class TenantIsolationCatalogTest extends TestCase
         );
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
+        // Reset tenant database to ensure clean state
+        TenantTestContext::resetTenantDatabase($dbB);
+        
+        // Re-set global channel (channels stay in global DB)
+        $globalChannel = \Webkul\Core\Models\Channel::first();
+        if ($globalChannel) {
+            core()->setCurrentChannel($globalChannel);
+        }
+        
         $connB = Product::query()->getConnection();
         $this->assertSame('tenant', $connB->getName(), 'Product connection name mismatch for tenant B');
         // Assert connection points to correct database (tenant B)
