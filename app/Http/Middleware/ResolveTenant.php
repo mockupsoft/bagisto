@@ -3,12 +3,13 @@
 namespace App\Http\Middleware;
 
 use App\Models\Tenant\TenantDatabase;
+use App\Services\Tenant\TenantConnectionConfigurator;
 use App\Services\Tenant\TenantResolver;
 use App\Support\Tenant\TenantContext;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ResolveTenant
 {
@@ -29,7 +30,7 @@ class ResolveTenant
         $resolved = $this->resolver->resolveByHost($host);
 
         if (! $resolved) {
-            abort(404);
+            \abort(404);
         }
 
         $tenant = $resolved['tenant'];
@@ -40,25 +41,18 @@ class ResolveTenant
             ->first();
 
         if (! $dbMeta) {
-            abort(503, 'Tenant DB not provisioned');
+            \abort(503, 'Tenant DB not provisioned');
         }
 
-        Config::set('database.connections.tenant', [
-            'driver' => 'mysql',
-            'host' => $dbMeta->database_host,
-            'port' => $dbMeta->database_port,
-            'database' => $dbMeta->database_name,
-            'username' => $dbMeta->database_username,
-            'password' => $dbMeta->database_password,
-            'prefix' => $dbMeta->database_prefix ?? '',
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'strict' => true,
-            'engine' => null,
-        ]);
+        try {
+            \app(TenantConnectionConfigurator::class)->configure($dbMeta);
 
-        DB::purge('tenant');
-        DB::reconnect('tenant');
+            DB::purge('tenant');
+            DB::reconnect('tenant');
+        } catch (Throwable $e) {
+            \report($e);
+            \abort(503, 'Tenant DB connection failed');
+        }
 
         $this->context->setTenant($tenant);
         $this->context->setDomain($domain);
