@@ -283,6 +283,9 @@ php artisan db:seed --class=DevBagistoSeeder
 | Patch | Commit | Açıklama |
 |-------|--------|----------|
 | Patch 0 | PSR-4 + Concord kaydı | Root composer.json ve config/concord.php |
+| Patch 1 | SaaS tenant/domain/db modeli | tenants/domains/tenant_databases global DB, primary domain domains.is_primary; resolver/ACL/DB switch yok |
+
+> Patch-1 onaylandı: Global DB’de tenants/domains/tenant_databases modeli kuruldu. Primary domain yalnızca domains.is_primary üzerinden yönetilecek. Resolver/DB switch/ACL gibi kırmızı alanlara dokunulmadı.
 | Patch 1 | Module skeleton | Providers, Model, Migration |
 | Patch 2A | Admin CRUD | Routes, Controller, DataGrid, ACL, Menu, Views |
 | Patch 2B | Contract + Proxy | Concord model binding |
