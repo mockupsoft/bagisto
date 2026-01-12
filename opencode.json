@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "AGENTS.md",
+    ".openagents/skills/orchestrator.md",
+    ".openagents/skills/repo-scout.md",
+    ".openagents/skills/architect.md",
+    ".openagents/skills/implementer.md",
+    ".openagents/skills/tester.md",
+    ".openagents/skills/reviewer.md",
+    ".openagents/skills/doc-writer.md",
+    ".openagents/policies/patch-policy.md",
+    ".openagents/policies/security-policy.md",
+    ".openagents/policies/php-laravel-style.md",
+    ".openagents/playbooks/bagisto-admin-crud.md",
+    ".openagents/playbooks/bagisto-module-skeleton.md",
+    ".openagents/playbooks/bagisto-migration-and-seed.md",
+    ".openagents/playbooks/bagisto-bugfix-protocol.md",
+    ".openagents/checklists/laravel-bagisto-change-checklist.md",
+    ".openagents/templates/plan-template.md",
+    ".openagents/templates/patch-summary-template.md",
+    ".openagents/templates/review-template.md",
+    ".openagents/templates/pr-description-template.md"
+  ]
+}
