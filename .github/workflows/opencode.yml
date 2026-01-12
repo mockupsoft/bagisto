@@ -23,32 +23,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract prompt
-        id: prompt
-        shell: bash
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-        run: |
-          BODY="${{ github.event.comment.body }}"
-          BODY="${BODY#*/opencode}"
-          BODY="${BODY#*/oc}"
-          BODY="$(echo "$BODY" | sed 's/^[[:space:]]*//')"
+       - name: Extract prompt
+         id: prompt
+         shell: bash
+         run: |
+           BODY="${{ github.event.comment.body }}"
+           BODY="${BODY#*/opencode}"
+           BODY="${BODY#*/oc}"
+           BODY="$(echo "$BODY" | sed 's/^[[:space:]]*//')"
 
-          if [ "$EVENT_NAME" == "issue_comment" ]; then
-            PROMPT="SADECE PLAN üret. Kod/patch üretme.
-
-İstek:
-${BODY}"
-          else
-            PROMPT="PATCH üret (unified diff) + TEST PLAN yaz.
-
-İstek:
-${BODY}"
-          fi
-
-          echo "text<<EOF" >> $GITHUB_OUTPUT
-          echo "$PROMPT" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+           echo "text<<EOF" >> $GITHUB_OUTPUT
+           echo "$BODY" >> $GITHUB_OUTPUT
+           echo "EOF" >> $GITHUB_OUTPUT
 
        - name: Check API Key
          run: |
@@ -73,4 +59,3 @@ ${BODY}"
            use_github_token: true
          env:
            GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
