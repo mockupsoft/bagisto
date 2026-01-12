@@ -7,6 +7,7 @@ use App\Models\Tenant\TenantDatabase;
 use App\Services\Tenant\TenantDatabaseProvisioner;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 use Tests\Support\TenantTestContext;
 use Tests\TestCase;
 use Webkul\Product\Repositories\ProductRepository;
@@ -24,7 +25,7 @@ class TenantIsolationCatalogTest extends TestCase
         TenantTestContext::clearTenantContext();
 
         config()->set('saas.tenant_db.provisioning_enabled', true);
-        config()->set('saas.tenant_db.seed_enabled', false);
+        config()->set('saas.tenant_db.seed_enabled', true);
     }
 
     public function test_same_sku_is_isolated_via_repository(): void
@@ -35,10 +36,14 @@ class TenantIsolationCatalogTest extends TestCase
         $repo = app(ProductRepository::class);
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
-        $repo->create(['type' => 'simple', 'sku' => 'ABC-1']);
+        $familyA = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
+        $this->assertNotNull($familyA, 'Attribute family seed missing for tenant A');
+        $repo->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyA]);
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
-        $repo->create(['type' => 'simple', 'sku' => 'ABC-1']);
+        $familyB = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
+        $this->assertNotNull($familyB, 'Attribute family seed missing for tenant B');
+        $repo->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyB]);
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
         $this->assertEquals(1, $repo->findWhere(['sku' => 'ABC-1'])->count());
@@ -53,10 +58,21 @@ class TenantIsolationCatalogTest extends TestCase
         [$tenantB, $dbB] = $this->provisionTenantWithDb('tenant_b2');
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
-        Product::query()->create(['type' => 'simple', 'sku' => 'ABC-1']);
+        // Assert connection is tenant before any queries
+        $this->assertSame('tenant', Product::query()->getConnection()->getName());
+        // Assert connection points to correct database
+        $this->assertSame($dbA->database_name, Product::query()->getConnection()->getDatabaseName());
+        $familyA = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
+        $this->assertNotNull($familyA, 'Attribute family seed missing for tenant A');
+        Product::query()->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyA]);
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
-        Product::query()->create(['type' => 'simple', 'sku' => 'ABC-1']);
+        $this->assertSame('tenant', Product::query()->getConnection()->getName());
+        // Assert connection points to correct database
+        $this->assertSame($dbB->database_name, Product::query()->getConnection()->getDatabaseName());
+        $familyB = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
+        $this->assertNotNull($familyB, 'Attribute family seed missing for tenant B');
+        Product::query()->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyB]);
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
         $countA = DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count();
@@ -103,7 +119,7 @@ class TenantIsolationCatalogTest extends TestCase
 
         $result = $provisioner->provision($tenantDb, [
             'force_enable' => true,
-            'seed' => false,
+            'seed' => true,
         ]);
 
         if (! $result['ok']) {

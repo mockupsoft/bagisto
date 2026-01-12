@@ -14,6 +14,7 @@ class TenantTestContext
     {
         $context = app(TenantContext::class);
         $context->setTenant($tenant);
+        app()->instance(TenantContext::class, $context);
 
         app(TenantConnectionConfigurator::class)->configure($tenantDb);
 
