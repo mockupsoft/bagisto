@@ -2,6 +2,7 @@
 
 namespace Webkul\Core\Eloquent;
 
+use App\Services\Tenant\TenantConnectionSelector;
 use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Traits\CacheableRepository;
@@ -219,5 +220,19 @@ abstract class Repository extends BaseRepository implements CacheableInterface
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * Create model instance and apply tenant connection if needed.
+     */
+    public function makeModel()
+    {
+        $model = parent::makeModel();
+
+        if (app()->bound(TenantConnectionSelector::class)) {
+            app(TenantConnectionSelector::class)->apply($model);
+        }
+
+        return $this->model = $model;
     }
 }
