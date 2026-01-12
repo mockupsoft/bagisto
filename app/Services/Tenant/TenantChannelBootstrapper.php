@@ -52,11 +52,8 @@ class TenantChannelBootstrapper
             return;
         }
 
-        if (DB::table('channels')->where('hostname', $host)->exists()) {
-            return;
-        }
-
         $template = DB::table('channels')->where('id', 1)->first();
+
 
         if (! $template) {
             $template = DB::table('channels')->orderBy('id')->first();
@@ -70,6 +67,11 @@ class TenantChannelBootstrapper
         $code = 'tenant_' . $tenantId . '_' . substr(md5($host), 0, 8);
 
         DB::transaction(function () use ($template, $code, $host) {
+            // Re-check inside transaction to reduce race duplicates.
+            if (DB::table('channels')->where('hostname', $host)->exists()) {
+                return;
+            }
+
             $payload = $this->buildChannelPayload((array) $template, $code, $host);
 
             $newChannelId = DB::table('channels')->insertGetId($payload);
@@ -92,7 +94,7 @@ class TenantChannelBootstrapper
                     $data['created_at'] = $data['created_at'] ?? now();
                     $data['updated_at'] = $data['updated_at'] ?? now();
 
-                    DB::table('channel_translations')->insert($data);
+                    DB::table('channel_translations')->insertOrIgnore($data);
                 }
             }
         });
@@ -134,16 +136,28 @@ class TenantChannelBootstrapper
             return;
         }
 
+        $cols = Schema::getColumnListing($table);
+
         $values = DB::table($table)
             ->where('channel_id', $fromChannelId)
             ->pluck($valueColumn)
             ->all();
 
         foreach ($values as $value) {
-            DB::table($table)->insert([
+            $row = [
                 'channel_id' => $toChannelId,
                 $valueColumn => $value,
-            ]);
+            ];
+
+            if (in_array('created_at', $cols, true)) {
+                $row['created_at'] = now();
+            }
+
+            if (in_array('updated_at', $cols, true)) {
+                $row['updated_at'] = now();
+            }
+
+            DB::table($table)->insertOrIgnore($row);
         }
     }
 
