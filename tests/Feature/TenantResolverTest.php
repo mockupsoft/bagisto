@@ -38,7 +38,7 @@ class TenantResolverTest extends TestCase
             'status' => 'provisioning',
         ]);
 
-        $this->get('/__tenant_ping', ['Host' => 'acme.example.test'])
+        $this->get('http://acme.example.test/__tenant_ping')
             ->assertOk();
 
         $this->assertEquals('tenant_acme', config('database.connections.tenant.database'));
