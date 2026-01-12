@@ -38,16 +38,56 @@ class TenantIsolationCatalogTest extends TestCase
         TenantTestContext::setTenantContext($tenantA, $dbA);
         // Assert connection points to correct database (tenant A)
         $this->assertSame($dbA->database_name, DB::connection('tenant')->getDatabaseName());
+        
+        // Debug: Model connection name + database
+        $connA = Product::query()->getConnection();
+        $this->assertSame('tenant', $connA->getName(), 'Product connection name mismatch for tenant A');
+        $this->assertSame($dbA->database_name, $connA->getDatabaseName(), 'Product DB mismatch for tenant A');
+        
+        // Debug: Insert'ten önce global DB'de SKU var mı?
+        $this->assertSame(
+            0,
+            DB::connection(config('database.default'))->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU already exists in GLOBAL DB before tenant A insert'
+        );
+        
         $familyA = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyA, 'Attribute family seed missing for tenant A');
         $repo->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyA]);
+        
+        // Debug: Insert'ten sonra sadece tenant DB'de var mı?
+        $this->assertSame(
+            1,
+            DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU not found in tenant A DB after insert'
+        );
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
         // Assert connection points to correct database (tenant B)
         $this->assertSame($dbB->database_name, DB::connection('tenant')->getDatabaseName());
+        
+        // Debug: Model connection name + database
+        $connB = Product::query()->getConnection();
+        $this->assertSame('tenant', $connB->getName(), 'Product connection name mismatch for tenant B');
+        $this->assertSame($dbB->database_name, $connB->getDatabaseName(), 'Product DB mismatch for tenant B');
+        
+        // Debug: Insert'ten önce global DB'de SKU var mı?
+        $this->assertSame(
+            0,
+            DB::connection(config('database.default'))->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU already exists in GLOBAL DB before tenant B insert'
+        );
+        
         $familyB = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyB, 'Attribute family seed missing for tenant B');
         $repo->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyB]);
+        
+        // Debug: Insert'ten sonra sadece tenant DB'de var mı?
+        $this->assertSame(
+            1,
+            DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU not found in tenant B DB after insert'
+        );
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
         $this->assertEquals(1, $repo->findWhere(['sku' => 'ABC-1'])->count());
@@ -63,22 +103,54 @@ class TenantIsolationCatalogTest extends TestCase
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
         // Assert connection is tenant before any queries
-        $this->assertSame('tenant', Product::query()->getConnection()->getName());
+        $connA = Product::query()->getConnection();
+        $this->assertSame('tenant', $connA->getName(), 'Product connection name mismatch for tenant A');
         // Assert connection points to correct database (tenant A)
         $this->assertSame($dbA->database_name, DB::connection('tenant')->getDatabaseName());
-        $this->assertSame($dbA->database_name, Product::query()->getConnection()->getDatabaseName());
+        $this->assertSame($dbA->database_name, $connA->getDatabaseName(), 'Product DB mismatch for tenant A');
+        
+        // Debug: Insert'ten önce global DB'de SKU var mı?
+        $this->assertSame(
+            0,
+            DB::connection(config('database.default'))->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU already exists in GLOBAL DB before tenant A insert'
+        );
+        
         $familyA = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyA, 'Attribute family seed missing for tenant A');
         Product::query()->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyA]);
+        
+        // Debug: Insert'ten sonra sadece tenant DB'de var mı?
+        $this->assertSame(
+            1,
+            DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU not found in tenant A DB after insert'
+        );
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
-        $this->assertSame('tenant', Product::query()->getConnection()->getName());
+        $connB = Product::query()->getConnection();
+        $this->assertSame('tenant', $connB->getName(), 'Product connection name mismatch for tenant B');
         // Assert connection points to correct database (tenant B)
         $this->assertSame($dbB->database_name, DB::connection('tenant')->getDatabaseName());
-        $this->assertSame($dbB->database_name, Product::query()->getConnection()->getDatabaseName());
+        $this->assertSame($dbB->database_name, $connB->getDatabaseName(), 'Product DB mismatch for tenant B');
+        
+        // Debug: Insert'ten önce global DB'de SKU var mı?
+        $this->assertSame(
+            0,
+            DB::connection(config('database.default'))->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU already exists in GLOBAL DB before tenant B insert'
+        );
+        
         $familyB = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyB, 'Attribute family seed missing for tenant B');
         Product::query()->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyB]);
+        
+        // Debug: Insert'ten sonra sadece tenant DB'de var mı?
+        $this->assertSame(
+            1,
+            DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count(),
+            'SKU not found in tenant B DB after insert'
+        );
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
         $countA = DB::connection('tenant')->table('products')->where('sku', 'ABC-1')->count();
