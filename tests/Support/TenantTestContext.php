@@ -16,8 +16,10 @@ class TenantTestContext
         $context->setTenant($tenant);
         app()->instance(TenantContext::class, $context);
 
+        // Configure tenant connection
         app(TenantConnectionConfigurator::class)->configure($tenantDb);
 
+        // IMPORTANT: Reset cached connection to ensure database parameter is updated
         DB::purge('tenant');
         DB::reconnect('tenant');
     }
@@ -28,6 +30,7 @@ class TenantTestContext
             app(TenantContext::class)->clear();
         }
 
+        // Purge tenant connection to prevent test pollution
         DB::purge('tenant');
     }
 }

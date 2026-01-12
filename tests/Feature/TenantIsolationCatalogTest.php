@@ -36,11 +36,15 @@ class TenantIsolationCatalogTest extends TestCase
         $repo = app(ProductRepository::class);
 
         TenantTestContext::setTenantContext($tenantA, $dbA);
+        // Assert connection points to correct database (tenant A)
+        $this->assertSame($dbA->database_name, DB::connection('tenant')->getDatabaseName());
         $familyA = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyA, 'Attribute family seed missing for tenant A');
         $repo->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyA]);
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
+        // Assert connection points to correct database (tenant B)
+        $this->assertSame($dbB->database_name, DB::connection('tenant')->getDatabaseName());
         $familyB = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyB, 'Attribute family seed missing for tenant B');
         $repo->create(['type' => 'simple', 'sku' => 'ABC-1', 'attribute_family_id' => $familyB]);
@@ -60,7 +64,8 @@ class TenantIsolationCatalogTest extends TestCase
         TenantTestContext::setTenantContext($tenantA, $dbA);
         // Assert connection is tenant before any queries
         $this->assertSame('tenant', Product::query()->getConnection()->getName());
-        // Assert connection points to correct database
+        // Assert connection points to correct database (tenant A)
+        $this->assertSame($dbA->database_name, DB::connection('tenant')->getDatabaseName());
         $this->assertSame($dbA->database_name, Product::query()->getConnection()->getDatabaseName());
         $familyA = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyA, 'Attribute family seed missing for tenant A');
@@ -68,7 +73,8 @@ class TenantIsolationCatalogTest extends TestCase
 
         TenantTestContext::setTenantContext($tenantB, $dbB);
         $this->assertSame('tenant', Product::query()->getConnection()->getName());
-        // Assert connection points to correct database
+        // Assert connection points to correct database (tenant B)
+        $this->assertSame($dbB->database_name, DB::connection('tenant')->getDatabaseName());
         $this->assertSame($dbB->database_name, Product::query()->getConnection()->getDatabaseName());
         $familyB = DB::connection('tenant')->table('attribute_families')->where('code', 'default')->value('id');
         $this->assertNotNull($familyB, 'Attribute family seed missing for tenant B');
