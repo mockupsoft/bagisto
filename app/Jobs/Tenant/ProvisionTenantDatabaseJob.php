@@ -35,27 +35,18 @@ class ProvisionTenantDatabaseJob implements ShouldQueue
             return;
         }
 
-        $db->status = 'provisioning';
-        $db->last_error = null;
-        $db->save();
-
         try {
             $provisioner = app(TenantDatabaseProvisioner::class);
             $result = $provisioner->provision($db);
 
-            if ($result['ok']) {
-                $db->status = 'ready';
-                $db->last_error = null;
-            } else {
-                $db->status = 'failed';
-                $db->last_error = $result['reason'];
+            if (! $result['ok']) {
+                Log::error('ProvisionTenantDatabaseJob failed', [
+                    'tenant_id' => $this->tenantId,
+                    'reason' => $result['reason'],
+                ]);
             }
         } catch (Throwable $e) {
-            $db->status = 'failed';
-            $db->last_error = mb_strimwidth($e->getMessage(), 0, 1000);
             report($e);
         }
-
-        $db->save();
     }
 }
