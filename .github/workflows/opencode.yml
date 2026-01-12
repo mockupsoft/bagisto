@@ -1,11 +1,6 @@
 name: OpenCode Agent
 
-on:
-  issue_comment:
-    types: [created]
-  pull_request_review_comment:
-    types: [created]
-
+on: []  # disabled
 permissions:
   contents: write
   pull-requests: write
