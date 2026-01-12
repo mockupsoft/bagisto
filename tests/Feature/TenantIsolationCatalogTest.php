@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Tenant\Tenant;
 use App\Models\Tenant\TenantDatabase;
 use App\Services\Tenant\TenantDatabaseProvisioner;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Tests\Support\TenantTestContext;
@@ -15,7 +14,9 @@ use Webkul\Product\Models\Product;
 
 class TenantIsolationCatalogTest extends TestCase
 {
-    use RefreshDatabase;
+    // Note: RefreshDatabase and DatabaseTransactions traits are NOT used here
+    // because resetTenantDatabase() runs DDL migrations which cannot run inside transactions.
+    // State is reset manually via TenantTestContext::resetTenantDatabase() for tenant DBs.
 
     protected function setUp(): void
     {
