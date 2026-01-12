@@ -18,6 +18,8 @@ jobs:
       contains(github.event.comment.body, '/opencode') ||
       contains(github.event.comment.body, '/oc')
     runs-on: ubuntu-latest
+    environment:
+      name: GEMINI
 
     steps:
       - name: Checkout
@@ -39,12 +41,12 @@ jobs:
       - name: Check API Key
         run: |
           if [ -z "$GEMINI_API_KEY" ]; then
-            echo "❌ GEMINI_API_KEY secret is not set in repository secrets."
-            echo "📝 Please add GEMINI_API_KEY to GitHub repository secrets."
+            echo "❌ GEMINI_API_KEY secret is not set or not exposed to this job."
+            echo "📝 Add it as a repository secret or make sure the job uses the correct environment (GEMINI)."
             exit 1
           fi
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINI }}
 
       - name: Run OpenCode
         uses: anomalyco/opencode/github@latest
@@ -55,7 +57,7 @@ jobs:
               && format('SADECE PLAN üret. Kod/patch üretme.\n\nİstek:\n{0}', steps.prompt.outputs.text)
               || format('PATCH üret (unified diff) + TEST PLAN yaz.\n\nİstek:\n{0}', steps.prompt.outputs.text)
             }}
-          model: openai/gpt-4o-mini
+          model: google/gemini-1.5-pro
           use_github_token: true
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINI }}
