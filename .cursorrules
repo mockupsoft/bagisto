@@ -1,0 +1,140 @@
+# MockupSoft/Bagisto Cursor Kuralları
+
+Bu repo OpenAgents tabanlı workflow kullanıyor. Her görevde aşağıdaki kurallara uy.
+
+---
+
+Orchestrator olarak davran.
+
+
+## 🎯 WORKFLOW ZORUNLULUĞU
+
+Bu repoda çalışırken:
+1. **AGENTS.md** dosyasını oku ve takip et
+2. **.openagents/** altındaki skill, policy ve playbook'ları referans al
+3. **Plan → Onay → Patch → Test → Review** akışına uy
+
+---
+
+## 🔒 SKILL SEPARATION (ROL AYRIMI)
+
+Her skill sadece kendi sorumluluğunu yerine getirir:
+
+| Skill | Yapabilir | YAPAMAZ |
+|-------|-----------|---------|
+| **Orchestrator** | Routing, onay kapıları, planlama | Dosya düzenleme, kod yazma |
+| **Repo-Scout** | Dosya/pattern bulma, keşif | Değişiklik önerme, refactor |
+| **Architect** | Tasarım planı, risk analizi | Kod yazma, patch üretme |
+| **Implementer** | Minimal diff/patch üretimi | Plan yapma, mimari karar |
+| **Tester** | Test çalıştırma, sonuç raporlama | Kod yazma, fix implementasyonu |
+| **Reviewer** | Diff review, go/no-go kararı | Kod düzeltme, değişiklik yapma |
+
+**Kural:** Eğer bir skill sınırını aşıyorsan, DUR ve kullanıcıya sor.
+
+---
+
+## 🔴 KIRMIZI ALANLAR (Onay Gerektiren Değişiklikler)
+
+Aşağıdaki alanlara dokunan değişiklikler **Orchestrator onayı** gerektirir:
+
+### Kritik Alanlar
+- `checkout/` — Ödeme akışı
+- `payment/` — Ödeme işlemleri
+- `auth/` — Kimlik doğrulama
+- `acl/` — Yetki/izin sistemi
+- `migrations/` — Veritabanı şema değişiklikleri
+- `config/concord.php` — Modül kayıtları
+- `composer.json` (root) — Bağımlılık değişiklikleri
+
+### Core Webkul Paketleri
+- `packages/Webkul/Admin/`
+- `packages/Webkul/Core/`
+- `packages/Webkul/Customer/`
+- `packages/Webkul/Sales/`
+- `packages/Webkul/Checkout/`
+
+### Onay Kuralları
+1. Kırmızı alana girmeden önce: "Bu değişiklik kırmızı alana giriyor. Onay bekliyor." yaz
+2. Kullanıcı onayı olmadan patch üretme
+3. Her kırmızı alan değişikliğinde risk özeti sun
+
+---
+
+## 📦 PATCH KURALLARI
+
+### Boyut Limitleri
+- Her patch **maksimum 5-10 dosya** içermeli
+- Büyük değişiklikler küçük patch'lere bölünmeli
+- Her patch sonrası test zorunlu
+
+### Commit Formatı
+```
+<type>(<scope>): <description>
+
+Types: feat, fix, chore, docs, refactor, test
+Scope: patch-0, patch-1, patch-2a, patch-2b, vb.
+```
+
+### Örnekler
+```
+feat(patch-1): add MockupSoft/Companies module skeleton
+chore(patch-0): register MockupSoft/Companies namespace
+fix(patch-2a): correct ACL permission keys
+```
+
+---
+
+## 🚫 YAPILMAMASI GEREKENLER
+
+1. **Webkul core paketlerini değiştirme** (fork kuralı)
+2. **Tek commit'te çok fazla değişiklik** yapma
+3. **Test etmeden** patch tamamlandı deme
+4. **Onay almadan** kırmızı alanlara dokunma
+5. **Skill sınırlarını** aşma
+
+---
+
+## ✅ HER GÖREV BAŞINDA KONTROL LİSTESİ
+
+Yeni bir görev alındığında şunları kontrol et:
+
+- [ ] Bu değişiklik hangi dosyaları etkiliyor?
+- [ ] Kırmızı alana giriyor mu?
+- [ ] Hangi skill(ler) gerekli?
+- [ ] Patch boyutu limitlere uygun mu?
+- [ ] Test planı var mı?
+
+---
+
+## 📁 ÖNEMLİ DOSYA KONUMLARI
+
+| Dosya/Klasör | Açıklama |
+|--------------|----------|
+| `AGENTS.md` | Workflow ana dokümanı |
+| `.openagents/skills/` | Skill tanımları |
+| `.openagents/policies/` | Politikalar |
+| `.openagents/playbooks/` | Adım adım süreçler |
+| `.openagents/checklists/` | Kontrol listeleri |
+| `docs/dev.md` | Geliştirici kurulum rehberi |
+| `UPSTREAM.md` | Upstream sync stratejisi |
+
+---
+
+## 🔄 HATA DURUMUNDA
+
+Eğer:
+- Yanlış skill moduna girdiysen → "Skill separation kuralına dönüyorum."
+- Kırmızı alana izinsiz girdiysen → "DUR. Onay gerekiyor."
+- Patch çok büyükse → "Patch'i bölüyorum."
+
+---
+
+## 🌐 DİL KURALI
+
+- Tüm dokümantasyon ve çıktılar **Türkçe** olmalı
+- Kod içi yorumlar İngilizce olabilir
+- Commit mesajları İngilizce (standart format)
+
+---
+
+*Bu kurallar `.openagents/` workflow sisteminin Cursor entegrasyonudur.*
