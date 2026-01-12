@@ -38,10 +38,76 @@ class TenantResolverTest extends TestCase
             'status' => 'provisioning',
         ]);
 
+        // Guard: Ensure route is registered
+        $this->assertTrue(
+            collect(app('router')->getRoutes())->contains(fn ($r) => $r->uri() === '__tenant_ping'),
+            'Route __tenant_ping must be registered in test environment'
+        );
+
         $this->get('http://acme.example.test/__tenant_ping')
             ->assertOk();
 
         $this->assertEquals('tenant_acme', config('database.connections.tenant.database'));
+    }
+
+    public function test_verified_custom_domain_resolves(): void
+    {
+        $tenant = Tenant::create([
+            'name' => 'Gamma Inc',
+            'slug' => 'gamma',
+            'status' => 'active',
+        ]);
+
+        Domain::create([
+            'tenant_id' => $tenant->id,
+            'domain' => 'custom.example.test',
+            'type' => 'custom',
+            'is_primary' => false,
+            'verified_at' => now(),
+        ]);
+
+        TenantDatabase::create([
+            'tenant_id' => $tenant->id,
+            'database_name' => 'tenant_gamma',
+            'database_host' => '127.0.0.1',
+            'database_port' => 3306,
+            'database_username' => 'root',
+            'database_password' => 'secret',
+            'status' => 'provisioning',
+        ]);
+
+        $this->get('http://custom.example.test/__tenant_ping')
+            ->assertOk();
+    }
+
+    public function test_unverified_custom_domain_returns_404(): void
+    {
+        $tenant = Tenant::create([
+            'name' => 'Delta Inc',
+            'slug' => 'delta',
+            'status' => 'active',
+        ]);
+
+        Domain::create([
+            'tenant_id' => $tenant->id,
+            'domain' => 'unverified.example.test',
+            'type' => 'custom',
+            'is_primary' => false,
+            'verified_at' => null,
+        ]);
+
+        TenantDatabase::create([
+            'tenant_id' => $tenant->id,
+            'database_name' => 'tenant_delta',
+            'database_host' => '127.0.0.1',
+            'database_port' => 3306,
+            'database_username' => 'root',
+            'database_password' => 'secret',
+            'status' => 'provisioning',
+        ]);
+
+        $this->get('http://unverified.example.test/__tenant_ping')
+            ->assertNotFound();
     }
 
     public function test_suspended_tenant_returns_404(): void
@@ -59,7 +125,7 @@ class TenantResolverTest extends TestCase
             'is_primary' => true,
         ]);
 
-        $this->get('/__tenant_ping', ['Host' => 'beta.example.test'])
+        $this->get('http://beta.example.test/__tenant_ping')
             ->assertNotFound();
     }
 }

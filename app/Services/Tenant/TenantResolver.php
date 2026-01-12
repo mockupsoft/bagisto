@@ -21,9 +21,14 @@ class TenantResolver
             return null;
         }
 
-        $domain = Domain::where('domain', $normalized)->first();
+        $domain = Domain::where('domain', $normalized)
+            ->first();
 
         if (! $domain) {
+            return null;
+        }
+
+        if ($domain->type === 'custom' && is_null($domain->verified_at)) {
             return null;
         }
 
