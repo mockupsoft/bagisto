@@ -50,12 +50,27 @@ ${BODY}"
           echo "$PROMPT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Run OpenCode
-        uses: anomalyco/opencode/github@latest
-        with:
-          prompt: ${{ steps.prompt.outputs.text }}
-          model: google/gemini-pro
-          use_github_token: true
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+       - name: Check API Key
+         run: |
+           if [ -z "$GEMINI_API_KEY" ]; then
+             echo "❌ GEMINI_API_KEY secret is not set in repository secrets."
+             echo "📝 Please add GEMINI_API_KEY to GitHub repository secrets."
+             exit 1
+           fi
+         env:
+           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+       - name: Run OpenCode
+         uses: anomalyco/opencode/github@latest
+         with:
+           prompt: |
+             ${{
+               github.event_name == 'issue_comment'
+               && format('SADECE PLAN üret. Kod/patch üretme.\n\nİstek:\n{0}', steps.prompt.outputs.text)
+               || format('PATCH üret (unified diff) + TEST PLAN yaz.\n\nİstek:\n{0}', steps.prompt.outputs.text)
+             }}
+           model: google/gemini-1.5-pro
+           use_github_token: true
+         env:
+           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
