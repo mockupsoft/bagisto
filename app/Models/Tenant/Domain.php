@@ -15,6 +15,9 @@ class Domain extends Model
         'type',
         'is_primary',
         'verified_at',
+        'verification_token',
+        'verification_method',
+        'verification_started_at',
         'created_by_id',
         'note',
     ];
@@ -22,6 +25,7 @@ class Domain extends Model
     protected $casts = [
         'is_primary' => 'boolean',
         'verified_at' => 'datetime',
+        'verification_started_at' => 'datetime',
     ];
 
     public function tenant()

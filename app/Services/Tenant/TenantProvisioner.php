@@ -75,6 +75,8 @@ class TenantProvisioner
             'type' => 'custom',
             'is_primary' => false,
             'verified_at' => null,
+            'verification_method' => 'dns_txt',
+            'verification_token' => Str::random(40),
             'created_by_id' => $createdById,
             'note' => $note,
         ]);
