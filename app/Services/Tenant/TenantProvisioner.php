@@ -9,7 +9,6 @@ use App\Models\Tenant\TenantDatabase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class TenantProvisioner
@@ -17,10 +16,12 @@ class TenantProvisioner
     public function createTenant(array $data): Tenant
     {
         return DB::transaction(function () use ($data) {
-            $slug = Str::slug(Str::lower(Arr::get($data, 'slug', Arr::get($data, 'name', ''))));
+            $name = Arr::get($data, 'name');
+            $providedSlug = Arr::get($data, 'slug');
+            $slug = $providedSlug ? Str::slug(Str::lower($providedSlug)) : Str::slug(Str::lower($name));
 
             $tenant = Tenant::create([
-                'name' => Arr::get($data, 'name'),
+                'name' => $name,
                 'slug' => $slug,
                 'status' => Arr::get($data, 'status', 'active'),
                 'plan' => Arr::get($data, 'plan'),
@@ -35,18 +36,21 @@ class TenantProvisioner
                 'type' => 'subdomain',
                 'is_primary' => true,
                 'verified_at' => null,
-                'created_by_id' => null,
+                'created_by_id' => Arr::get($data, 'created_by_id'),
                 'note' => null,
             ]);
 
+            $dbConfig = Config::get('saas.tenant_db', []);
+            $dbName = ($dbConfig['name_prefix'] ?? 'tenant_') . $tenant->id;
+
             TenantDatabase::create([
                 'tenant_id' => $tenant->id,
-                'database_name' => Arr::get($data, 'database_name', 'tenant_' . $slug),
-                'database_host' => Config::get('saas.database.host', '127.0.0.1'),
-                'database_port' => Config::get('saas.database.port', 3306),
-                'database_username' => Config::get('saas.database.username', 'root'),
-                'database_password' => Config::get('saas.database.password', ''),
-                'database_prefix' => Config::get('saas.database.prefix', ''),
+                'database_name' => $dbName,
+                'database_host' => $dbConfig['host'] ?? '127.0.0.1',
+                'database_port' => $dbConfig['port'] ?? 3306,
+                'database_username' => $dbConfig['username'] ?? 'root',
+                'database_password' => $dbConfig['password'] ?? '',
+                'database_prefix' => $dbConfig['prefix'] ?? '',
                 'status' => 'provisioning',
                 'last_error' => null,
             ]);
