@@ -3,6 +3,16 @@
 return [
     'base_domain' => env('SAAS_BASE_DOMAIN', 'example.test'),
 
+    'reserved_subdomains' => [
+        'admin',
+        'api',
+        'www',
+        'root',
+        'support',
+        'mail',
+        'billing',
+    ],
+
     'tenant_db' => [
         'name_prefix' => env('SAAS_TENANT_DB_NAME_PREFIX', 'tenant_'),
         'host' => env('SAAS_TENANT_DB_HOST', '127.0.0.1'),
