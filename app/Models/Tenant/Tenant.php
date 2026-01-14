@@ -14,9 +14,21 @@ class Tenant extends Model
 
     protected $fillable = [
         'name',
+        'store_name',
         'slug',
+        'subdomain',
         'status',
         'plan',
+        'provisioning_started_at',
+        'provisioning_finished_at',
+        'onboarding_completed_at',
+        'last_error',
+    ];
+
+    protected $casts = [
+        'provisioning_started_at' => 'datetime',
+        'provisioning_finished_at' => 'datetime',
+        'onboarding_completed_at' => 'datetime',
     ];
 
     public function domains()

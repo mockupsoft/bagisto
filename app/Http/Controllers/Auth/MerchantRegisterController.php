@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MerchantRegisterStep1Request;
 use App\Http\Requests\MerchantRegisterStep2Request;
 use App\Http\Requests\MerchantRegisterStep3Request;
+use App\Services\TenantProvisioningService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -96,6 +97,8 @@ class MerchantRegisterController extends Controller
 
         session()->put(self::SESSION_KEY . '.completed_at', now()->toIso8601String());
 
-        return redirect()->route('merchant.provisioning.stub');
+        $tenant = app(TenantProvisioningService::class)->startFromOnboardingSession();
+
+        return redirect()->route('provisioning.progress', ['tenant' => $tenant->id]);
     }
 }

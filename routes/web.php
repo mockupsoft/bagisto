@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\MerchantRegisterController;
+use App\Http\Controllers\ProvisioningController;
 use Illuminate\Support\Facades\Route;
 
 if (app()->environment(['local', 'testing'])) {
@@ -18,6 +19,8 @@ Route::post('/register/step-2', [MerchantRegisterController::class, 'postStep2']
 Route::get('/register/organization', [MerchantRegisterController::class, 'showStep3'])->name('merchant.register.step3');
 Route::post('/register/complete', [MerchantRegisterController::class, 'complete'])->name('merchant.register.complete');
 
-Route::get('/provisioning', function () {
-    return view('provisioning.stub');
-})->name('merchant.provisioning.stub');
+Route::get('/provisioning/{tenant}/progress', [ProvisioningController::class, 'progress'])
+    ->name('provisioning.progress');
+
+Route::get('/provisioning/{tenant}/status', [ProvisioningController::class, 'status'])
+    ->name('provisioning.status');

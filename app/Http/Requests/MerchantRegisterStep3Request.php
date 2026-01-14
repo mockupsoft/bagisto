@@ -38,6 +38,7 @@ class MerchantRegisterStep3Request extends FormRequest
                 'max:30',
                 'regex:/^(?!-)[a-z0-9-]+(?<!-)$/',
                 Rule::notIn($reserved),
+                Rule::unique('tenants', 'subdomain'),
             ],
             'terms_accepted' => ['required', 'accepted'],
         ];
