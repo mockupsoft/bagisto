@@ -20,6 +20,13 @@ php artisan db:seed --class=DevBagistoSeeder
 | **Companies Module** | http://localhost/admin/mockupsoft/companies |
 | **Login** | `admin@example.com` / `admin123` |
 
+### Tenant DDL Testleri (SaaS)
+
+Bazı testler (ör. `TenantCustomerHttpSmokeTest`, `TenantCustomerIsolationTest`) tenant DB oluşturup migration çalıştırdığı için varsayılan olarak **skip** edilir.
+
+- Açmak için: `.env.testing` (veya test ortamı env) içine `RUN_TENANT_DDL_TESTS=true` ekleyin.
+- MySQL kullanıcısının `CREATE DATABASE` / `DROP DATABASE` yetkisi olmalı.
+
 > 📖 Ayrıntılar için [`docs/dev.md`](docs/dev.md)
 
 ---

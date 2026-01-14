@@ -5,6 +5,7 @@ return [
         'Webkul\\Product\\',
         'Webkul\\Category\\',
         'Webkul\\Attribute\\',
+        'Webkul\\Customer\\',
     ],
 
     'global_namespaces' => [
