@@ -5,6 +5,7 @@ namespace Webkul\Checkout\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Checkout\Contracts\Cart as CartContract;
 use Webkul\Checkout\Database\Factories\CartFactory;
 use Webkul\Core\Models\ChannelProxy;
@@ -12,7 +13,7 @@ use Webkul\Customer\Models\CustomerProxy;
 
 class Cart extends Model implements CartContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * The table associated with the model.

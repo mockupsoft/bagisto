@@ -4,11 +4,14 @@ namespace Webkul\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Core\Contracts\Address as AddressContract;
 use Webkul\Customer\Models\Customer;
 
 abstract class Address extends Model implements AddressContract
 {
+    use TenantScopedConnection;
+
     /**
      * Table.
      *

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Throwable;
 use App\Services\Tenant\TenantChannelBootstrapper;
 use App\Services\Tenant\TenantCatalogSeeder;
+use App\Services\Tenant\TenantSalesSeeder;
 
 class TenantDatabaseProvisioner
 {
@@ -118,6 +119,12 @@ class TenantDatabaseProvisioner
 
                 try {
                     app(TenantCatalogSeeder::class)->seed();
+                } catch (Throwable $e) {
+                    report($e);
+                }
+
+                try {
+                    app(TenantSalesSeeder::class)->seed();
                 } catch (Throwable $e) {
                     report($e);
                 }

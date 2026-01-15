@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Attribute\Models\AttributeProxy;
 use Webkul\Product\Contracts\ProductAttributeValue as ProductAttributeValueContract;
 use Webkul\Product\Database\Factories\ProductAttributeValueFactory;
 
 class ProductAttributeValue extends Model implements ProductAttributeValueContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * Indicates if the model should be timestamped.

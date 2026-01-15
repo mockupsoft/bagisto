@@ -7,6 +7,7 @@ use App\Models\Tenant\TenantDatabase;
 use App\Services\Tenant\TenantCatalogSeeder;
 use App\Services\Tenant\TenantConnectionConfigurator;
 use App\Services\Tenant\TenantCustomerSeeder;
+use App\Services\Tenant\TenantSalesSeeder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -40,7 +41,8 @@ class ProvisionTenantJob implements ShouldQueue
     public function handle(
         TenantConnectionConfigurator $configurator,
         TenantCatalogSeeder $catalogSeeder,
-        TenantCustomerSeeder $customerSeeder
+        TenantCustomerSeeder $customerSeeder,
+        TenantSalesSeeder $salesSeeder
     ): void {
         $tenant = Tenant::find($this->tenantId);
 
@@ -101,6 +103,7 @@ class ProvisionTenantJob implements ShouldQueue
 
             $catalogSeeder->seed();
             $customerSeeder->seed();
+            $salesSeeder->seed();
 
             $this->bootstrapTenantAdmin();
 
