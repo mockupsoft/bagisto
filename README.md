@@ -22,10 +22,26 @@ php artisan db:seed --class=DevBagistoSeeder
 
 ### Tenant DDL Testleri (SaaS)
 
-Bazı testler (ör. `TenantCustomerHttpSmokeTest`, `TenantCustomerIsolationTest`) tenant DB oluşturup migration çalıştırdığı için varsayılan olarak **skip** edilir.
+### Domain Verification (Patch-12)
+
+Custom domain doğrulama iki yöntemle yapılır:
+- **DNS TXT:** `_saas-verify.<domain>` hostuna `saas-verify=<token>` TXT kaydı ekleyin.
+- **HTTP File:** `https://<domain>/.well-known/saas-domain-verification.txt` endpoint’i `saas-verify=<token>` içeriğini döndürmeli.
+
+Lokal/test için DNS/HTTP doğrulama I/O mocklanır:
+- HTTP: `Http::fake()`
+- DNS: testte `app()->instance(DomainVerificationService::class, new DomainVerificationService($fakeResolver))`
+
+
+Bazı testler (ör. `TenantCustomerHttpSmokeTest`, `TenantCustomerIsolationTest`, `TenantSalesCheckoutSmokeTest`) tenant DB oluşturup migration çalıştırdığı için varsayılan olarak **skip** edilir.
 
 - Açmak için: `.env.testing` (veya test ortamı env) içine `RUN_TENANT_DDL_TESTS=true` ekleyin.
 - MySQL kullanıcısının `CREATE DATABASE` / `DROP DATABASE` yetkisi olmalı.
+- Örnek komutlar:
+  - `RUN_TENANT_DDL_TESTS=true php artisan migrate --path=database/migrations/tenant -v`
+  - `RUN_TENANT_DDL_TESTS=true php artisan test --filter=TenantCustomer`
+  - `RUN_TENANT_DDL_TESTS=true php artisan test --filter=ProvisioningFlowTest`
+  - `RUN_TENANT_DDL_TESTS=true php artisan test --filter=TenantSalesCheckoutSmokeTest`
 
 > 📖 Ayrıntılar için [`docs/dev.md`](docs/dev.md)
 

@@ -3,10 +3,13 @@
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Product\Contracts\ProductFlat as ProductFlatContract;
 
 class ProductFlat extends Model implements ProductFlatContract
 {
+    use TenantScopedConnection;
+
     /**
      * The table associated with the model.
      *
