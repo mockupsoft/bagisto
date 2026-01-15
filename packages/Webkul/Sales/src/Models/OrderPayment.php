@@ -5,12 +5,13 @@ namespace Webkul\Sales\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Sales\Contracts\OrderPayment as OrderPaymentContract;
 use Webkul\Sales\Database\Factories\OrderPaymentFactory;
 
 class OrderPayment extends Model implements OrderPaymentContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     protected $table = 'order_payment';
 

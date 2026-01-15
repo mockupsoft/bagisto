@@ -18,10 +18,11 @@ use Webkul\Product\Models\ProductReviewProxy;
 use Webkul\Sales\Models\InvoiceProxy;
 use Webkul\Sales\Models\OrderProxy;
 use Webkul\Shop\Mail\Customer\ResetPasswordNotification;
+use App\Models\Concerns\TenantScopedConnection;
 
 class Customer extends Authenticatable implements CustomerContract
 {
-    use HasApiTokens, HasFactory, Notifiable, Visitor;
+    use HasApiTokens, HasFactory, Notifiable, Visitor, TenantScopedConnection;
 
     /**
      * The table associated with the model.

@@ -3,11 +3,14 @@
 namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Core\Models\ChannelProxy;
 use Webkul\Product\Contracts\ProductInventoryIndex as ProductInventoryIndexContract;
 
 class ProductInventoryIndex extends Model implements ProductInventoryIndexContract
 {
+    use TenantScopedConnection;
+
     /**
      * Fillable.
      *

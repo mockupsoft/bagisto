@@ -63,10 +63,20 @@ class TenantProvisioner
 
     public function attachCustomDomain(Tenant $tenant, string $domain, ?int $createdById = null, ?string $note = null): Domain
     {
-        $cleanDomain = trim(Str::lower($domain));
+        $cleanDomain = app(DomainVerificationService::class)->normalizeDomain($domain);
 
         if ($cleanDomain === '' || str_contains($cleanDomain, ' ') || ! str_contains($cleanDomain, '.')) {
             throw new \InvalidArgumentException('Invalid domain format.');
+        }
+
+        $claimed = Domain::query()
+            ->where('domain', $cleanDomain)
+            ->whereNotNull('verified_at')
+            ->where('tenant_id', '!=', $tenant->id)
+            ->exists();
+
+        if ($claimed) {
+            throw new \InvalidArgumentException('domain_already_verified');
         }
 
         return Domain::create([
@@ -75,7 +85,7 @@ class TenantProvisioner
             'type' => 'custom',
             'is_primary' => false,
             'verified_at' => null,
-            'verification_method' => 'dns_txt',
+            'verification_method' => DomainVerificationService::METHOD_DNS_TXT,
             'verification_token' => Str::random(40),
             'created_by_id' => $createdById,
             'note' => $note,

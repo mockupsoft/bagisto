@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Checkout\Contracts\CartItem as CartItemContract;
 use Webkul\Checkout\Database\Factories\CartItemFactory;
 use Webkul\Product\Models\ProductProxy;
@@ -15,7 +16,7 @@ use Webkul\Product\Type\AbstractType;
 
 class CartItem extends Model implements CartItemContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     protected $table = 'cart_items';
 

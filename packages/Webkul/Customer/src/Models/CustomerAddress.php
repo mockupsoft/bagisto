@@ -5,13 +5,16 @@ namespace Webkul\Customer\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Core\Models\Address;
 use Webkul\Customer\Contracts\CustomerAddress as CustomerAddressContract;
 use Webkul\Customer\Database\Factories\CustomerAddressFactory;
 
 class CustomerAddress extends Address implements CustomerAddressContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
+
+    protected $table = 'customer_addresses';
 
     /**
      * Define the customer address type.

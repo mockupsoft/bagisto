@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Customer\Contracts\CustomerGroup as CustomerGroupContract;
 use Webkul\Customer\Database\Factories\CustomerGroupFactory;
 
 class CustomerGroup extends Model implements CustomerGroupContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * Deinfine model table name.

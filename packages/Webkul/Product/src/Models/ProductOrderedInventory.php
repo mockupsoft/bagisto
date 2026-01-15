@@ -5,13 +5,14 @@ namespace Webkul\Product\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Core\Models\ChannelProxy;
 use Webkul\Product\Contracts\ProductOrderedInventory as ProductOrderedInventoryContract;
 use Webkul\Product\Database\Factories\ProductOrderedInventoryFactory;
 
 class ProductOrderedInventory extends Model implements ProductOrderedInventoryContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * Timestamps.

@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Product\Type\AbstractType;
 use Webkul\Sales\Contracts\OrderItem as OrderItemContract;
 use Webkul\Sales\Database\Factories\OrderItemFactory;
 
 class OrderItem extends Model implements OrderItemContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * Define the guarded property.

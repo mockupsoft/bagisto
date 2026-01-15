@@ -5,12 +5,13 @@ namespace Webkul\Checkout\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Checkout\Contracts\CartShippingRate as CartShippingRateContract;
 use Webkul\Checkout\Database\Factories\CartShippingRateFactory;
 
 class CartShippingRate extends Model implements CartShippingRateContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * Fillable property of the model.
