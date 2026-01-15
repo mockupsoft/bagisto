@@ -52,4 +52,21 @@ class Core extends BaseCore
 
         return $firstChannel ? $firstChannel->code : 'default';
     }
+
+    /**
+     * Returns current locale with null-safe fallback for admin routes.
+     */
+    public function getCurrentLocale()
+    {
+        $locale = parent::getCurrentLocale();
+
+        if (! $locale) {
+            // Fallback to default locale if current locale is null (e.g., admin routes without tenant context)
+            $defaultLocale = $this->localeRepository->findOneByField('code', config('app.locale'));
+
+            return $defaultLocale ?: $this->localeRepository->first();
+        }
+
+        return $locale;
+    }
 }
