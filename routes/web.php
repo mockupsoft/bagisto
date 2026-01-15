@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\MerchantRegisterController;
+use App\Http\Controllers\Merchant\DomainVerificationController;
 use App\Http\Controllers\ProvisioningController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,11 @@ Route::get('/provisioning/{tenant}/progress', [ProvisioningController::class, 'p
 
 Route::get('/provisioning/{tenant}/status', [ProvisioningController::class, 'status'])
     ->name('provisioning.status');
+
+Route::prefix('merchant')->group(function () {
+    Route::post('domains', [DomainVerificationController::class, 'store'])->name('merchant.domains.store');
+    Route::get('domains/{domain}/instructions', [DomainVerificationController::class, 'instructions'])->name('merchant.domains.instructions');
+    Route::get('domains/{domain}/status', [DomainVerificationController::class, 'status'])->name('merchant.domains.status');
+    Route::post('domains/{domain}/verify', [DomainVerificationController::class, 'verify'])->name('merchant.domains.verify');
+    Route::post('domains/{domain}/rotate-token', [DomainVerificationController::class, 'rotateToken'])->name('merchant.domains.rotate');
+});

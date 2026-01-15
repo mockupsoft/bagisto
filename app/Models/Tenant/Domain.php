@@ -18,6 +18,9 @@ class Domain extends Model
         'verification_token',
         'verification_method',
         'verification_started_at',
+        'last_checked_at',
+        'last_failure_reason',
+        'verification_value',
         'created_by_id',
         'note',
     ];
@@ -26,6 +29,7 @@ class Domain extends Model
         'is_primary' => 'boolean',
         'verified_at' => 'datetime',
         'verification_started_at' => 'datetime',
+        'last_checked_at' => 'datetime',
     ];
 
     public function tenant()
