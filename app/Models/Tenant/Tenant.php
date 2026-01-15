@@ -23,12 +23,14 @@ class Tenant extends Model
         'provisioning_finished_at',
         'onboarding_completed_at',
         'last_error',
+        'settings',
     ];
 
     protected $casts = [
         'provisioning_started_at' => 'datetime',
         'provisioning_finished_at' => 'datetime',
         'onboarding_completed_at' => 'datetime',
+        'settings' => 'array',
     ];
 
     public function domains()
