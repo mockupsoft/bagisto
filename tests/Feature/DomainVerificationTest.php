@@ -36,7 +36,7 @@ class DomainVerificationTest extends TestCase
         $verify = app(DomainVerificationService::class);
 
         $tenant = $service->createTenant(['name' => 'Beta']);
-        $domain = $service->attachCustomDomain($tenant, 'beta.example.test');
+        $domain = $service->attachCustomDomain($tenant, 'beta-custom.example.test');
 
         $oldToken = $domain->verification_token;
 
@@ -109,9 +109,11 @@ class DomainVerificationTest extends TestCase
         $domain = $verify->start($domain, 'http_file');
 
         $instruction = $verify->getHttpInstruction($domain);
+        $altUrl = str_replace('https://', 'http://', $instruction['url']);
 
         Http::fake([
             $instruction['url'] => Http::response('wrong', 200),
+            $altUrl => Http::response('wrong', 200),
         ]);
 
         $fail = $verify->attemptVerify($domain, 'http_file');
@@ -119,6 +121,7 @@ class DomainVerificationTest extends TestCase
 
         Http::fake([
             $instruction['url'] => Http::response($instruction['value'], 200),
+            $altUrl => Http::response($instruction['value'], 200),
         ]);
 
         $ok = $verify->attemptVerify($domain->refresh(), 'http_file');

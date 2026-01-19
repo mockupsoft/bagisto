@@ -37,7 +37,7 @@ class MerchantTenantManagementTest extends TestCase
         $tenantA = $provisioner->createTenant(['name' => 'A', 'status' => 'active']);
         $tenantB = $provisioner->createTenant(['name' => 'B', 'status' => 'active']);
 
-        $domainB = $provisioner->attachCustomDomain($tenantB, 'b.example.test');
+        $domainB = $provisioner->attachCustomDomain($tenantB, 'custom-b.example.test');
 
         $merchantA = MerchantUser::create([
             'tenant_id' => $tenantA->id,
@@ -47,7 +47,7 @@ class MerchantTenantManagementTest extends TestCase
         ]);
 
         $this->actingAs($merchantA, 'merchant')
-            ->post(route('merchant.domains.rotate', ['domain' => $domainB->id]))
+            ->post(route('merchant.portal.domains.rotate', ['domain' => $domainB->id]))
             ->assertStatus(403);
     }
 
@@ -64,7 +64,7 @@ class MerchantTenantManagementTest extends TestCase
         ]);
 
         $this->actingAs($merchant, 'merchant')
-            ->post(route('merchant.domains.add'), ['domain' => 'custom.example.test'])
+            ->post(route('merchant.portal.domains.add'), ['domain' => 'custom.example.test'])
             ->assertRedirect(route('merchant.dashboard'));
 
         $dashboard = $this->actingAs($merchant, 'merchant')->get(route('merchant.dashboard'));
@@ -91,13 +91,15 @@ class MerchantTenantManagementTest extends TestCase
         $service = app(DomainVerificationService::class);
         $service->start($domain, DomainVerificationService::METHOD_HTTP_FILE);
         $instruction = $service->getHttpInstruction($domain->refresh());
+        $altUrl = str_replace('https://', 'http://', $instruction['url']);
 
         Http::fake([
             $instruction['url'] => Http::response($instruction['value'], 200),
+            $altUrl => Http::response($instruction['value'], 200),
         ]);
 
         $this->actingAs($merchant, 'merchant')
-            ->post(route('merchant.domains.verify', ['domain' => $domain->id]), ['method' => 'http_file'])
+            ->post(route('merchant.portal.domains.verify', ['domain' => $domain->id]), ['method' => 'http_file'])
             ->assertRedirect(route('merchant.dashboard'));
 
         $this->assertNotNull($domain->refresh()->verified_at);

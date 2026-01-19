@@ -19,21 +19,21 @@ class MerchantDomainVerificationTest extends TestCase
     public function test_instructions_endpoint_returns_dns_and_http_instructions(): void
     {
         $tenant = app(TenantProvisioner::class)->createTenant(['name' => 'Merchant']);
-        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant.example.test');
+        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant-custom.example.test');
 
         $this->withSession([
             self::SESSION_KEY => ['tenant_id' => $tenant->id],
         ])->get(route('merchant.domains.instructions', ['domain' => $domain->id]))
             ->assertOk()
-            ->assertJsonPath('domain', 'merchant.example.test')
-            ->assertJsonPath('dns_txt.host', DomainVerificationService::DNS_PREFIX . 'merchant.example.test')
-            ->assertJsonPath('http_file.url', 'https://merchant.example.test' . DomainVerificationService::HTTP_WELL_KNOWN_PATH);
+            ->assertJsonPath('domain', 'merchant-custom.example.test')
+            ->assertJsonPath('dns_txt.host', DomainVerificationService::DNS_PREFIX . 'merchant-custom.example.test')
+            ->assertJsonPath('http_file.url', 'https://merchant-custom.example.test' . DomainVerificationService::HTTP_WELL_KNOWN_PATH);
     }
 
     public function test_verify_dns_success_via_controller(): void
     {
         $tenant = app(TenantProvisioner::class)->createTenant(['name' => 'Merchant']);
-        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant.example.test');
+        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant-custom.example.test');
 
         $service = new DomainVerificationService(new class($domain) implements DnsTxtResolver {
             public function __construct(private Domain $domain)
@@ -60,15 +60,17 @@ class MerchantDomainVerificationTest extends TestCase
     public function test_verify_http_success_via_controller(): void
     {
         $tenant = app(TenantProvisioner::class)->createTenant(['name' => 'Merchant']);
-        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant.example.test');
+        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant-custom.example.test');
 
         $service = app(DomainVerificationService::class);
         $domain = $service->start($domain, 'http_file');
 
         $instruction = $service->getHttpInstruction($domain);
+        $altUrl = str_replace('https://', 'http://', $instruction['url']);
 
         Http::fake([
             $instruction['url'] => Http::response($instruction['value'], 200),
+            $altUrl => Http::response($instruction['value'], 200),
         ]);
 
         $this->withSession([
@@ -83,7 +85,7 @@ class MerchantDomainVerificationTest extends TestCase
     public function test_verify_is_rate_limited(): void
     {
         $tenant = app(TenantProvisioner::class)->createTenant(['name' => 'Merchant']);
-        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant.example.test');
+        $domain = app(TenantProvisioner::class)->attachCustomDomain($tenant, 'merchant-custom.example.test');
 
         $service = new DomainVerificationService(new class implements DnsTxtResolver {
             public function getTxtRecords(string $host): array

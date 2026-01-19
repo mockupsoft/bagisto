@@ -21,7 +21,7 @@
 
 <div class="card" style="margin-bottom: 16px;">
     <h3>Add Custom Domain</h3>
-    <form method="POST" action="{{ route('merchant.domains.add') }}">
+    <form method="POST" action="{{ route('merchant.portal.domains.add') }}">
         @csrf
         <input type="text" name="domain" placeholder="example.com" required>
         <input type="text" name="note" placeholder="note (optional)">
@@ -65,7 +65,7 @@
                 </td>
                 <td>
                     @if ($domain->type === 'custom')
-                        <form method="POST" action="{{ route('merchant.domains.verify', ['domain' => $domain->id]) }}" style="margin-bottom:6px;">
+                        <form method="POST" action="{{ route('merchant.portal.domains.verify', ['domain' => $domain->id]) }}" style="margin-bottom:6px;">
                             @csrf
                             <select name="method">
                                 <option value="dns_txt">DNS TXT</option>
@@ -74,7 +74,7 @@
                             <button type="submit">Verify now</button>
                         </form>
 
-                        <form method="POST" action="{{ route('merchant.domains.rotate', ['domain' => $domain->id]) }}">
+                        <form method="POST" action="{{ route('merchant.portal.domains.rotate', ['domain' => $domain->id]) }}">
                             @csrf
                             <select name="method">
                                 <option value="dns_txt">DNS TXT</option>

@@ -31,7 +31,7 @@ Route::get('/provisioning/{tenant}/status', [ProvisioningController::class, 'sta
     ->name('provisioning.status');
 
 // Patch-12 merchant domain verification endpoints (wizard/session-based)
-Route::prefix('merchant')->group(function () {
+Route::prefix('merchant')->middleware(['merchant.onboarding'])->group(function () {
     Route::post('domains', [DomainVerificationController::class, 'store'])->name('merchant.domains.store');
     Route::get('domains/{domain}/instructions', [DomainVerificationController::class, 'instructions'])->name('merchant.domains.instructions');
     Route::get('domains/{domain}/status', [DomainVerificationController::class, 'status'])->name('merchant.domains.status');
@@ -49,9 +49,9 @@ Route::prefix('merchant')->group(function () {
 
         Route::get('', [MerchantDashboardController::class, 'index'])->name('merchant.dashboard');
 
-        Route::post('domains/add', [MerchantDashboardController::class, 'addDomain'])->name('merchant.domains.add');
-        Route::post('domains/{domain}/verify-now', [MerchantDashboardController::class, 'verifyNow'])->name('merchant.domains.verify');
-        Route::post('domains/{domain}/rotate-token', [MerchantDashboardController::class, 'rotateToken'])->name('merchant.domains.rotate');
+        Route::post('domains/add', [MerchantDashboardController::class, 'addDomain'])->name('merchant.portal.domains.add');
+        Route::post('domains/{domain}/verify-now', [MerchantDashboardController::class, 'verifyNow'])->name('merchant.portal.domains.verify');
+        Route::post('domains/{domain}/rotate-token', [MerchantDashboardController::class, 'rotateToken'])->name('merchant.portal.domains.rotate');
 
         Route::get('settings', [MerchantSettingsController::class, 'edit'])->name('merchant.settings.edit');
         Route::post('settings', [MerchantSettingsController::class, 'update'])->name('merchant.settings.update');

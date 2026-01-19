@@ -8,6 +8,7 @@ use App\Services\Tenant\TenantProvisioner;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Webkul\Core\Facades\Core;
 use Webkul\User\Models\Admin;
 use Webkul\User\Models\Role;
 
@@ -15,6 +16,13 @@ use Webkul\User\Models\Role;
 class AdminTenantManagementTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->fakeCoreContext();
+    }
 
     public function test_admin_can_list_and_view_tenants(): void
     {
@@ -82,5 +90,59 @@ class AdminTenantManagementTest extends TestCase
             'role_id' => $role->id,
             'status' => 1,
         ]);
+    }
+
+    protected function fakeCoreContext(): void
+    {
+        $fake = new class
+        {
+            public function getCurrentLocale(): object
+            {
+                return (object) ['code' => 'en', 'direction' => 'ltr'];
+            }
+
+            public function getBaseCurrency(): object
+            {
+                return new class
+                {
+                    public function toJson(): string
+                    {
+                        return json_encode(['code' => 'USD']);
+                    }
+                };
+            }
+
+            public function getCurrentChannelCode(): string
+            {
+                return 'default';
+            }
+
+            public function getDefaultChannelCode(): string
+            {
+                return 'default';
+            }
+
+            public function getRequestedChannelCode($fallback = true): string
+            {
+                return 'default';
+            }
+
+            public function getConfigData($key, $channel = null, $locale = null)
+            {
+                return null;
+            }
+
+            public function version(): string
+            {
+                return 'test';
+            }
+
+            public function __call($name, $arguments)
+            {
+                return null;
+            }
+        };
+
+        Core::swap($fake);
     }
 }
