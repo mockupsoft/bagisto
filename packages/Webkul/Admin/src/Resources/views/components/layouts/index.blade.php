@@ -3,7 +3,7 @@
 <html
     class="{{ request()->cookie('dark_mode') ?? 0 ? 'dark' : '' }}"
     lang="{{ app()->getLocale() }}"
-    dir="{{ core()->getCurrentLocale()->direction }}"
+    dir="{{ core()->getCurrentLocale()?->direction ?? 'ltr' }}"
 >
 
 <head>
@@ -31,7 +31,7 @@
     >
     <meta
         name="currency"
-        content="{{ core()->getBaseCurrency()->toJson() }}"
+        content="{{ core()->getBaseCurrency()?->toJson() ?? '{}' }}"
     >
     <meta 
         name="generator" 

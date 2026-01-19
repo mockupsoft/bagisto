@@ -99,11 +99,20 @@ class TenantProvisioningService
             return $tenant;
         });
 
+        $merchantUser = \App\Models\MerchantUser::updateOrCreate(
+            ['email' => $adminEmail],
+            [
+                'tenant_id' => $tenant->id,
+                'name' => $adminName,
+                'password' => $adminPasswordHash,
+            ]
+        );
+
         dispatch(new ProvisionTenantJob(
             tenantId: $tenant->id,
-            adminEmail: $adminEmail,
-            adminPasswordHash: $adminPasswordHash,
-            adminName: $adminName
+            adminEmail: $merchantUser->email,
+            adminPasswordHash: $merchantUser->password,
+            adminName: $merchantUser->name
         ));
 
         session()->put(self::SESSION_KEY . '.tenant_id', $tenant->id);

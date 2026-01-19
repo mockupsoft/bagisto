@@ -22,7 +22,12 @@ class ResolveTenant
     public function handle(Request $request, Closure $next)
     {
         $path = ltrim($request->path(), '/');
-        if (str_starts_with($path, 'admin') || str_starts_with($path, 'super') || str_starts_with($path, 'api/admin')) {
+        if (
+            str_starts_with($path, 'admin')
+            || str_starts_with($path, 'super')
+            || str_starts_with($path, 'api/admin')
+            || str_starts_with($path, 'merchant')
+        ) {
             return $next($request);
         }
 
