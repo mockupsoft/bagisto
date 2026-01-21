@@ -11,6 +11,7 @@ use App\Services\Tenant\TenantDatabaseProvisioner;
 use App\Services\Tenant\TenantResolver;
 use App\Support\Tenant\TenantContext;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -43,14 +44,15 @@ class TenantAdminCatalogHttpSmokeTest extends TestCase
 
             $this->registerSmokeRoute();
 
+            $this->withoutMiddleware(VerifyCsrfToken::class);
+
             $payload = [
                 'sku' => 'HTTP-SKU-1',
                 'category' => 'Http Category',
                 'product' => 'Http Product',
             ];
 
-            $response = $this->withServerVariables(['HTTP_HOST' => $host])
-                ->post($this->smokePath(), $payload);
+            $response = $this->post('http://' . $host . $this->smokePath(), $payload);
 
             $response->assertOk();
             $response->assertJson(['ok' => true]);
