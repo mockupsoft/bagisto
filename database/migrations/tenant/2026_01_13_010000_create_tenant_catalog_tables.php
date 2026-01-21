@@ -17,9 +17,15 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedInteger('_lft')->default(0);
+            $table->unsignedInteger('_rgt')->default(0);
+            $table->unsignedInteger('depth')->default(0);
             $table->boolean('status')->default(true);
             $table->unsignedInteger('position')->default(0);
             $table->timestamps();
+
+            $table->index('parent_id');
+            $table->index(['_lft', '_rgt']);
         });
 
         Schema::create('category_translations', function (Blueprint $table) {
@@ -74,10 +80,21 @@ return new class extends Migration {
 
             $table->index(['product_id', 'locale', 'channel']);
         });
+
+        Schema::create('product_categories', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
+
+            $table->index(['product_id', 'category_id']);
+            $table->unique(['product_id', 'category_id']);
+        });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('product_categories');
         Schema::dropIfExists('product_flat');
         Schema::dropIfExists('product_attribute_values');
         Schema::dropIfExists('products');

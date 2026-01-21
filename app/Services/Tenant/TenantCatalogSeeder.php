@@ -12,12 +12,17 @@ class TenantCatalogSeeder
     {
         $conn = DB::connection('tenant');
 
-        // Root category
-        $rootId = $conn->table('categories')->whereNull('parent_id')->value('id');
+        // Default category with nested-set values
+        $defaultCategoryId = $conn->table('categories')
+            ->whereNull('parent_id')
+            ->value('id');
 
-        if (! $rootId) {
-            $rootId = $conn->table('categories')->insertGetId([
+        if (! $defaultCategoryId) {
+            $defaultCategoryId = $conn->table('categories')->insertGetId([
                 'parent_id' => null,
+                '_lft' => 1,
+                '_rgt' => 2,
+                'depth' => 0,
                 'status' => true,
                 'position' => 0,
                 'created_at' => now(),
@@ -25,18 +30,18 @@ class TenantCatalogSeeder
             ]);
         }
 
-        // Root category translation (en)
+        // Default category translation (en)
         $hasTranslation = $conn->table('category_translations')
-            ->where('category_id', $rootId)
+            ->where('category_id', $defaultCategoryId)
             ->where('locale', config('app.locale', 'en'))
             ->exists();
 
         if (! $hasTranslation) {
             $conn->table('category_translations')->insert([
-                'category_id' => $rootId,
+                'category_id' => $defaultCategoryId,
                 'locale' => config('app.locale', 'en'),
-                'name' => 'Root Category',
-                'slug' => 'root-category',
+                'name' => 'Default',
+                'slug' => 'default',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
