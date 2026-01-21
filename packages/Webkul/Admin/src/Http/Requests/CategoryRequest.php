@@ -32,7 +32,7 @@ class CategoryRequest extends FormRequest
             'logo_path.*'   => 'mimes:bmp,jpeg,jpg,png,webp',
             'banner_path'   => 'array',
             'banner_path.*' => 'mimes:bmp,jpeg,jpg,png,webp',
-            'attributes'    => 'array',
+            'attributes'    => 'required|array',
             'attributes.*'  => 'required',
         ];
 

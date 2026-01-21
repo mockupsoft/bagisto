@@ -4,13 +4,10 @@ namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Product\Contracts\ProductVideo as ProductVideoContract;
 
 class ProductVideo extends Model implements ProductVideoContract
 {
-    use TenantScopedConnection;
-
     /**
      * Timestamps.
      *

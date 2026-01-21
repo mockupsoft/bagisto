@@ -42,9 +42,6 @@ return new class extends Migration {
 
                 $table->index('product_id');
                 $table->index('inventory_source_id');
-
-                $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-                $table->foreign('inventory_source_id')->references('id')->on('inventory_sources')->onDelete('cascade');
             });
         }
 
@@ -59,9 +56,6 @@ return new class extends Migration {
 
                 $table->index('product_id');
                 $table->index('channel_id');
-
-                $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-                $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
             });
         }
 
@@ -77,9 +71,6 @@ return new class extends Migration {
 
                 $table->index('product_id');
                 $table->index('channel_id');
-
-                $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-                $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
             });
         }
     }

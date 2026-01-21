@@ -6,15 +6,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Attribute\Contracts\AttributeFamily as AttributeFamilyContract;
 use Webkul\Attribute\Database\Factories\AttributeFamilyFactory;
-use Webkul\Attribute\Models\AttributeGroupProxy;
 use Webkul\Product\Models\ProductProxy;
 
 class AttributeFamily extends Model implements AttributeFamilyContract
 {
-    use HasFactory, TenantScopedConnection;
+    use HasFactory;
 
     public $timestamps = false;
 

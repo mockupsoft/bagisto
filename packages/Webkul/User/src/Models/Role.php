@@ -5,13 +5,12 @@ namespace Webkul\User\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Concerns\TenantScopedConnection;
 use Webkul\User\Contracts\Role as RoleContract;
 use Webkul\User\Database\Factories\RoleFactory;
 
 class Role extends Model implements RoleContract
 {
-    use HasFactory, TenantScopedConnection;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.

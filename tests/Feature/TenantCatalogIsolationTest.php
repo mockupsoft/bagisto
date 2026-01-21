@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Tests\Support\TenantTestContext;
 use Tests\TestCase;
-use Webkul\Category\Models\Category;
-use Webkul\Category\Models\CategoryTranslation;
-use Webkul\Product\Models\Product;
-use Webkul\Product\Models\ProductAttributeValue;
 
 class TenantCatalogIsolationTest extends TestCase
 {
@@ -40,23 +36,23 @@ class TenantCatalogIsolationTest extends TestCase
             $this->runCatalogFlow($tenantA, $dbA, 'SAME-SKU', 'Same Product', 'default');
 
             TenantTestContext::setTenantContext($tenantA, $dbA);
-            $this->assertSame(1, Product::query()->count());
+            $this->assertSame(1, DB::connection('tenant')->table('products')->count());
             $this->assertSame(1, DB::connection('tenant')->table('product_categories')->count());
-            $this->assertSame(1, ProductAttributeValue::query()->count());
+            $this->assertSame(1, DB::connection('tenant')->table('product_attribute_values')->count());
 
             TenantTestContext::setTenantContext($tenantB, $dbB);
-            $this->assertSame(0, Product::query()->count());
+            $this->assertSame(0, DB::connection('tenant')->table('products')->count());
             $this->assertSame(0, DB::connection('tenant')->table('product_categories')->count());
 
             $this->runCatalogFlow($tenantB, $dbB, 'SAME-SKU', 'Same Product', 'default');
 
             TenantTestContext::setTenantContext($tenantB, $dbB);
-            $this->assertSame(1, Product::query()->count());
+            $this->assertSame(1, DB::connection('tenant')->table('products')->count());
             $this->assertSame(1, DB::connection('tenant')->table('product_categories')->count());
-            $this->assertSame(1, ProductAttributeValue::query()->count());
+            $this->assertSame(1, DB::connection('tenant')->table('product_attribute_values')->count());
 
             TenantTestContext::setTenantContext($tenantA, $dbA);
-            $this->assertSame(1, Product::query()->count());
+            $this->assertSame(1, DB::connection('tenant')->table('products')->count());
             $this->assertSame(1, DB::connection('tenant')->table('product_categories')->count());
         } finally {
             TenantTestContext::clearTenantContext();
@@ -82,15 +78,20 @@ class TenantCatalogIsolationTest extends TestCase
 
         $locale = config('app.locale', 'en');
 
-        $category = Category::create([
+        $conn = DB::connection('tenant');
+        $categoryId = $conn->table('categories')->insertGetId([
             'parent_id' => null,
             'status' => 1,
             'position' => 1,
             'display_mode' => 'products_and_description',
+            '_lft' => 3,
+            '_rgt' => 4,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        CategoryTranslation::create([
-            'category_id' => $category->id,
+        $conn->table('category_translations')->insert([
+            'category_id' => $categoryId,
             'locale' => $locale,
             'name' => 'Test Category',
             'slug' => $categorySlug,
@@ -99,17 +100,22 @@ class TenantCatalogIsolationTest extends TestCase
 
         $attributeId = $this->ensureNameAttribute();
 
-        $product = Product::create([
+        $productId = $conn->table('products')->insertGetId([
             'type' => 'simple',
             'attribute_family_id' => null,
             'sku' => $sku,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        $product->categories()->sync([$category->id]);
+        $conn->table('product_categories')->insert([
+            'product_id' => $productId,
+            'category_id' => $categoryId,
+        ]);
 
         if ($attributeId) {
-            ProductAttributeValue::create([
-                'product_id' => $product->id,
+            $conn->table('product_attribute_values')->insert([
+                'product_id' => $productId,
                 'attribute_id' => $attributeId,
                 'locale' => $locale,
                 'channel' => 'default',
@@ -117,7 +123,7 @@ class TenantCatalogIsolationTest extends TestCase
                 'unique_id' => implode('|', array_filter([
                     'default',
                     $locale,
-                    $product->id,
+                    $productId,
                     $attributeId,
                 ])),
             ]);
