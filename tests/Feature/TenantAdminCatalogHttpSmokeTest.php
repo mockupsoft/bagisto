@@ -37,9 +37,8 @@ class TenantAdminCatalogHttpSmokeTest extends TestCase
 
         try {
             TenantTestContext::setTenantContext($tenant, $db);
-            TenantTestContext::resetTenantDatabase($db);
-            TenantTestContext::setTenantContext($tenant, $db);
             app(TenantCatalogSeeder::class)->seed();
+            $this->ensureNameAttribute();
             TenantTestContext::clearTenantContext();
 
             $this->registerSmokeRoute();
@@ -234,6 +233,34 @@ class TenantAdminCatalogHttpSmokeTest extends TestCase
         $tenantDb->refresh();
 
         return [$tenant, $tenantDb, $host];
+    }
+
+    protected function ensureNameAttribute(): ?int
+    {
+        $conn = DB::connection('tenant');
+        $attributeId = $conn->table('attributes')->where('code', 'name')->value('id');
+
+        if ($attributeId) {
+            return (int) $attributeId;
+        }
+
+        return $conn->table('attributes')->insertGetId([
+            'code' => 'name',
+            'admin_name' => 'Name',
+            'type' => 'text',
+            'is_required' => 1,
+            'is_unique' => 0,
+            'is_filterable' => 0,
+            'is_comparable' => 0,
+            'is_configurable' => 0,
+            'is_user_defined' => 0,
+            'is_visible_on_front' => 0,
+            'value_per_locale' => 1,
+            'value_per_channel' => 0,
+            'enable_wysiwyg' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     protected function smokePath(): string
