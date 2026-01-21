@@ -56,6 +56,7 @@ class TenantAdminCatalogHttpSmokeTest extends TestCase
 
             $response->assertOk();
             $response->assertJson(['ok' => true]);
+            $this->assertNotEmpty($response->json('product_id'));
 
             $slug = Str::slug($payload['category']);
 
@@ -63,6 +64,7 @@ class TenantAdminCatalogHttpSmokeTest extends TestCase
 
             $this->assertSame(1, DB::connection('tenant')->table('products')->where('sku', $payload['sku'])->count());
             $this->assertSame(1, DB::connection('tenant')->table('category_translations')->where('slug', $slug)->count());
+            $this->assertSame(1, DB::connection('tenant')->table('products')->count());
             if (Schema::connection('tenant')->hasTable('product_categories')) {
                 $this->assertSame(1, DB::connection('tenant')->table('product_categories')->count());
             }
