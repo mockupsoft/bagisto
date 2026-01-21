@@ -3,10 +3,13 @@
 namespace Webkul\Attribute\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Attribute\Contracts\AttributeGroup as AttributeGroupContract;
 
 class AttributeGroup extends Model implements AttributeGroupContract
 {
+    use TenantScopedConnection;
+
     public $timestamps = false;
 
     protected $fillable = [

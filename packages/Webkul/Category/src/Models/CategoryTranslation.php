@@ -5,12 +5,13 @@ namespace Webkul\Category\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Category\Contracts\CategoryTranslation as CategoryTranslationContract;
 use Webkul\Category\Database\Factories\CategoryTranslationFactory;
 
 class CategoryTranslation extends Model implements CategoryTranslationContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * Indicates if the model should be timestamped.

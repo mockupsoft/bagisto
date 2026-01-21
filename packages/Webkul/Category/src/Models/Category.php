@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Kalnoy\Nestedset\NodeTrait;
 use Shetabit\Visitor\Traits\Visitable;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Attribute\Models\AttributeProxy;
 use Webkul\Category\Contracts\Category as CategoryContract;
 use Webkul\Category\Database\Factories\CategoryFactory;
@@ -16,7 +17,7 @@ use Webkul\Product\Models\ProductProxy;
 
 class Category extends TranslatableModel implements CategoryContract
 {
-    use HasFactory, NodeTrait, Visitable;
+    use HasFactory, NodeTrait, Visitable, TenantScopedConnection;
 
     /**
      * Translated attributes.

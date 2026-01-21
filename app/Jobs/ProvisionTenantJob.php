@@ -101,9 +101,13 @@ class ProvisionTenantJob implements ShouldQueue
                 '--force' => true,
             ]);
 
-            $catalogSeeder->seed();
-            $customerSeeder->seed();
-            $salesSeeder->seed();
+            $seedEnabled = (bool) ($config['seed_enabled'] ?? false);
+
+            if ($seedEnabled) {
+                $catalogSeeder->seed();
+                $customerSeeder->seed();
+                $salesSeeder->seed();
+            }
 
             $this->bootstrapTenantAdmin();
 

@@ -4,10 +4,13 @@ namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Product\Contracts\ProductImage as ProductImageContract;
 
 class ProductImage extends Model implements ProductImageContract
 {
+    use TenantScopedConnection;
+
     /**
      * Timestamp.
      *

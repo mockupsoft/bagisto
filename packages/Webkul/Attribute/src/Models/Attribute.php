@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Attribute\Contracts\Attribute as AttributeContract;
 use Webkul\Attribute\Database\Factories\AttributeFactory;
 use Webkul\Core\Eloquent\TranslatableModel;
 
 class Attribute extends TranslatableModel implements AttributeContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     public $translatedAttributes = ['name'];
 

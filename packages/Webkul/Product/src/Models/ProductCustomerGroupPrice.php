@@ -5,13 +5,14 @@ namespace Webkul\Product\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Customer\Models\CustomerGroupProxy;
 use Webkul\Product\Contracts\ProductCustomerGroupPrice as ProductCustomerGroupPriceContract;
 use Webkul\Product\Database\Factories\ProductCustomerGroupPriceFactory;
 
 class ProductCustomerGroupPrice extends Model implements ProductCustomerGroupPriceContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     /**
      * Add fillable property to the model.

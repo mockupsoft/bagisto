@@ -5,13 +5,14 @@ namespace Webkul\Attribute\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Concerns\TenantScopedConnection;
 use Webkul\Attribute\Contracts\AttributeOption as AttributeOptionContract;
 use Webkul\Attribute\Database\Factories\AttributeOptionFactory;
 use Webkul\Core\Eloquent\TranslatableModel;
 
 class AttributeOption extends TranslatableModel implements AttributeOptionContract
 {
-    use HasFactory;
+    use HasFactory, TenantScopedConnection;
 
     public $timestamps = false;
 
