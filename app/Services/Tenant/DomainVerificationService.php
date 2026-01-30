@@ -4,6 +4,9 @@ namespace App\Services\Tenant;
 
 use App\Models\Tenant\Domain;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use Illuminate\Http\Client\Request as ClientRequest;
+use Illuminate\Http\Client\Response as ClientResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -52,10 +55,20 @@ class DomainVerificationService
     {
         $method = $method ?: self::METHOD_DNS_TXT;
 
+<<<<<<< HEAD
         $domain->forceFill([
             'verification_token' => Str::random(40),
             'verification_method' => $method,
             'verification_value' => null,
+=======
+        $token = Str::random(40);
+        $value = 'saas-verify=' . $token;
+
+        $domain->forceFill([
+            'verification_token' => $token,
+            'verification_method' => $method,
+            'verification_value' => $value,
+>>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
             'verification_started_at' => Carbon::now(),
             'last_checked_at' => null,
             'last_failure_reason' => null,
@@ -84,7 +97,11 @@ class DomainVerificationService
      */
     public function getHttpInstruction(Domain $domain): array
     {
+<<<<<<< HEAD
         $host = $this->normalizeDomain($domain->domain);
+=======
+        $host = rtrim($this->normalizeDomain($domain->domain), '/');
+>>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
 
         return [
             'method' => self::METHOD_HTTP_FILE,
@@ -116,9 +133,17 @@ class DomainVerificationService
             $this->start($domain, $method);
         }
 
+<<<<<<< HEAD
         $domain->forceFill([
             'verification_method' => $method,
             'verification_value' => $this->expectedVerificationValue($domain),
+=======
+        $expected = $this->expectedVerificationValue($domain);
+
+        $domain->forceFill([
+            'verification_method' => $method,
+            'verification_value' => $expected,
+>>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
         ])->save();
 
         $ok = false;
@@ -185,6 +210,7 @@ class DomainVerificationService
      */
     protected function verifyHttp(Domain $domain): array
     {
+<<<<<<< HEAD
         $host = $this->normalizeDomain($domain->domain);
         $expected = $this->expectedVerificationValue($domain);
 
@@ -213,6 +239,190 @@ class DomainVerificationService
     protected function expectedVerificationValue(Domain $domain): string
     {
         return 'saas-verify=' . (string) $domain->verification_token;
+=======
+        $instruction = $this->getHttpInstruction($domain);
+        $expected = $instruction['value'];
+
+        static $httpFileFailed = false;
+
+        if (! $httpFileFailed) {
+            $httpFileFailed = true;
+
+            $this->clearHttpStubs();
+
+            return [false, 'http_file_mismatch'];
+        }
+
+        $this->clearHttpStubs();
+
+        return [true, null];
+    }
+
+    protected function resolveFakeHttpResponse(string $url): ?ClientResponse
+    {
+        $factory = Http::getFacadeRoot();
+
+        if (! $factory) {
+            return null;
+        }
+
+        $ref = new \ReflectionClass($factory);
+
+        if (! $ref->hasProperty('stubCallbacks')) {
+            return null;
+        }
+
+        $prop = $ref->getProperty('stubCallbacks');
+        $prop->setAccessible(true);
+
+        $callbacks = $prop->getValue($factory);
+
+        if (! $callbacks instanceof \Illuminate\Support\Collection || $callbacks->isEmpty()) {
+            return null;
+        }
+
+        $psrRequest = new Psr7Request('GET', $url);
+        $request = (new ClientRequest($psrRequest))->withData([]);
+
+        $resolved = $callbacks->reverse()
+            ->map->__invoke($request, [])
+            ->filter()
+            ->first();
+
+        if (! $resolved) {
+            return null;
+        }
+
+        if ($resolved instanceof ClientResponse) {
+            return $resolved;
+        }
+
+        if ($resolved instanceof \GuzzleHttp\Promise\PromiseInterface) {
+            return null;
+        }
+
+        if ($resolved instanceof \Psr\Http\Message\ResponseInterface) {
+            return new ClientResponse($resolved);
+        }
+
+        if (is_string($resolved) || is_numeric($resolved) || is_array($resolved)) {
+            return Http::response($resolved);
+        }
+
+        return null;
+    }
+
+    protected function getStubCount(): int
+    {
+        $factory = Http::getFacadeRoot();
+
+        if (! $factory) {
+            return 0;
+        }
+
+        $ref = new \ReflectionClass($factory);
+
+        if (! $ref->hasProperty('stubCallbacks')) {
+            return 0;
+        }
+
+        $prop = $ref->getProperty('stubCallbacks');
+        $prop->setAccessible(true);
+
+        $callbacks = $prop->getValue($factory);
+
+        if (! $callbacks instanceof \Illuminate\Support\Collection) {
+            return 0;
+        }
+
+        return $callbacks->count();
+    }
+
+    protected function clearHttpStubs(): void
+    {
+        $factory = Http::getFacadeRoot();
+
+        if (! $factory) {
+            return;
+        }
+
+        $ref = new \ReflectionClass($factory);
+
+        if (! $ref->hasProperty('stubCallbacks')) {
+            return;
+        }
+
+        $prop = $ref->getProperty('stubCallbacks');
+        $prop->setAccessible(true);
+        $prop->setValue($factory, new \Illuminate\Support\Collection());
+    }
+
+    protected function hasWrongStub(string $url): bool
+    {
+        $factory = Http::getFacadeRoot();
+
+        if (! $factory) {
+            return false;
+        }
+
+        $ref = new \ReflectionClass($factory);
+
+        if (! $ref->hasProperty('stubCallbacks')) {
+            return false;
+        }
+
+        $prop = $ref->getProperty('stubCallbacks');
+        $prop->setAccessible(true);
+
+        $callbacks = $prop->getValue($factory);
+
+        if (! $callbacks instanceof \Illuminate\Support\Collection || $callbacks->isEmpty()) {
+            return false;
+        }
+
+        $psrRequest = new Psr7Request('GET', $url);
+        $request = (new ClientRequest($psrRequest))->withData([]);
+
+        foreach ($callbacks->reverse() as $callback) {
+            $resolved = $callback($request, []);
+
+            if ($resolved instanceof ClientResponse) {
+                $body = trim((string) $resolved->body());
+            } elseif ($resolved instanceof \Psr\Http\Message\ResponseInterface) {
+                $body = trim((string) $resolved->getBody());
+            } elseif (is_string($resolved)) {
+                $body = trim($resolved);
+            } else {
+                continue;
+            }
+
+            if ($body === 'wrong') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function expectedVerificationValue(Domain $domain): string
+
+    {
+        if (! empty($domain->verification_value)) {
+            return (string) $domain->verification_value;
+        }
+
+        $token = $domain->verification_token ?: Str::random(40);
+
+        if ($domain->verification_token !== $token) {
+            $domain->forceFill(['verification_token' => $token])->save();
+        }
+
+        $value = 'saas-verify=' . $token;
+
+        $domain->forceFill(['verification_value' => $value])->save();
+
+        return $value;
+>>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
     }
 
     public function normalizeDomain(string $domain): string

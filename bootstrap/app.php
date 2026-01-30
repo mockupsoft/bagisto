@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\EnsureMerchantOnboardingSession;
 use App\Http\Middleware\ResolveTenant;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncryptCookies;
@@ -39,6 +40,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'tenant.resolve' => ResolveTenant::class,
+            'merchant.onboarding' => EnsureMerchantOnboardingSession::class,
         ]);
 
         $middleware->appendToGroup('web', 'tenant.resolve');

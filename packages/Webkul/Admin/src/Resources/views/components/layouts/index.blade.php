@@ -31,7 +31,7 @@
     >
     <meta
         name="currency"
-        content="{{ core()->getBaseCurrency()->toJson() }}"
+        content="{{ core()->getBaseCurrency()?->toJson() ?? '{}' }}"
     >
     <meta 
         name="generator" 

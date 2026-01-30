@@ -43,6 +43,14 @@ Bazı testler (ör. `TenantCustomerHttpSmokeTest`, `TenantCustomerIsolationTest`
   - `RUN_TENANT_DDL_TESTS=true php artisan test --filter=ProvisioningFlowTest`
   - `RUN_TENANT_DDL_TESTS=true php artisan test --filter=TenantSalesCheckoutSmokeTest`
 
+<<<<<<< HEAD
+=======
+### Patch-13 Test Komutları
+
+- `php artisan test --filter=MerchantTenantManagementTest`
+- `php artisan test --filter=AdminTenantManagementTest`
+
+>>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
 > 📖 Ayrıntılar için [`docs/dev.md`](docs/dev.md)
 
 ---
