@@ -20,7 +20,7 @@ class Core
     use CurrencyFormatter;
 
     /**
-     * The Bagisto version.
+     * The application version.
      *
      * @var string
      */

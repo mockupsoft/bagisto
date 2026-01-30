@@ -95,6 +95,17 @@ return [
     ],
 
     /**
+     * Tenants Management (Patch 12-15)
+     */
+    [
+        'key'        => 'tenants',
+        'name'       => 'admin::app.components.layouts.sidebar.tenants',
+        'route'      => 'admin.tenants.index',
+        'sort'       => 3.5,
+        'icon'       => 'icon-customer-2',
+    ],
+
+    /**
      * Customers.
      */
     [
@@ -347,6 +358,12 @@ return [
         'name'       => 'admin::app.components.layouts.sidebar.imports',
         'route'      => 'admin.settings.data_transfer.imports.index',
         'sort'       => 1,
+        'icon'       => '',
+    ], [
+        'key'        => 'settings.whitelabel',
+        'name'       => 'admin::app.components.layouts.sidebar.whitelabel',
+        'route'      => 'admin.settings.whitelabel.index',
+        'sort'       => 11,
         'icon'       => '',
     ],
 

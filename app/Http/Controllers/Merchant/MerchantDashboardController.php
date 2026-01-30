@@ -8,9 +8,12 @@ use App\Models\Tenant\Domain;
 use App\Models\Tenant\Tenant;
 use App\Services\Tenant\DomainVerificationService;
 use App\Services\Tenant\TenantProvisioner;
+use App\Support\Tenant\TenantContext;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
+use Tests\Support\TenantTestContext;
 use Illuminate\View\View;
 
 class MerchantDashboardController extends Controller
@@ -24,12 +27,35 @@ class MerchantDashboardController extends Controller
             ->with(['database', 'domains'])
             ->findOrFail($merchant->tenant_id);
 
+        $tenantDb = $tenant->database;
+        $stats = [];
+
+        if ($tenantDb && $tenantDb->status === 'ready') {
+            TenantTestContext::setTenantContext($tenant, $tenantDb);
+            
+            try {
+                $stats = [
+                    'total_orders' => DB::connection('tenant')->table('orders')->count(),
+                    'today_orders' => DB::connection('tenant')->table('orders')->whereDate('created_at', today())->count(),
+                    'month_orders' => DB::connection('tenant')->table('orders')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
+                    'total_revenue' => DB::connection('tenant')->table('orders')->where('status', '!=', 'canceled')->sum('base_grand_total'),
+                    'month_revenue' => DB::connection('tenant')->table('orders')->where('status', '!=', 'canceled')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('base_grand_total'),
+                    'total_customers' => DB::connection('tenant')->table('customers')->count(),
+                    'total_products' => DB::connection('tenant')->table('products')->count(),
+                    'recent_orders' => DB::connection('tenant')->table('orders')->orderBy('created_at', 'desc')->limit(5)->get(),
+                ];
+            } finally {
+                TenantTestContext::clearTenantContext();
+            }
+        }
+
         return view('merchant.dashboard', [
             'tenant' => $tenant,
             'domains' => $tenant->domains,
             'dnsPrefix' => DomainVerificationService::DNS_PREFIX,
             'httpPath' => DomainVerificationService::HTTP_WELL_KNOWN_PATH,
             'verificationService' => $verificationService,
+            'stats' => $stats,
         ]);
     }
 

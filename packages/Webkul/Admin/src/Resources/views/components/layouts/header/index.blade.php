@@ -13,18 +13,24 @@
 
         <!-- Logo -->
         <a href="{{ route('admin.dashboard.index') }}" class="flex-shrink-0">
-            @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+            @php
+                $isDarkMode = request()->cookie('dark_mode');
+                $whitelabelLogo = $isDarkMode 
+                    ? core()->getConfigData('whitelabel.branding.logos.admin_logo_dark')
+                    : core()->getConfigData('whitelabel.branding.logos.admin_logo_light');
+                $defaultLogo = core()->getConfigData('general.design.admin_logo.logo_image');
+            @endphp
+            @if ($whitelabelLogo)
                 <img
                     class="h-8 w-auto sm:h-10"
-                    src="{{ Storage::url($logo) }}"
-                    alt="{{ config('app.name') }}"
+                    src="{{ asset($whitelabelLogo) }}"
+                    alt="{{ core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name') }}"
                 />
-            @else
+            @elseif ($defaultLogo)
                 <img
-                    src="{{ request()->cookie('dark_mode') ? bagisto_asset('images/dark-logo.svg') : bagisto_asset('images/logo.svg') }}"
                     class="h-8 w-auto sm:h-10"
-                    id="logo-image"
-                    alt="{{ config('app.name') }}"
+                    src="{{ asset($defaultLogo) }}"
+                    alt="{{ core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name') }}"
                 />
             @endif
         </a>
@@ -97,12 +103,31 @@
             <!-- Admin Dropdown -->
             <x-slot:content class="!p-0">
                 <div class="flex items-center gap-1.5 border border-b-gray-300 px-4 py-2 dark:border-gray-800 sm:px-5 sm:py-2.5">
-                    <img
-                        src="{{ url('cache/logo/bagisto.png') }}"
-                        class="sm:h-6 sm:w-6"
-                        width="20"
-                        height="20"
-                    />
+                    @php
+                        $appName = core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name');
+                        $isDarkMode = request()->cookie('dark_mode');
+                        $whitelabelLogo = $isDarkMode 
+                            ? core()->getConfigData('whitelabel.branding.logos.admin_logo_dark')
+                            : core()->getConfigData('whitelabel.branding.logos.admin_logo_light');
+                        $defaultLogo = core()->getConfigData('general.design.admin_logo.logo_image');
+                    @endphp
+                    @if ($whitelabelLogo)
+                        <img
+                            src="{{ asset($whitelabelLogo) }}"
+                            class="sm:h-6 sm:w-6"
+                            width="20"
+                            height="20"
+                            alt="{{ $appName }}"
+                        />
+                    @elseif ($defaultLogo)
+                        <img
+                            src="{{ asset($defaultLogo) }}"
+                            class="sm:h-6 sm:w-6"
+                            width="20"
+                            height="20"
+                            alt="{{ $appName }}"
+                        />
+                    @endif
 
                     <!-- Version -->
                     <p class="text-xs text-gray-400 sm:text-sm">
@@ -148,18 +173,24 @@
     <!-- Drawer Header -->
     <x-slot:header>
         <div class="flex items-center justify-between">
-            @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+            @php
+                $drawerLogo = core()->getConfigData('general.design.admin_logo.logo_image');
+                $isDarkMode = request()->cookie('dark_mode');
+                $whitelabelDrawerLogo = $isDarkMode 
+                    ? core()->getConfigData('whitelabel.branding.logos.admin_logo_dark')
+                    : core()->getConfigData('whitelabel.branding.logos.admin_logo_light');
+            @endphp
+            @if ($whitelabelDrawerLogo)
                 <img
-                    src="{{ Storage::url($logo) }}"
+                    src="{{ asset($whitelabelDrawerLogo) }}"
                     class="h-8 w-auto sm:h-10"
-                    alt="{{ config('app.name') }}"
+                    alt="{{ core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name') }}"
                 />
-            @else
+            @elseif ($drawerLogo)
                 <img
-                    src="{{ request()->cookie('dark_mode') ? bagisto_asset('images/dark-logo.svg') : bagisto_asset('images/logo.svg') }}"
+                    src="{{ asset($drawerLogo) }}"
                     class="h-8 w-auto sm:h-10"
-                    id="logo-image"
-                    alt="{{ config('app.name') }}"
+                    alt="{{ core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name') }}"
                 />
             @endif
         </div>
@@ -257,7 +288,9 @@
                                         :class="{'overflow-hidden rounded border border-dashed border-gray-300 dark:border-gray-800 dark:mix-blend-exclusion dark:invert': ! product.images.length}"
                                     >
                                         <template v-if="! product.images.length">
-                                            <img src="{{ bagisto_asset('images/product-placeholders/front.svg') }}" class="h-full w-full object-cover">
+                                            <div class="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
+                                                <span class="text-xs text-gray-400">@lang('admin::app.catalog.products.edit.types.grouped.image-placeholder')</span>
+                                            </div>
                                         
                                             <p class="absolute bottom-0.5 w-full text-center text-[4px] font-semibold text-gray-400 sm:bottom-1.5 sm:text-[6px]">
                                                 @lang('admin::app.catalog.products.edit.types.grouped.image-placeholder')
@@ -740,10 +773,6 @@
             data() {
                 return {
                     isDarkMode: {{ request()->cookie('dark_mode') ?? 0 }},
-
-                    logo: "{{ bagisto_asset('images/logo.svg') }}",
-
-                    dark_logo: "{{ bagisto_asset('images/dark-logo.svg') }}",
                 };
             },
 

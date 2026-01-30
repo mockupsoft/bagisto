@@ -38,6 +38,11 @@ class CoreConfigRepository extends Repository
         }
 
         foreach ($data as $method => $fieldData) {
+            // Skip non-array values (like locale, channel which are already handled)
+            if (!is_array($fieldData)) {
+                continue;
+            }
+            
             $recursiveData = $this->recursiveArray($fieldData, $method);
 
             foreach ($recursiveData as $fieldName => $value) {

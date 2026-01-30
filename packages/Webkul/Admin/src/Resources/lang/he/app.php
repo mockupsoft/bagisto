@@ -5021,7 +5021,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'מופעל על ידי <a href="https://bagisto.com/" target="_blank">Bagisto</a>, פרויקט קהילתי על ידי <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        'copy-right' => '',,
     ],
 
     'emails' => [

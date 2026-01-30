@@ -18,6 +18,9 @@ class TenantResolver
         $normalized = $this->normalizeHost($host);
 
         if ($normalized === '') {
+            if (config('app.debug')) {
+                \Log::debug('TenantResolver: Empty normalized host', ['host' => $host]);
+            }
             return null;
         }
 
@@ -25,6 +28,13 @@ class TenantResolver
             ->first();
 
         if (! $domain) {
+            if (config('app.debug')) {
+                \Log::debug('TenantResolver: Domain not found', [
+                    'host' => $host,
+                    'normalized' => $normalized,
+                    'available_domains' => Domain::pluck('domain')->toArray(),
+                ]);
+            }
             return null;
         }
 
@@ -34,7 +44,13 @@ class TenantResolver
 
         $tenant = $domain->tenant;
 
-        if (! $tenant || $tenant->status !== 'active') {
+        if (! $tenant) {
+            return null;
+        }
+
+        // Allow active, ready, and provisioning tenants
+        // Provisioning tenants can access admin panel to see progress
+        if (! in_array($tenant->status, ['active', 'ready', 'provisioning'])) {
             return null;
         }
 
@@ -44,7 +60,7 @@ class TenantResolver
         ];
     }
 
-    protected function normalizeHost(string $host): string
+    public function normalizeHost(string $host): string
     {
         $host = trim(Str::lower($host));
 

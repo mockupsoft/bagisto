@@ -6,7 +6,7 @@ return [
             'email'                  => 'E-posta Adresi',
             'forget-password-link'   => 'Şifremi Unuttum ?',
             'password'               => 'Şifre',
-            'powered-by-description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :bagisto tarafından desteklenmektedir.',
+            'powered-by-description' => '',
             'submit-btn'             => 'Giriş Yap',
             'title'                  => 'Giriş Yap',
         ],
@@ -16,7 +16,7 @@ return [
                 'email'                  => 'Kayıtlı E-posta',
                 'email-not-exist'        => 'E-posta Bulunamadı',
                 'page-title'             => 'Şifremi Unuttum',
-                'powered-by-description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :bagisto tarafından desteklenmektedir.',
+                'powered-by-description' => '',
                 'reset-link-sent'        => 'Şifre Sıfırlama Bağlantısı Gönderildi',
                 'sign-in-link'           => 'Giriş Yap’a Geri Dön ?',
                 'submit-btn'             => 'Sıfırla',
@@ -29,7 +29,7 @@ return [
             'confirm-password'       => 'Şifreyi Onayla',
             'email'                  => 'Kayıtlı E-posta',
             'password'               => 'Şifre',
-            'powered-by-description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :bagisto tarafından desteklenmektedir.',
+            'powered-by-description' => '',
             'submit-btn'             => 'Şifre Sıfırla',
             'title'                  => 'Şifre Sıfırlama',
         ],
@@ -3012,6 +3012,27 @@ return [
             ],
         ],
 
+        'whitelabel' => [
+            'index' => [
+                'title'       => 'Whitelabel Ayarları',
+                'description' => 'Marka özelleştirmesi yapın ve uygulamanızdan platform referanslarını kaldırın.',
+                'save-btn'   => 'Ayarları Kaydet',
+                'save-success' => 'Whitelabel ayarları başarıyla kaydedildi.',
+            ],
+
+            'branding' => [
+                'general' => [
+                    'title' => 'Genel Ayarlar',
+                    'info'  => 'Temel marka bilgilerini yapılandırın.',
+                ],
+
+                'footer' => [
+                    'title' => 'Alt Bilgi Ayarları',
+                    'info'  => 'Alt bilgi markasını ve "Powered By" metnini yapılandırın.',
+                ],
+            ],
+        ],
+
         'exchange-rates' => [
             'index' => [
                 'create-btn'    => 'Döviz Kuru Oluştur',
@@ -4627,6 +4648,54 @@ return [
                     ],
                 ],
             ],
+
+            'whitelabel' => [
+                'info'  => 'Marka özelleştirmesi yapın ve platform referanslarını kaldırın.',
+                'title' => 'Whitelabel',
+
+                'branding' => [
+                    'info'  => 'Marka ayarlarını yapılandırın.',
+                    'title' => 'Marka',
+
+                    'general' => [
+                        'app-name'           => 'Uygulama Adı',
+                        'company-name'       => 'Şirket Adı',
+                        'company-url'        => 'Şirket Web Sitesi URL',
+                        'info'               => 'Uygulama adı, şirket detayları ve meta generator etiketi gibi temel marka bilgilerini yapılandırın.',
+                        'meta-generator'     => 'Meta Generator Etiketi',
+                        'meta-generator-info' => 'Bu değer HTML meta generator etiketinde kullanılacaktır. Boş bırakılırsa varsayılan uygulama adı kullanılır.',
+                        'title'              => 'Genel Ayarlar',
+                    ],
+
+                    'footer' => [
+                        'info'                    => 'Alt bilgi markasını ve "Powered By" metnini yapılandırın.',
+                        'powered-by-text'         => 'Alt Bilgi "Powered By" Metni',
+                        'powered-by-text-info'    => 'Alt bilgide görüntülenecek özel HTML metni. Boş bırakılırsa alt bilgi metni gizlenir.',
+                        'show-powered-by'         => '"Powered By" Alt Bilgisini Göster',
+                        'show-powered-by-info'    => 'Admin panelinde "Powered By" alt bilgi metnini etkinleştirin veya devre dışı bırakın.',
+                        'title'                   => 'Alt Bilgi Ayarları',
+                    ],
+
+                    'logos' => [
+                        'info'  => 'Admin paneli ve mağaza için logo görsellerini yapılandırın.',
+                        'title' => 'Logolar',
+
+                        'admin' => [
+                            'logo-light'      => 'Admin Logo (Açık Tema)',
+                            'logo-dark'       => 'Admin Logo (Koyu Tema)',
+                            'title'           => 'Admin Paneli Logoları',
+                            'title-info'      => 'Admin paneli için açık ve koyu tema logolarını yapılandırın.',
+                        ],
+
+                        'shop' => [
+                            'logo-light'      => 'Mağaza Logo (Açık Tema)',
+                            'logo-dark'       => 'Mağaza Logo (Koyu Tema)',
+                            'title'           => 'Mağaza Logoları',
+                            'title-info'      => 'Mağaza ön yüzü için açık ve koyu tema logolarını yapılandırın.',
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
 
@@ -4675,6 +4744,7 @@ return [
                 'dashboard'                => 'Kontrol Paneli',
                 'data-transfer'            => 'Veri aktarımı',
                 'discount'                 => 'İndirim',
+                'whitelabel'               => 'Whitelabel',
                 'email-templates'          => 'E-posta Şablonları',
                 'events'                   => 'Etkinlikler',
                 'exchange-rates'           => 'Döviz Kurları',
@@ -4704,6 +4774,7 @@ return [
                 'tax-categories'           => 'Vergi Kategorileri',
                 'tax-rates'                => 'Vergi Oranları',
                 'taxes'                    => 'Vergiler',
+                'tenants'                  => 'Tenants',
                 'themes'                   => 'Temalar',
                 'transactions'             => 'İşlemler',
                 'url-rewrites'             => 'URL Yeniden Yazma',
@@ -4711,7 +4782,36 @@ return [
             ],
 
             'powered-by' => [
-                'description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :bagisto tarafından desteklenmektedir.',
+                'description' => '',
+            ],
+        ],
+
+        'whitelabel' => [
+            'info'  => 'Marka özelleştirmesi yapın ve Bagisto referanslarını kaldırın.',
+            'title' => 'Whitelabel',
+
+            'branding' => [
+                'info'  => 'Marka ayarlarını yapılandırın.',
+                'title' => 'Marka',
+
+                'general' => [
+                    'app-name'           => 'Uygulama Adı',
+                    'company-name'       => 'Şirket Adı',
+                    'company-url'        => 'Şirket Web Sitesi URL',
+                    'info'               => 'Uygulama adı, şirket detayları ve meta generator etiketi gibi temel marka bilgilerini yapılandırın.',
+                    'meta-generator'     => 'Meta Generator Etiketi',
+                    'meta-generator-info' => 'Bu değer HTML meta generator etiketinde kullanılacaktır. Boş bırakılırsa varsayılan uygulama adı kullanılır.',
+                    'title'              => 'Genel Ayarlar',
+                ],
+
+                'footer' => [
+                    'info'                    => 'Alt bilgi markasını ve "Powered By" metnini yapılandırın.',
+                    'powered-by-text'         => 'Alt Bilgi "Powered By" Metni',
+                    'powered-by-text-info'    => 'Alt bilgide görüntülenecek özel HTML metni. Boş bırakılırsa alt bilgi metni gizlenir.',
+                    'show-powered-by'         => '"Powered By" Alt Bilgisini Göster',
+                    'show-powered-by-info'    => 'Admin panelinde "Powered By" alt bilgi metnini etkinleştirin veya devre dışı bırakın.',
+                    'title'                   => 'Alt Bilgi Ayarları',
+                ],
             ],
         ],
 
@@ -5021,7 +5121,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'Tarafından desteklenmektedir <a href="https://bagisto.com/" target="_blank">Bagisto</a>, Bir Topluluk Projesi <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        'copy-right' => '',
     ],
 
     'emails' => [
@@ -5131,6 +5231,96 @@ return [
             'subtotal'                   => 'Ara Toplam',
             'tax'                        => 'Vergi',
             'tracking-number'            => 'Takip Numarası: :tracking_number',
+        ],
+    ],
+
+    'tenants' => [
+        'create' => [
+            'title'                      => 'Yeni Tenant Oluştur',
+            'create-btn'                 => 'Yeni Tenant Oluştur',
+            'save-btn'                   => 'Kaydet',
+            'success'                    => 'Tenant başarıyla oluşturuldu.',
+            'success-provisioning'       => 'Tenant başarıyla oluşturuldu. Provisioning işlemi arka planda devam ediyor.',
+            'error'                      => 'Tenant oluşturulurken bir hata oluştu: :message',
+            'basic-information'          => 'Temel Bilgiler',
+            'domain-settings'            => 'Domain Ayarları',
+            'database-settings'          => 'Veritabanı Ayarları',
+            'admin-user'                 => 'Admin Kullanıcı',
+            'provisioning-settings'      => 'Provisioning Ayarları',
+            'fields' => [
+                'name'                      => 'Tenant Adı',
+                'name-placeholder'          => 'Örn: Acme Store',
+                'slug'                      => 'Tenant Slug',
+                'slug-placeholder'          => 'Örn: acme-store',
+                'slug-info'                 => 'URL-safe, küçük harf, rakam ve tire içerebilir',
+                'store_name'                => 'Mağaza Adı',
+                'store_name-placeholder'    => 'Opsiyonel: Mağaza görünen adı',
+                'primary_domain'            => 'Birincil Domain',
+                'primary_domain-placeholder' => 'Örn: acme.example.test (boş bırakılırsa otomatik oluşturulur)',
+                'primary_domain-info'      => 'Boş bırakılırsa slug + base domain kullanılır',
+                'db_host'                   => 'Veritabanı Host',
+                'db_host-placeholder'       => '127.0.0.1',
+                'db_name'                   => 'Veritabanı Adı',
+                'db_name-placeholder'      => 'Boş bırakılırsa otomatik: tenant_{id}',
+                'db_name-info'              => 'Boş bırakılırsa otomatik oluşturulur',
+                'db_username'               => 'Veritabanı Kullanıcı Adı',
+                'db_username-placeholder'  => 'Boş bırakılırsa config\'ten kullanılır',
+                'db_username-info'         => 'Her tenant için ayrı DB kullanıcısı oluşturulacak',
+                'db_username-info-auto'    => 'Boş bırakılırsa otomatik oluşturulur: tenant_{id}_user',
+                'db_password'               => 'Veritabanı Şifresi',
+                'db_password-placeholder'  => 'Minimum 8 karakter',
+                'db_password-info'          => 'Boş bırakılırsa otomatik oluşturulur',
+                'admin-auto-info'           => 'Boş bırakılırsa otomatik oluşturulur',
+                'admin_name'                => 'Admin Adı',
+                'admin_name-placeholder'   => 'Örn: Admin User',
+                'admin_name-info'           => 'Boş bırakılırsa: {Tenant Name} Admin',
+                'admin_email'               => 'Admin E-posta',
+                'admin_email-placeholder'  => 'admin@example.com',
+                'admin_email-info'          => 'Boş bırakılırsa: admin@{slug}.{base_domain}',
+                'admin_password'            => 'Admin Şifre',
+                'admin_password-placeholder' => 'Minimum 8 karakter',
+                'admin_password-info'        => 'Boş bırakılırsa otomatik oluşturulur (16 karakter)',
+                'provision_now'             => 'Hemen Provisioning Yap',
+                'provision_now-info'        => 'Açık: Tenant oluşturulur oluşturulmaz DB oluşturma ve migration işlemleri başlar',
+            ],
+            'validation' => [
+                'name' => [
+                    'required' => 'Tenant adı zorunludur.',
+                ],
+                'slug' => [
+                    'required' => 'Tenant slug zorunludur.',
+                    'regex'    => 'Slug sadece küçük harf, rakam ve tire içerebilir.',
+                    'unique'   => 'Bu slug zaten kullanılıyor.',
+                ],
+                'primary_domain' => [
+                    'unique' => 'Bu domain zaten kullanılıyor.',
+                ],
+                'admin_email' => [
+                    'required' => 'Admin e-posta zorunludur.',
+                    'email'    => 'Geçerli bir e-posta adresi giriniz.',
+                ],
+                'admin_password' => [
+                    'required' => 'Admin şifre zorunludur.',
+                    'min'      => 'Şifre en az 8 karakter olmalıdır.',
+                ],
+                'admin_name' => [
+                    'required' => 'Admin adı zorunludur.',
+                ],
+                'db_password' => [
+                    'min' => 'Veritabanı şifresi en az 8 karakter olmalıdır.',
+                ],
+            ],
+        ],
+        'show' => [
+            'quick-links'        => 'Hızlı Bağlantılar',
+            'admin-panel-link'   => 'Tenant Admin Paneli',
+            'storefront-link'    => 'Tenant Storefront',
+            'open-admin-panel'   => 'Admin Paneli Aç',
+            'open-storefront'   => 'Storefront Aç',
+            'no-domain-warning'  => 'Domain ekleyin',
+            'admin-user-info'    => 'Admin Kullanıcı Bilgileri',
+            'admin-name'         => 'Admin Adı',
+            'admin-email'        => 'Admin E-posta',
         ],
     ],
 ];

@@ -1,6 +1,6 @@
-# Bagisto - Agent Workflow Destekli E-Ticaret Platformu
+# E-Ticaret Platformu - Agent Workflow Destekli
 
-Bu repo, [Bagisto](https://github.com/bagisto/bagisto) e-ticaret platformunun **mockupsoft** fork'udur. OpenAgents tabanlı repo-native agent workflow sistemi ile geliştirilmektedir.
+Bu repo, Laravel tabanlı e-ticaret platformudur. OpenAgents tabanlı repo-native agent workflow sistemi ile geliştirilmektedir.
 
 ---
 
@@ -11,7 +11,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate:fresh
-php artisan db:seed --class=DevBagistoSeeder
+php artisan db:seed --class=DevEcommerceSeeder
 ```
 
 | | URL |
@@ -68,8 +68,7 @@ Bazı testler (ör. `TenantCustomerHttpSmokeTest`, `TenantCustomerIsolationTest`
 
 ### Bu Repo Nedir?
 
-- **Fork:** `mockupsoft/bagisto` - Geliştirme burada yapılır
-- **Upstream:** `bagisto/bagisto` - Referans ve uyumluluk kaynağı
+- **Repository:** `mockupsoft/ecommerce` - Geliştirme burada yapılır
 - **Workflow:** OpenAgents tabanlı, local-first, küçük patch'lerle geliştirme
 
 ### Temel Özellikler
@@ -86,8 +85,8 @@ Bazı testler (ör. `TenantCustomerHttpSmokeTest`, `TenantCustomerIsolationTest`
 ### 1. Repo'yu Klonlayın
 
 ```bash
-git clone --recurse-submodules https://github.com/mockupsoft/bagisto.git
-cd bagisto
+git clone --recurse-submodules https://github.com/mockupsoft/ecommerce.git
+cd ecommerce
 ```
 
 > **Not:** `--recurse-submodules` flag'i `tools/openagents-upstream` submodule'ünü de indirir.
@@ -147,7 +146,7 @@ Detaylı kullanım için: [.openagents/QUICKSTART.md](.openagents/QUICKSTART.md)
 ## Proje Yapısı
 
 ```
-mockupsoft/bagisto/
+mockupsoft/ecommerce/
 ├── AGENTS.md                    # Ana workflow dokümantasyonu
 ├── README.md                    # Bu dosya
 ├── .gitmodules                  # Submodule konfigürasyonu
@@ -217,7 +216,7 @@ mockupsoft/bagisto/
 
 - **PSR-12** standartlarına uyum
 - **Laravel conventions** takip edilmeli
-- **Bagisto patterns** kullanılmalı (Repository, DataGrid, etc.)
+- **E-Commerce patterns** kullanılmalı (Repository, DataGrid, etc.)
 
 Detaylar için: [php-laravel-style.md](.openagents/policies/php-laravel-style.md)
 
@@ -263,7 +262,6 @@ Maximum 5 dosya değiştir ve risk özeti ekle.
 ### Upstream Referanslar
 
 - **OpenAgents:** [darrenhinde/OpenAgents](https://github.com/darrenhinde/OpenAgents) (workflow referansı)
-- **Bagisto Upstream:** [bagisto/bagisto](https://github.com/bagisto/bagisto)
 
 > **Not:** `tools/openagents-upstream` çalışma zamanı bağımlılığı **değildir**. Yalnızca referans amaçlı upstream kopyadır.
 
@@ -290,7 +288,6 @@ Maximum 5 dosya değiştir ve risk özeti ekle.
 
 Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
-Bagisto orijinal projesi de MIT Lisansı altındadır: [bagisto/bagisto](https://github.com/bagisto/bagisto)
 
 ---
 
@@ -302,7 +299,6 @@ Bagisto orijinal projesi de MIT Lisansı altındadır: [bagisto/bagisto](https:/
 - **Onay kapıları:** Kritik alanlarda kontrollü değişiklik
 - **Skill separation:** Her rol kendi sınırları içinde kalır
 - **Test zorunluluğu:** Her değişiklik sonrası doğrulama
-- **Upstream uyumu:** bagisto/bagisto ile uyumluluk korunur
 
 ### Local-First Avantajları
 

@@ -1,6 +1,6 @@
 # Upstream Senkronizasyon Rehberi
 
-Bu doküman, `mockupsoft/bagisto` fork'unun `bagisto/bagisto` upstream'i ile nasıl senkronize edileceğini açıklar.
+Bu doküman, `mockupsoft/ecommerce` repository'sinin upstream ile nasıl senkronize edileceğini açıklar.
 
 ---
 
@@ -8,8 +8,8 @@ Bu doküman, `mockupsoft/bagisto` fork'unun `bagisto/bagisto` upstream'i ile nas
 
 | Terim | Açıklama |
 |-------|----------|
-| **Origin** | `mockupsoft/bagisto` - Bu fork, geliştirme burada yapılır |
-| **Upstream** | `bagisto/bagisto` - Orijinal Bagisto projesi, referans kaynağı |
+| **Origin** | `mockupsoft/ecommerce` - Bu repository, geliştirme burada yapılır |
+| **Upstream** | Upstream repository - Referans kaynağı |
 
 Fork stratejisi:
 - Tüm özelleştirmeler ve workflow dosyaları bu fork'ta tutulur
@@ -25,9 +25,9 @@ Fork stratejisi:
 git remote -v
 
 # Beklenen çıktı:
-# origin    https://github.com/mockupsoft/bagisto.git (fetch)
-# origin    https://github.com/mockupsoft/bagisto.git (push)
-# upstream  https://github.com/bagisto/bagisto.git (fetch)
+# origin    https://github.com/mockupsoft/ecommerce.git (fetch)
+# origin    https://github.com/mockupsoft/ecommerce.git (push)
+# upstream  https://github.com/upstream/ecommerce.git (fetch)
 # upstream  https://github.com/bagisto/bagisto.git (push)
 
 # Eğer upstream yoksa ekle:

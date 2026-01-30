@@ -5021,7 +5021,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'Didukung oleh <a href="https://bagisto.com/" target="_blank">Bagisto</a>, proyek komunitas yang dikembangkan oleh <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        'copy-right' => '',,
     ],
 
     'emails' => [

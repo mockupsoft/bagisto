@@ -244,7 +244,7 @@
                         <div class="m-auto grid h-[476px] w-full place-content-center items-center justify-items-center text-center max-md:h-60">
                             <img
                                 class="max-md:h-32 max-md:w-32 max-sm:h-[100px] max-sm:w-[100px]"
-                                src="{{ bagisto_asset('images/review.png') }}"
+                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23f3f4f6' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%239ca3af' font-family='Arial' font-size='14'%3EReview%3C/text%3E%3C/svg%3E"
                                 alt=""
                                 title=""
                             >
@@ -339,7 +339,7 @@
                         <template v-if="isLoading">
                             <img
                                 class="h-5 w-5 animate-spin text-blue-600"
-                                src="{{ bagisto_asset('images/spinner.svg') }}"
+                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cpath fill='%233b82f6' d='M12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8V2z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='1s' repeatCount='indefinite' from='0 12 12' to='360 12 12'/%3E%3C/path%3E%3C/svg%3E"
                             />
 
                             @lang('shop::app.products.view.reviews.translating')
@@ -458,7 +458,7 @@
                             <template v-if="isLoading">
                                 <img
                                     class="h-5 w-5 animate-spin text-blue-600"
-                                    src="{{ bagisto_asset('images/spinner.svg') }}"
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cpath fill='%233b82f6' d='M12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8V2z'%3E%3CanimateTransform attributeName='transform' type='rotate' dur='1s' repeatCount='indefinite' from='0 12 12' to='360 12 12'/%3E%3C/path%3E%3C/svg%3E"
                                 />
 
                                 @lang('shop::app.products.view.reviews.translating')

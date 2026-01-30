@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'name'    => 'Webkul Bagisto Attributes',
+    'name'    => 'E-Commerce Attributes',
     'version' => core()->version(),
 ];

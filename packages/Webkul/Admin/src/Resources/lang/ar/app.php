@@ -5021,7 +5021,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'بدعم من <a href="https://bagisto.com/" target="_blank">Bagisto</a>، مشروع مجتمعي من <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        'copy-right' => '',,
     ],
 
     'emails' => [

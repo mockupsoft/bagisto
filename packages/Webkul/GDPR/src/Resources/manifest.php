@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'name'    => 'Webkul Bagisto GDPR',
+    'name'    => 'E-Commerce GDPR',
     'version' => core()->version(),
 ];

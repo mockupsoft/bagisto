@@ -28,19 +28,22 @@
                 <!-- Email Header -->
                 <div style="margin-bottom: 65px;">
                     <a href="{{ route('shop.home.index') }}">
-                        @if ($logo = core()->getCurrentChannel()->logo_url)
+                        @php
+                            $appName = core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name');
+                            $whitelabelLogo = core()->getConfigData('whitelabel.branding.logos.shop_logo_light');
+                            $channelLogo = core()->getCurrentChannel()->logo_url;
+                        @endphp
+                        @if ($whitelabelLogo)
                             <img
-                                src="{{ $logo }}"
-                                alt="{{ config('app.name') }}"
+                                src="{{ asset($whitelabelLogo) }}"
+                                alt="{{ $appName }}"
                                 style="height: 40px; width: 110px;"
                             />
-                        @else
+                        @elseif ($channelLogo)
                             <img
-                                src="{{ bagisto_asset('images/logo.svg', 'shop') }}"
-                                alt="{{ config('app.name') }}"
-                                width="131"
-                                height="29"
-                                style="width: 156px;height: 40px;"
+                                src="{{ $channelLogo }}"
+                                alt="{{ $appName }}"
+                                style="height: 40px; width: 110px;"
                             />
                         @endif
                     </a>

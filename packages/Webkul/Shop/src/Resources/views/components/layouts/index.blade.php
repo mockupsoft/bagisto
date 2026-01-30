@@ -41,7 +41,7 @@
         >
         <meta 
             name="generator" 
-            content="Bagisto"
+            content="{{ core()->getConfigData('whitelabel.branding.general.meta_generator') ?: config('app.name') }}"
         >
 
         @stack('meta')
@@ -49,7 +49,7 @@
         <link
             rel="icon"
             sizes="16x16"
-            href="{{ core()->getCurrentChannel()->favicon_url ?? bagisto_asset('images/favicon.ico') }}"
+            href="{{ core()->getCurrentChannel()->favicon_url ?? '' }}"
         />
 
         @bagistoVite(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
@@ -102,7 +102,6 @@
             Skip to main content
         </a>
 
-        <!-- Built With Bagisto -->
         <div id="app">
             <!-- Flash Message Blade Component -->
             <x-shop::flash-group />

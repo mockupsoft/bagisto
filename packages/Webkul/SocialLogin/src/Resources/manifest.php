@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'name'    => 'Webkul Bagisto Social Login',
+    'name'    => 'E-Commerce Social Login',
     'version' => core()->version(),
 ];

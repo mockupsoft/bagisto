@@ -1,56 +1,29 @@
 <x-admin::layouts>
     <x-slot:title>
-        Tenants
+        @lang('admin::app.components.layouts.sidebar.tenants')
     </x-slot>
 
-    <div class="content">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+    <div class="flex items-center justify-between gap-4 max-sm:flex-wrap">
+        <p class="text-xl font-bold text-gray-800 dark:text-white">
+            @lang('admin::app.components.layouts.sidebar.tenants')
+        </p>
 
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-
-        <h1 class="text-xl font-bold mb-4">Tenants</h1>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Slug</th>
-                    <th>Status</th>
-                    <th>DB Status</th>
-                    <th>Primary Domain</th>
-                    <th>Verified</th>
-                    <th>Last Error</th>
-                    <th>Created</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tenants as $tenant)
-                    <tr>
-                        <td>{{ $tenant->id }}</td>
-                        <td>{{ $tenant->name }}</td>
-                        <td>{{ $tenant->slug }}</td>
-                        <td>{{ $tenant->status }}</td>
-                        <td>{{ $tenant->database?->status ?? '-' }}</td>
-                        <td>{{ $tenant->primaryDomain?->domain ?? '-' }}</td>
-                        <td>{{ $tenant->primaryDomain?->verified_at ? 'yes' : 'no' }}</td>
-                        <td>{{ $tenant->last_error ?? '-' }}</td>
-                        <td>{{ $tenant->created_at }}</td>
-                        <td>
-                            <a href="{{ route('admin.tenants.show', ['tenant' => $tenant->id]) }}">View</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        <div class="mt-4">
-            {{ $tenants->links() }}
+        <div class="flex items-center gap-x-2.5">
+            @if (bouncer()->hasPermission('tenants.create'))
+                <a
+                    href="{{ route('admin.tenants.create') }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.tenants.create.create-btn')
+                </a>
+            @endif
         </div>
     </div>
+
+    {!! view_render_event('bagisto.admin.tenants.list.before') !!}
+
+    <!-- Datagrid -->
+    <x-admin::datagrid :src="route('admin.tenants.index')" />
+
+    {!! view_render_event('bagisto.admin.tenants.list.after') !!}
 </x-admin::layouts>

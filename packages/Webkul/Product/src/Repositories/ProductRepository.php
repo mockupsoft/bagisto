@@ -140,6 +140,10 @@ class ProductRepository extends Repository
     {
         $attribute = $this->attributeRepository->findOneByField('code', $code);
 
+        if (! $attribute) {
+            return null;
+        }
+
         $attributeValues = $this->productAttributeValueRepository->findWhere([
             'attribute_id'          => $attribute->id,
             $attribute->column_name => $value,

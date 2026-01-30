@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Bagisto'),
+    'name' => env('APP_NAME', 'E-Commerce Platform'),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +107,19 @@ return [
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Panel Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the default locale for the admin panel.
+    | This is separate from the main application locale to allow
+    | different languages for admin and shop frontend.
+    |
+    */
+
+    'admin_locale' => env('APP_ADMIN_LOCALE', 'tr'),
 
     /*
     |--------------------------------------------------------------------------

@@ -46,10 +46,46 @@ class Core extends BaseCore
         return $this->fallbackChannelCode();
     }
 
+    /**
+     * Returns current locale with tenant-safe fallback.
+     *
+     * @return \Webkul\Core\Contracts\Locale
+     */
+    public function getCurrentLocale()
+    {
+        $locale = parent::getCurrentLocale();
+
+        if ($locale) {
+            return $locale;
+        }
+
+        // Fallback: Create a minimal locale object if none exists
+        return $this->fallbackLocale();
+    }
+
     protected function fallbackChannelCode(): string
     {
         $firstChannel = $this->channelRepository->first();
 
         return $firstChannel ? $firstChannel->code : 'default';
+    }
+
+    protected function fallbackLocale()
+    {
+        // Try to get first available locale
+        $firstLocale = $this->localeRepository->first();
+
+        if ($firstLocale) {
+            return $firstLocale;
+        }
+
+        // Last resort: Create a minimal locale model instance
+        $localeCode = app()->getLocale() ?: config('app.fallback_locale', 'en');
+
+        return \Webkul\Core\Models\Locale::make([
+            'code' => $localeCode,
+            'name' => ucfirst($localeCode),
+            'direction' => 'ltr',
+        ]);
     }
 }

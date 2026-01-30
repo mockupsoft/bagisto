@@ -3,7 +3,7 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Bagisto Vite Configuration
+    | Vite Configuration
     |--------------------------------------------------------------------------
     |
     | Please add your Vite registry here to seamlessly support the `bagisto_assets` function.
