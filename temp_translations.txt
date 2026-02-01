@@ -1,0 +1,1309 @@
+﻿
+      ],
+  
+      'settings' => [
+          'locales' => [
+              'index' => [
+                  'create-btn' => 'Yerel Olu┼ştur',
+                  'locale'     => 'Yerel',
+                  'logo-size'  => 'Resim ├ğ├Âz├╝n├╝rl├╝─ş├╝ 24px x 16px gibi olmal─▒d─▒r',
+                  'title'      => 'Yereller',
+  
+                  'datagrid' => [
+                      'actions'   => '─░┼şlemler',
+                      'code'      => 'Kodu',
+                      'delete'    => 'Sil',
+                      'direction' => 'Y├Ân',
+                      'edit'      => 'D├╝zenle',
+                      'id'        => 'ID',
+                      'ltr'       => 'LTR',
+                      'name'      => 'Ad─▒',
+                      'rtl'       => 'RTL',
+                  ],
+  
+                  'create' => [
+                      'code'             => 'Kodu',
+                      'direction'        => 'Y├Ân',
+                      'locale-logo'      => 'Yerel Logosu',
+                      'name'             => 'Ad─▒',
+                      'save-btn'         => 'Yereli Kaydet',
+                      'select-direction' => 'Y├Ân se├ğ',
+                      'title'            => 'Yerel Olu┼ştur',
+                  ],
+  
+                  'edit' => [
+                      'title' => 'Yerelleri D├╝zenle',
+                  ],
+  
+                  'create-success'    => 'Yerel ba┼şar─▒yla olu┼şturuldu.',
+                  'delete-failed'     => 'Yerel silme ba┼şar─▒s─▒z',
+                  'delete-success'    => 'Yerel ba┼şar─▒yla silindi.',
+                  'delete-warning'    => 'Emin misiniz, bu i┼şlemi ger├ğekle┼ştirmek istedi─şinize?',
+                  'last-delete-error' => 'En az bir Yerel gereklidir.',
+                  'update-success'    => 'Yerel ba┼şar─▒yla g├╝ncellendi.',
+              ],
+          ],
+  
+          'currencies' => [
+              'index' => [
+                  'title'      => 'Para Birimleri',
+                  'create-btn' => 'Para Birimi Olu┼ştur',
+                  'currency'   => 'Para Birimi',
+  
+                  'datagrid' => [
+                      'actions'        => '─░┼şlemler',
+                      'code'           => 'Kodu',
+                      'delete'         => 'Sil',
+                      'edit'           => 'D├╝zenle',
+                      'id'             => 'ID',
+                      'method-error'   => 'Hata! Yanl─▒┼ş y├Ântem alg─▒land─▒, l├╝tfen kitlesel i┼şlem yap─▒land─▒rmas─
+▒n─▒ kontrol edin',
+                      'name'           => 'Ad─▒',
+                      'no-resource'    => 'Eylem i├ğin yetersiz kaynak sa─şland─▒',
+                      'partial-action' => 'K─▒s─▒tlanm─▒┼ş sistem k─▒s─▒tlamalar─▒ nedeniyle baz─▒ i┼şlemler ger├ğekle┼
+ştirilmedi',
+                      'update-success' => 'Se├ğilen :resource ba┼şar─▒yla g├╝ncellendi',
+                  ],
+  
+                  'create' => [
+                      'code'                   => 'Kodu',
+                      'create-btn'             => 'Para Birimi Olu┼ştur',
+                      'currency-position'      => 'Para Birimi Pozisyonu',
+                      'decimal'                => 'Ondal─▒k',
+                      'decimal-separator'      => 'Ondal─▒k Ay─▒r─▒c─▒',
+                      'decimal-separator-note' => ':attribute alan─▒ yaln─▒zca virg├╝l (,) ve nokta (.) operat├Ârlerini
+ kabul edebilir',
+                      'delete-warning'         => 'Emin misiniz, bu i┼şlemi ger├ğekle┼ştirmek istedi─şinize?',
+                      'general'                => 'Genel',
+                      'group-separator'        => 'Grup Ay─▒r─▒c─▒',
+                      'group-separator-note'   => ':attribute alan─▒ yaln─▒zca virg├╝l (,), nokta (.), kesme i┼şareti (
+\') ve bo┼şluk ( ) karakterlerini kabul edebilir.',
+                      'name'                   => 'Ad─▒',
+                      'save-btn'               => 'Para Birimini Kaydet',
+                      'symbol'                 => 'Sembol',
+                      'title'                  => 'Yeni Para Birimi Olu┼ştur',
+                  ],
+  
+                  'edit' => [
+                      'title' => 'Para Birimini D├╝zenle',
+                  ],
+  
+                  'create-success'    => 'Para birimi ba┼şar─▒yla olu┼şturuldu.',
+                  'delete-failed'     => 'Para birimi silinemedi',
+                  'delete-success'    => 'Para birimi ba┼şar─▒yla silindi.',
+                  'last-delete-error' => 'En az bir Para Birimi gereklidir.',
+                  'update-success'    => 'Para birimi ba┼şar─▒yla g├╝ncellendi.',
+              ],
+          ],
+  
+          'data-transfer' => [
+              'imports' => [
+                  'create' => [
+                      'action'              => 'Aksiyon',
+                      'allowed-errors'      => '─░zin Verilen Hatalar',
+                      'back-btn'            => 'Geri',
+                      'create-update'       => 'Olu┼ştur/G├╝ncelle',
+                      'delete'              => 'Sil',
+                      'download-sample'     => '├ûrnek ─░ndir',
+                      'field-separator'     => 'Alan Ayrac─▒',
+                      'file-info-example'   => '├ûrne─şin, urun-resimleri i├ğin dosyalar /project-root/storage/app/impo
+rt/product-images klas├Âr├╝ne yerle┼ştirilmelidir.',
+                      'file-info'           => '/project-root/storage/app/import klas├Âr├╝ne g├Âre mutlak yol kullan─▒n
+, ├ûrnek: urun-resimleri, import-resimler.',
+                      'file'                => 'Dosya',
+                      'general'             => 'Genel',
+                      'images-directory'    => 'Resim Klas├Âr Yolu',
+                      'process-in-queue'    => 'S─▒ra ─░┼şlemesi',
+                      'results'             => 'Sonu├ğlar',
+                      'save-btn'            => 'Kaydet Import',
+                      'settings'            => 'Ayarlar',
+                      'skip-errors'         => 'Hatalar─▒ Atla',
+                      'stop-on-errors'      => 'Hatalara Dur',
+                      'title'               => 'Import Olu┼ştur',
+                      'type'                => 'T├╝r',
+                      'validation-strategy' => 'Do─şrulama Yakla┼ş─▒m─▒',
+                  ],
+  
+                  'edit' => [
+                      'action'              => 'Aksiyon',
+                      'allowed-errors'      => '─░zin Verilen Hatalar',
+                      'back-btn'            => 'Geri',
+                      'create-update'       => 'Olu┼ştur/G├╝ncelle',
+                      'current-file'        => 'Mevcut Y├╝klenen Dosya',
+                      'delete'              => 'Sil',
+                      'download-sample'     => '├ûrnek ─░ndir',
+                      'field-separator'     => 'Alan Ayrac─▒',
+                      'file-info-example'   => '├ûrne─şin, urun-resimleri i├ğin dosyalar /project-root/storage/app/impo
+rt/product-images klas├Âr├╝ne yerle┼ştirilmelidir.',
+                      'file-info'           => '/project-root/storage/app/import klas├Âr├╝ne g├Âre mutlak yol kullan─▒n
+, ├ûrnek: urun-resimleri, import-resimler.',
+                      'file'                => 'Dosya',
+                      'general'             => 'Genel',
+                      'images-directory'    => 'Resim Klas├Âr Yolu',
+                      'process-in-queue'    => 'S─▒ra ─░┼şlemesi',
+                      'results'             => 'Sonu├ğlar',
+                      'save-btn'            => 'Kaydet Import',
+                      'settings'            => 'Ayarlar',
+                      'skip-errors'         => 'Hatalar─▒ Atla',
+                      'stop-on-errors'      => 'Hatalara Dur',
+                      'title'               => 'Import D├╝zenle',
+                      'type'                => 'T├╝r',
+                      'validation-strategy' => 'Do─şrulama Yakla┼ş─▒m─▒',
+                  ],
+  
+                  'index' => [
+                      'button-title' => 'Import Olu┼ştur',
+                      'title'        => 'Importlar',
+  
+                      'datagrid' => [
+                          'actions'       => 'Eylemler',
+                          'completed-at'  => 'Tamamland─▒ ─░├ğin',
+                          'created'       => 'Olu┼şturuldu',
+                          'delete'        => 'Sil',
+                          'deleted'       => 'Silindi',
+                          'edit'          => 'D├╝zenle',
+                          'error-file'    => 'Hata Dosyas─▒',
+                          'id'            => 'ID',
+                          'started-at'    => 'Ba┼şlad─▒',
+                          'state'         => 'Durum',
+                          'summary'       => '├ûzet',
+                          'updated'       => 'G├╝ncellendi',
+                          'uploaded-file' => 'Y├╝klenen Dosya',
+                      ],
+                  ],
+  
+                  'import' => [
+                      'back-btn'                => 'Geri',
+                      'completed-batches'       => 'Toplam Tamamlanan Batches:',
+                      'download-error-report'   => 'Tam Hata Raporu ─░ndir',
+                      'edit-btn'                => 'D├╝zenle',
+                      'imported-info'           => 'Tebrikler! Import i┼şlemi ba┼şar─▒yla ger├ğekle┼şti.',
+                      'importing-info'          => 'Import ─░┼şlemi Devam Ediyor',
+                      'indexing-info'           => '├£r├╝n Fiyat─▒, Stok ve Elastik Arama ─░ndekslemesi Devam Ediyor',
+                      'linking-info'            => '├£r├╝n Ba─şlant─▒s─▒ Devam Ediyor',
+                      'progress'                => '─░lerleme:',
+                      'title'                   => 'Import',
+                      'total-batches'           => 'Toplam Batches:',
+                      'total-created'           => 'Toplam Kay─▒t Olu┼şturuldu:',
+                      'total-deleted'           => 'Toplam Kay─▒t Silindi:',
+                      'total-errors'            => 'Toplam Hatalar:',
+                      'total-invalid-rows'      => 'Toplam Ge├ğersiz Sat─▒rlar:',
+                      'total-rows-processed'    => 'Toplam ─░┼şlenen Sat─▒rlar:',
+                      'total-updated'           => 'Toplam Kay─▒t G├╝ncellendi:',
+                      'validate-info'           => 'Do─şrulama Verilerine T─▒klayarak importunuzu kontrol edin.',
+                      'validate'                => 'Do─şrula',
+                      'validating-info'         => 'Veriler okundu ve Do─şrulan─▒yor',
+                      'validation-failed-info'  => 'Importunuz ge├ğersiz. A┼şa─ş─▒daki hatalar─▒ d├╝zeltin ve tekrar de
+neyin.',
+                      'validation-success-info' => 'Importunuz ge├ğerli. Import i┼şlemini ba┼şlatmak i├ğin T─▒klay─▒n.'
+,
+                  ],
+  
+                  'create-success'    => 'Import ba┼şar─▒yla olu┼şturuldu.',
+                  'delete-failed'     => 'Import silinirken beklenmedik bir hata olu┼ştu.',
+                  'delete-success'    => 'Import ba┼şar─▒yla silindi.',
+                  'not-valid'         => 'Import ge├ğersiz',
+                  'nothing-to-import' => '─░├ğe aktarmak i├ğin kaynak yok.',
+                  'setup-queue-error' => 'Import i┼şlemi i├ğin "database" veya "redis" olarak kuyruk s├╝r├╝c├╝n├╝ de─şi
+┼ştirin.',
+                  'update-success'    => 'Import ba┼şar─▒yla g├╝ncellendi.',
+              ],
+          ],
+  
+>         'whitelabel' => [
+              'index' => [
+                  'title'       => 'Whitelabel Ayarlar─▒',
+                  'description' => 'Marka ├Âzelle┼ştirmesi yap─▒n ve uygulaman─▒zdan platform referanslar─▒n─▒ kald─▒r─
+▒n.',
+                  'save-btn'   => 'Ayarlar─▒ Kaydet',
+                  'save-success' => 'Whitelabel ayarlar─▒ ba┼şar─▒yla kaydedildi.',
+              ],
+  
+              'branding' => [
+                  'general' => [
+                      'title' => 'Genel Ayarlar',
+                      'info'  => 'Temel marka bilgilerini yap─▒land─▒r─▒n.',
+                  ],
+  
+                  'footer' => [
+                      'title' => 'Alt Bilgi Ayarlar─▒',
+                      'info'  => 'Alt bilgi markas─▒n─▒ ve "Powered By" metnini yap─▒land─▒r─▒n.',
+                  ],
+              ],
+          ],
+  
+          'exchange-rates' => [
+              'index' => [
+                  'create-btn'    => 'D├Âviz Kuru Olu┼ştur',
+                  'exchange-rate' => 'D├Âviz Kuru',
+                  'title'         => 'D├Âviz Kurlar─▒',
+                  'update-rates'  => 'D├Âviz Kuru G├╝ncelle',
+  
+                  'create' => [
+                      'delete-warning'         => 'Emin misiniz, bu i┼şlemi ger├ğekle┼ştirmek istedi─şinize?',
+                      'rate'                   => 'Kur',
+                      'save-btn'               => 'D├Âviz Kuru Kaydet',
+                      'select-target-currency' => 'Hedef para birimini se├ğ',
+                      'source-currency'        => 'Kaynak Para Birimi',
+                      'target-currency'        => 'Hedef Para Birimi',
+                      'title'                  => 'D├Âviz Kuru Olu┼ştur',
+                  ],
+  
+                  'edit' => [
+                      'title' => 'D├Âviz Kurlar─▒n─▒ D├╝zenle',
+                  ],
+  
+                  'datagrid' => [
+                      'actions'       => '─░┼şlemler',
+                      'currency-name' => 'Para Birimi Ad─▒',
+                      'delete'        => 'Sil',
+                      'edit'          => 'D├╝zenle',
+                      'exchange-rate' => 'D├Âviz Kuru',
+                      'id'            => 'ID',
+                  ],
+  
+                  'create-success' => 'D├Âviz Kuru Ba┼şar─▒yla Olu┼şturuldu',
+                  'delete-error'   => 'D├Âviz Kuru Silme Hatas─▒',
+                  'delete-success' => 'D├Âviz Kuru Ba┼şar─▒yla Silindi',
+                  'update-success' => 'D├Âviz Kuru Ba┼şar─▒yla G├╝ncellendi',
+              ],
+          ],
+  
+          'inventory-sources' => [
+              'index' => [
+                  'create-btn' => 'Envanter Kayna─ş─▒ Olu┼ştur',
+                  'title'      => 'Envanter Kaynaklar─▒',
+  
+                  'datagrid' => [
+                      'active'   => 'Aktif',
+                      'code'     => 'Kod',
+                      'delete'   => 'Sil',
+                      'edit'     => 'D├╝zenle',
+                      'id'       => 'ID',
+                      'inactive' => 'Pasif',
+                      'name'     => 'Ad─▒',
+                      'priority' => '├ûncelik',
+                      'status'   => 'Durum',
+                  ],
+              ],
+  
+              'create' => [
+                  'add-title'      => 'Envanter Kayna─ş─▒ Ekle',
+                  'address'        => 'Kaynak Adresi',
+                  'back-btn'       => 'Geri',
+                  'city'           => '┼Şehir',
+                  'code'           => 'Kod',
+                  'contact-email'  => 'E-posta',
+                  'contact-fax'    => 'Faks',
+                  'contact-info'   => '─░leti┼şim Bilgileri',
+                  'contact-name'   => 'Ad─▒',
+                  'contact-number' => '─░leti┼şim Numaras─▒',
+                  'country'        => '├£lke',
+                  'description'    => 'A├ğ─▒klama',
+                  'general'        => 'Genel',
+                  'latitude'       => 'Enlem',
+                  'longitude'      => 'Boylam',
+                  'name'           => 'Ad─▒',
+                  'postcode'       => 'Posta Kodu',
+                  'priority'       => '├ûncelik',
+                  'save-btn'       => 'Envanter Kaynaklar─▒n─▒ Kaydet',
+                  'select-country' => '├£lke Se├ğ',
+                  'select-state'   => 'Eyalet Se├ğ',
+                  'settings'       => 'Ayarlar',
+                  'state'          => 'Eyalet',
+                  'status'         => 'Durum',
+                  'street'         => 'Sokak',
+                  'title'          => 'Envanter Kaynaklar─▒',
+              ],
+  
+              'edit' => [
+                  'back-btn'       => 'Geri',
+                  'city'           => '┼Şehir',
+                  'code'           => 'Kod',
+                  'contact-email'  => 'E-posta',
+                  'contact-fax'    => 'Faks',
+                  'contact-info'   => '─░leti┼şim Bilgileri',
+                  'contact-name'   => 'Ad─▒',
+                  'contact-number' => '─░leti┼şim Numaras─▒',
+                  'country'        => '├£lke',
+                  'description'    => 'A├ğ─▒klama',
+                  'general'        => 'Genel',
+                  'latitude'       => 'Enlem',
+                  'longitude'      => 'Boylam',
+                  'name'           => 'Ad─▒',
+                  'postcode'       => 'Posta Kodu',
+                  'priority'       => '├ûncelik',
+                  'save-btn'       => 'Envanter Kaynaklar─▒n─▒ Kaydet',
+                  'select-country' => '├£lke Se├ğ',
+                  'select-state'   => 'Eyalet Se├ğ',
+                  'settings'       => 'Ayarlar',
+                  'source-address' => 'Kaynak Adresi',
+                  'state'          => 'Eyalet',
+                  'status'         => 'Durum',
+                  'street'         => 'Sokak',
+                  'title'          => 'Envanter Kaynaklar─▒n─▒ D├╝zenle',
+              ],
+  
+              'create-success'    => 'Envanter Kayna─ş─▒ Ba┼şar─▒yla Olu┼şturuldu',
+              'delete-failed'     => 'Envanter Kaynaklar─▒ Silme Ba┼şar─▒s─▒z',
+              'delete-success'    => 'Envanter Kaynaklar─▒ Ba┼şar─▒yla Silindi',
+              'last-delete-error' => 'Son Envanter Kayna─ş─▒ Silinemez',
+              'update-success'    => 'Envanter Kaynaklar─▒ Ba┼şar─▒yla G├╝ncellendi',
+          ],
+  
+          'taxes' => [
+              'categories' => [
+                  'index' => [
+                      'delete-warning' => 'Silmek istedi─şinizden emin misiniz?',
+                      'tax-category'   => 'Vergi Kategorisi',
+                      'title'          => 'Vergi Kategorileri',
+  
+                      'datagrid' => [
+                          'actions' => '─░┼şlemler',
+                          'code'    => 'Kodu',
+                          'delete'  => 'Sil',
+                          'edit'    => 'D├╝zenle',
+                          'id'      => 'ID',
+                          'name'    => 'Ad─▒',
+                      ],
+  
+                      'create' => [
+                          'add-tax-rates' => 'Vergi Oranlar─▒ Ekle',
+                          'code'          => 'Kodu',
+                          'description'   => 'A├ğ─▒klama',
+                          'empty-text'    => 'Vergi Oranlar─▒ mevcut de─şil, l├╝tfen yeni Vergi Oranlar─▒ olu┼şturun.',
+                          'general'       => 'Vergi Kategorisi',
+                          'name'          => 'Ad─▒',
+                          'save-btn'      => 'Vergi Kategorisini Kaydet',
+                          'select'        => 'Se├ğ',
+                          'tax-rates'     => 'Vergi Oranlar─▒',
+                          'title'         => 'Vergi Kategorisi Olu┼ştur',
+                      ],
+  
+                      'edit' => [
+                          'title'   => 'Vergi Kategorilerini D├╝zenle',
+                      ],
+  
+                      'can-not-delete' => 'Vergi Oran─▒ Atanm─▒┼ş Kategoriler silinemez.',
+                      'create-success' => 'Yeni Vergi Kategorisi Olu┼şturuldu',
+                      'delete-failed'  => 'Vergi Kategorisi Silme Ba┼şar─▒s─▒z',
+                      'delete-success' => 'Vergi Kategorisi Ba┼şar─▒yla Silindi',
+                      'update-success' => 'Vergi Kategorisi Ba┼şar─▒yla G├╝ncellendi',
+                  ],
+              ],
+  
+              'rates' => [
+                  'index' => [
+                      'button-title' => 'Vergi Oran─▒ Olu┼ştur',
+                      'tax-rate'     => 'Vergi Oran─▒',
+                      'title'        => 'Vergi Oranlar─▒',
+  
+                      'datagrid' => [
+                          'country'    => '├£lke',
+                          'delete'     => 'Sil',
+                          'edit'       => 'D├╝zenle',
+                          'id'         => 'ID',
+                          'identifier' => 'Tan─▒mlay─▒c─▒',
+                          'state'      => 'Eyalet',
+                          'tax-rate'   => 'Vergi Oran─▒',
+                          'zip-code'   => 'Posta Kodu',
+                          'zip-from'   => 'Posta Kodu Ba┼şlang─▒c─▒',
+                          'zip-to'     => 'Posta Kodu Biti┼şi',
+                      ],
+                  ],
+  
+                      'client-secret'                  => 'M├╝┼şteri S─▒rr─▒',
+                      'client-secret-info'             => 'Gizli anahtar─▒n─▒z─▒ buraya ekleyin',
+                      'description'                    => 'A├ğ─▒klama',
+                      'generate-invoice'               => 'Sipari┼ş verildikten sonra faturay─▒ otomatik olarak olu┼ştu
+r',
+                      'generate-invoice-applicable'    => 'Otomatik fatura olu┼şturma etkinse uygulan─▒r',
+                      'info'                           => '├ûdeme y├Ântemi bilgilerini ayarlay─▒n',
+                      'instructions'                   => 'Talimatlar',
+                      'logo'                           => 'Logo',
+                      'logo-information'               => 'Resim ├ğ├Âz├╝n├╝rl├╝─ş├╝ 55 piksel X 45 piksel gibi olmal─▒d
+─▒r',
+                      'mailing-address'                => '├çeki G├Ânder',
+                      'money-transfer'                 => 'Havale',
+                      'money-transfer-info'            => 'Fonlar─▒n bir ki┼şiden veya hesaptan ba┼şka bir ki┼şiye veya
+ hesaba, genellikle elektronik olarak, i┼şlemler veya havaleler gibi ├ğe┼şitli ama├ğlarla aktar─▒lmas─▒.',
+                      'page-title'                     => '├ûdeme Y├Ântemleri',
+                      'paid'                           => '├ûdendi',
+                      'paypal-smart-button'            => 'PayPal',
+                      'paypal-smart-button-info'       => 'PayPal Smart Button: Web siteleri ve uygulamalar i├ğin g├╝ve
+nli, ├ğoklu y├Ântemli i┼şlemler i├ğin ├Âzelle┼ştirilebilir d├╝─şmelerle ├ğevrimi├ği ├Âdemeleri kolayla┼şt─▒r─▒r.',
+                      'paypal-standard'                => 'PayPal Standart',
+                      'paypal-standard-info'           => 'PayPal Standart, ├ğevrimi├ği i┼şletmeler i├ğin temel bir Pay
+Pal ├Âdeme se├ğene─şidir ve m├╝┼şterilerin PayPal hesaplar─▒n─▒ veya kredi / banka kartlar─▒n─▒ kullanarak ├Âdeme yapma
+lar─▒n─▒ sa─şlar.',
+                      'pending'                        => 'Beklemede',
+                      'pending-payment'                => 'Bekleyen ├ûdeme',
+                      'processing'                     => '─░┼şleniyor',
+                      'sandbox'                        => 'Kum Havuzu',
+                      'set-invoice-status'             => 'Fatura olu┼şturulduktan sonra fatura durumunu ayarla',
+                      'set-order-status'               => 'Fatura olu┼şturulduktan sonra sipari┼ş durumunu ayarla',
+                      'sort-order'                     => 'S─▒ralama S─▒ras─▒',
+                      'status'                         => 'Durum',
+                      'title'                          => 'Ba┼şl─▒k',
+                  ],
+  
+                  'order-settings' => [
+                      'info'               => 'Sipari┼ş numaralar─▒n─▒, minimum sipari┼şleri ve geri sipari┼şleri ayarl
+ay─▒n.',
+                      'title'              => 'Sipari┼ş Ayarlar─▒',
+  
+                      'order-number' => [
+                          'generator'   => 'Sipari┼ş Numaras─▒ Olu┼şturucusu',
+                          'info'        => 'Bir m├╝┼şteri sipari┼şine atanan benzersiz bir tan─▒mlay─▒c─▒d─▒r ve sat─▒n
+ alma s├╝reci boyunca takip, ileti┼şim ve referans sa─şlar.',
+                          'length'      => 'Sipari┼ş Numaras─▒ Uzunlu─şu',
+                          'prefix'      => 'Sipari┼ş Numaras─▒ ├ûneki',
+                          'suffix'      => 'Sipari┼ş Numaras─▒ Soneki',
+                          'title'       => 'Sipari┼ş Numaras─▒ Ayarlar─▒',
+                      ],
+  
+                      'minimum-order' => [
+                          'description'             => 'A├ğ─▒klama',
+                          'enable'                  => 'Etkinle┼ştir',
+                          'include-discount-amount' => '─░ndirim Tutar─▒n─▒ Dahil Et',
+                          'include-tax-amount'      => 'Tutara Vergi Dahil Et',
+                          'info'                    => 'Bir sipari┼şin i┼şlenmesi veya faydalar i├ğin gereken en d├╝┼ş├
+╝k miktar─▒ veya de─şeri belirleyen yap─▒land─▒r─▒lm─▒┼ş kriterler.',
+                          'minimum-order-amount'    => 'Minimum Sipari┼ş Tutar─▒',
+                          'title'                   => 'Minimum Sipari┼ş Ayarlar─▒',
+                      ],
+  
+                      'reorder' => [
+                          'admin-reorder'      => 'Y├Ânetici Yeniden Sipari┼ş',
+                          'admin-reorder-info' => 'Y├Ânetici kullan─▒c─▒lar─▒ i├ğin yeniden sipari┼ş ├Âzelli─şini etkin
+le┼ştirin veya devre d─▒┼ş─▒ b─▒rak─▒n.',
+                          'info'               => 'Ma─şaza kullan─▒c─▒lar─▒ i├ğin yeniden sipari┼ş ├Âzelli─şini etkinle
+┼ştirin veya devre d─▒┼ş─▒ b─▒rak─▒n.',
+                          'shop-reorder'       => 'Ma─şaza Yeniden Sipari┼ş',
+                          'shop-reorder-info'  => 'Ma─şaza kullan─▒c─▒lar─▒ i├ğin yeniden sipari┼ş ├Âzelli─şini etkinle
+┼ştirin veya devre d─▒┼ş─▒ b─▒rak─▒n.',
+                          'title'              => 'Yeniden Sipari┼şe ─░zin Ver',
+                      ],
+  
+                      'stock-options' => [
+                          'allow-back-orders' => 'Geri Sipari┼şlere ─░zin Ver',
+                          'info'              => 'Stok se├ğenekleri, potansiyel karlar─▒ etkileyen belirli bir fiyattan
+ ┼şirket hisselerini sat─▒n alma veya satma hakk─▒ veren yat─▒r─▒m s├Âzle┼şmeleridir.',
+                          'title'             => 'Stok Se├ğenekleri',
+                      ],
+                  ],
+  
+                  'invoice-settings' => [
+                      'info'  => 'Fatura numaras─▒n─▒, ├Âdeme ko┼şullar─▒n─▒, fatura kayd─▒rma tasar─▒m─▒n─▒ ve fatura 
+hat─▒rlat─▒c─▒lar─▒n─▒ ayarlay─▒n.',
+                      'title' => 'Fatura Ayarlar─▒',
+  
+                      'invoice-number' => [
+                          'generator'  => 'Fatura Numaras─▒ Olu┼şturucusu',
+                          'info'       => 'Faturalara benzersiz tan─▒mlama numaralar─▒ olu┼şturmak ve atamak i├ğin kura
+llar─▒n veya parametrelerin yap─▒land─▒r─▒lmas─▒.',
+                          'length'     => 'Fatura Numaras─▒ Uzunlu─şu',
+                          'prefix'     => 'Fatura Numaras─▒ ├ûneki',
+                          'suffix'     => 'Fatura Numaras─▒ Soneki',
+                          'title'      => 'Fatura Numaras─▒ Ayarlar─▒',
+                      ],
+  
+                      'payment-terms' => [
+                          'due-duration'      => 'Vade S├╝resi',
+                          'due-duration-day'  => ':due-duration G├╝n',
+                          'due-duration-days' => ':due-duration G├╝n',
+                          'info'              => 'Al─▒c─▒n─▒n sat─▒c─▒ya mal veya hizmetler i├ğin ne zaman ve nas─▒l ├Â
+deme yapmas─▒ gerekti─şini belirleyen anla┼ş─▒lan ko┼şullar.',
+                          'title'             => '├ûdeme Ko┼şullar─▒',
+                      ],
+  
+                      'pdf-print-outs' => [
+                          'footer-text'      => 'Alt bilgi metni',
+                          'footer-text-info' => 'PDF\'nin altbilgisinde g├Âr├╝necek metni girin.',
+                          'info'             => 'Fatura Kimli─şi, Sipari┼ş Kimli─şi\'ni ba┼şl─▒kta g├Âr├╝nt├╝lemek ve f
+atura logosunu i├ğermek i├ğin PDF Yazd─▒rmalar─▒n─▒ yap─▒land─▒r─▒n.',
+                          'invoice-id-info'  => 'Fatura Ba┼şl─▒─ş─▒nda Fatura Kimli─şi\'nin g├Âr├╝nt├╝lenmesini yap─▒la
+nd─▒r─▒n.',
+                          'invoice-id-title' => 'Ba┼şl─▒kta Fatura Kimli─şi\'ni G├Âster',
+                          'logo'             => 'Logo',
+                          'logo-info'        => 'G├Âr├╝nt├╝ ├ğ├Âz├╝n├╝rl├╝─ş├╝ 131px X 30px olmal─▒d─▒r.',
+                          'order-id-info'    => 'Fatura Ba┼şl─▒─ş─▒nda Sipari┼ş Kimli─şi\'nin g├Âr├╝nt├╝lenmesini yap─▒
+land─▒r─▒n.',
+                          'order-id-title'   => 'Ba┼şl─▒kta Sipari┼ş Kimli─şi\'ni G├Âster',
+                          'title'            => 'PDF Yazd─▒rmalar─▒',
+                      ],
+  
+                      'invoice-reminders' => [
+                          'info'                       => 'Faturalar i├ğin yakla┼şan veya gecikmi┼ş ├Âdemeleri m├╝┼şter
+ilere hat─▒rlatmak i├ğin otomatik bildirimler veya ileti┼şimler g├Ânderilir.',
+                          'interval-between-reminders' => 'Hat─▒rlatmalar Aras─▒ndaki S├╝re',
+                          'maximum-limit-of-reminders' => 'Hat─▒rlatmalar─▒n Maksimum S─▒n─▒r─▒',
+                          'title'                      => 'Fatura Hat─▒rlat─▒c─▒lar─▒',
+                      ],
+                  ],
+  
+                  'taxes' => [
+                      'title'      => 'Vergiler',
+                      'title-info' => 'Vergiler, mallar, hizmetler veya i┼şlemler ├╝zerinde h├╝k├╝metler taraf─▒ndan zo
+runlu olarak uygulanan ve sat─▒c─▒lar taraf─▒ndan toplanan ve yetkililere aktar─▒lan zorunlu ├╝cretlerdir.',
+  
+                      'categories' => [
+                          'title'      => 'Vergi Kategorileri',
+                          'title-info' => 'Vergi kategorileri, ├╝r├╝nlere veya hizmetlere vergi oranlar─▒n─▒ kategorize
+ etmek ve uygulamak i├ğin sat─▒┼ş vergisi, katma de─şer vergisi veya ├Âzel t├╝ketim vergisi gibi farkl─▒ vergi t├╝rleri
+ i├ğin s─▒n─▒fland─▒rmalard─▒r.',
+                          'product'    => '├£r├╝n Varsay─▒lan Vergi Kategorisi',
+                          'shipping'   => 'Nakliye Vergi Kategorisi',
+                          'none'       => 'Yok',
+                      ],
+  
+                      'calculation' => [
+                          'title'            => 'Hesaplama Ayarlar─▒',
+                          'title-info'       => 'Temel fiyat, indirimler, vergiler ve ek ├╝cretler gibi mal veya hizmet
+lerin maliyeti hakk─▒nda ayr─▒nt─▒lar.',
+                          'based-on'         => 'Hesaplama Temeli',
+                          'shipping-address' => 'Teslimat Adresi',
+                          'billing-address'  => 'Fatura Adresi',
+                          'shipping-origin'  => 'Nakliye Kayna─ş─▒',
+                          'product-prices'   => '├£r├╝n Fiyatlar─▒',
+                          'shipping-prices'  => 'Nakliye Fiyatlar─▒',
+                          'excluding-tax'    => 'Vergi Hari├ğ',
+                          'including-tax'    => 'Vergi Dahil',
+                      ],
+  
+                      'default-destination-calculation' => [
+                          'default-country'   => 'Varsay─▒lan ├£lke',
+                          'default-post-code' => 'Varsay─▒lan Posta Kodu',
+                          'default-state'     => 'Varsay─▒lan Eyalet',
+                          'title'             => 'Varsay─▒lan Hedef Hesaplama',
+                          'title-info'        => '├ûnceden belirlenmi┼ş fakt├Ârler veya ayarlar temelinde standart veya
+ ba┼şlang─▒├ğ ÔÇïÔÇïbir hedefin otomatik belirlenmesi.',
+                      ],
+  
+                      'shopping-cart' => [
+                          'title'                   => 'Al─▒┼şveri┼ş Sepeti G├Âr├╝nt├╝leme Ayarlar─▒',
+                          'title-info'              => 'Al─▒┼şveri┼ş sepetinde vergilerin g├Âr├╝nt├╝lenmesini ayarlay─▒
+n',
+                          'display-prices'          => 'Fiyatlar─▒ G├Âster',
+                          'display-subtotal'        => 'Ara Toplam─▒ G├Âster',
+                          'display-shipping-amount' => 'Nakliye Tutar─▒n─▒ G├Âster',
+                          'excluding-tax'           => 'Vergi Hari├ğ',
+                          'including-tax'           => 'Vergi Dahil',
+                          'both'                    => 'Hem Vergi Hari├ğ Hem de Dahil',
+                      ],
+  
+                      'sales' => [
+                          'title'                   => 'Sipari┼şler, Faturalar, ─░adeler G├Âr├╝nt├╝leme Ayarlar─▒',
+                          'title-info'              => 'Sipari┼şlerde, faturalarda ve iadelerde vergilerin g├Âr├╝nt├╝le
+nmesini ayarlay─▒n',
+                          'display-prices'          => 'Fiyatlar─▒ G├Âster',
+                          'display-subtotal'        => 'Ara Toplam─▒ G├Âster',
+                          'display-shipping-amount' => 'Nakliye Tutar─▒n─▒ G├Âster',
+                          'excluding-tax'           => 'Vergi Hari├ğ',
+                          'including-tax'           => 'Vergi Dahil',
+                          'both'                    => 'Hem Vergi Hari├ğ Hem de Dahil',
+                      ],
+                  ],
+  
+                  'checkout' => [
+                      'title' => '├ûdeme',
+                      'info'  => 'Misafir ├Âdeme ayarlar─▒n─▒ yap─▒n, Mini Sepeti etkinle┼ştir veya devre d─▒┼ş─▒ b─▒ra
+k, sepet ├Âzeti.',
+  
+                      'shopping-cart' => [
+                          'cart-page'              => 'Sepet Sayfas─▒',
+                          'cart-page-info'         => 'Kullan─▒c─▒ al─▒┼şveri┼ş deneyimini geli┼ştirmek i├ğin Sepet Say
+fas─▒ g├Âr├╝n├╝rl├╝─ş├╝n├╝ kontrol edin.',
+                          'cross-sell'             => '├çapraz Sat─▒┼ş ├£r├╝nleri',
+                          'cross-sell-info'        => 'Ek sat─▒┼ş f─▒rsatlar─▒n─▒ art─▒rmak i├ğin ├ğapraz sat─▒┼ş ├╝r├╝
+nlerini etkinle┼ştirin.',
+                          'estimate-shipping'      => 'Tahmini Nakliye',
+                          'estimate-shipping-info' => '├ûn ├Âdemeli nakliye maliyetlerini sa─şlamak i├ğin tahmini nakli
+yeyi etkinle┼ştirin.',
+                          'guest-checkout'         => 'Misafir ├Âdemesine izin ver',
+                          'guest-checkout-info'    => 'H─▒zl─▒ ve sorunsuz bir sat─▒n alma i┼şlemi i├ğin misafir ├Âdeme
+sini etkinle┼ştirin.',
+                          'info'                   => 'Kullan─▒c─▒ kolayl─▒─ş─▒n─▒ art─▒rmak ve sat─▒n alma s├╝recini o
+ptimize etmek i├ğin misafir ├Âdemesini, sepet sayfas─▒n─▒, ├ğapraz sat─▒┼ş ├╝r├╝nlerini ve tahmini nakliyeyi etkinle┼şt
+irin.',
+                          'title'                  => 'Al─▒┼şveri┼ş Sepeti',
+                      ],
+  
+                      'my-cart' => [
+                          'display-item-quantities' => '├£r├╝n miktarlar─▒n─▒ g├Âster',
+                          'display-number-in-cart'  => 'Sepetteki ├╝r├╝n say─▒s─▒n─▒ g├Âster',
+                          'info'                    => 'My Cart ayarlar─▒n─▒ etkinle┼ştirerek, ├╝r├╝n miktarlar─▒n─▒n ├
+Âzetini g├Âstermek ve sepetin toplam ├╝r├╝n say─▒s─▒n─▒ g├Âr├╝nt├╝lemek i├ğin kolay takip i├ğin ayarlar─▒ etkinle┼ştiri
+n.',
+                          'summary'                 => '├ûzet',
+                          'title'                   => 'Sepetim',
+                      ],
+  
+                      'mini-cart' => [
+                          'display-mini-cart'    => 'Mini Sepeti G├Âster',
+                          'info'                 => 'Mini Sepet ayarlar─▒n─▒ etkinle┼ştirerek mini sepeti g├Âr├╝nt├╝ley
+in ve h─▒zl─▒ eri┼şim i├ğin Mini Sepet Teklif Bilgilerini g├Âsterin.',
+                          'mini-cart-offer-info' => 'Mini Sepet Teklif Bilgileri',
+                          'title'                => 'Mini Sepet',
+                      ],
+                  ],
+              ],
+  
+>             'whitelabel' => [
+                  'info'  => 'Marka ├Âzelle┼ştirmesi yap─▒n ve platform referanslar─▒n─▒ kald─▒r─▒n.',
+                  'title' => 'Whitelabel',
+  
+                  'branding' => [
+                      'info'  => 'Marka ayarlar─▒n─▒ yap─▒land─▒r─▒n.',
+                      'title' => 'Marka',
+  
+                      'general' => [
+                          'app-name'           => 'Uygulama Ad─▒',
+                          'company-name'       => '┼Şirket Ad─▒',
+                          'company-url'        => '┼Şirket Web Sitesi URL',
+                          'info'               => 'Uygulama ad─▒, ┼şirket detaylar─▒ ve meta generator etiketi gibi tem
+el marka bilgilerini yap─▒land─▒r─▒n.',
+                          'meta-generator'     => 'Meta Generator Etiketi',
+                          'meta-generator-info' => 'Bu de─şer HTML meta generator etiketinde kullan─▒lacakt─▒r. Bo┼ş b─
+▒rak─▒l─▒rsa varsay─▒lan uygulama ad─▒ kullan─▒l─▒r.',
+                          'title'              => 'Genel Ayarlar',
+                      ],
+  
+                      'footer' => [
+                          'info'                    => 'Alt bilgi markas─▒n─▒ ve "Powered By" metnini yap─▒land─▒r─▒n.'
+,
+                          'powered-by-text'         => 'Alt Bilgi "Powered By" Metni',
+                          'powered-by-text-info'    => 'Alt bilgide g├Âr├╝nt├╝lenecek ├Âzel HTML metni. Bo┼ş b─▒rak─▒l─
+▒rsa alt bilgi metni gizlenir.',
+                          'show-powered-by'         => '"Powered By" Alt Bilgisini G├Âster',
+                          'show-powered-by-info'    => 'Admin panelinde "Powered By" alt bilgi metnini etkinle┼ştirin v
+eya devre d─▒┼ş─▒ b─▒rak─▒n.',
+                          'title'                   => 'Alt Bilgi Ayarlar─▒',
+                      ],
+  
+                      'logos' => [
+                          'info'  => 'Admin paneli ve ma─şaza i├ğin logo g├Ârsellerini yap─▒land─▒r─▒n.',
+                          'title' => 'Logolar',
+  
+                          'admin' => [
+                              'logo-light'      => 'Admin Logo (A├ğ─▒k Tema)',
+                              'logo-dark'       => 'Admin Logo (Koyu Tema)',
+                              'title'           => 'Admin Paneli Logolar─▒',
+                              'title-info'      => 'Admin paneli i├ğin a├ğ─▒k ve koyu tema logolar─▒n─▒ yap─▒land─▒r─▒n
+.',
+                          ],
+  
+                          'shop' => [
+                              'logo-light'      => 'Ma─şaza Logo (A├ğ─▒k Tema)',
+                              'logo-dark'       => 'Ma─şaza Logo (Koyu Tema)',
+                              'title'           => 'Ma─şaza Logolar─▒',
+                              'title-info'      => 'Ma─şaza ├Ân y├╝z├╝ i├ğin a├ğ─▒k ve koyu tema logolar─▒n─▒ yap─▒land
+─▒r─▒n.',
+                          ],
+                      ],
+                  ],
+              ],
+          ],
+      ],
+  
+      'components' => [
+          'layouts' => [
+              'header' => [
+                  'account-title' => 'Hesap',
+                  'app-version'   => 'S├╝r├╝m : :version',
+                  'logout'        => '├ç─▒k─▒┼ş',
+                  'my-account'    => 'Hesab─▒m',
+                  'notifications' => 'Bildirimler',
+                  'visit-shop'    => 'Ma─şazay─▒ Ziyaret Et',
+  
+                  'mega-search' => [
+                      'categories'                      => 'Kategoriler',
+                      'customers'                       => 'M├╝┼şteriler',
+                      'explore-all-categories'          => 'T├╝m kategorileri ke┼şfet',
+                      'explore-all-customers'           => 'T├╝m m├╝┼şterileri ke┼şfet',
+                      'explore-all-matching-categories' => 'E┼şle┼şen t├╝m kategorileri ke┼şfet ÔÇ£:queryÔÇØ (:count)',
+                      'explore-all-matching-customers'  => 'E┼şle┼şen t├╝m m├╝┼şterileri ke┼şfet ÔÇ£:queryÔÇØ (:count)'
+,
+                      'explore-all-matching-orders'     => 'E┼şle┼şen t├╝m sipari┼şleri ke┼şfet ÔÇ£:queryÔÇØ (:count)',
+                      'explore-all-matching-products'   => 'E┼şle┼şen t├╝m ├╝r├╝nleri ke┼şfet ÔÇ£:queryÔÇØ (:count)',
+                      'explore-all-orders'              => 'T├╝m sipari┼şleri ke┼şfet',
+                      'explore-all-products'            => 'T├╝m ├╝r├╝nleri ke┼şfet',
+                      'orders'                          => 'Sipari┼şler',
+                      'products'                        => '├£r├╝nler',
+                      'sku'                             => 'Stok Kodu: :sku',
+                      'title'                           => 'Mega Arama',
+                  ],
+              ],
+  
+              'sidebar' => [
+                  'attribute-families'       => '├ûzellik Aileleri',
+                  'attributes'               => '├ûzellikler',
+                  'booking-product'          => 'Rezervasyonlar',
+                  'campaigns'                => 'Kampanyalar',
+                  'catalog'                  => 'Katalog',
+                  'categories'               => 'Kategoriler',
+                  'channels'                 => 'Kanallar',
+                  'cms'                      => 'CMS',
+                  'collapse'                 => 'Daralt',
+                  'communications'           => '─░leti┼şim',
+                  'configure'                => 'Yap─▒land─▒r',
+                  'currencies'               => 'Para Birimleri',
+                  'customers'                => 'M├╝┼şteriler',
+                  'dashboard'                => 'Kontrol Paneli',
+                  'data-transfer'            => 'Veri aktar─▒m─▒',
+                  'discount'                 => '─░ndirim',
+                  'whitelabel'               => 'Whitelabel',
+                  'email-templates'          => 'E-posta ┼Şablonlar─▒',
+                  'events'                   => 'Etkinlikler',
+                  'exchange-rates'           => 'D├Âviz Kurlar─▒',
+                  'gdpr-data-requests'       => 'GDPR Veri Talepleri',
+                  'groups'                   => 'Gruplar',
+                  'imports'                  => '─░thalat',
+                  'inventory-sources'        => 'Envanter Kaynaklar─▒',
+                  'invoices'                 => 'Faturalar',
+                  'locales'                  => 'Yerel Ayarlar',
+                  'marketing'                => 'Pazarlama',
+                  'mode'                     => 'Karanl─▒k Mod',
+                  'newsletter-subscriptions' => 'B├╝lten Abonelikleri',
+                  'orders'                   => 'Sipari┼şler',
+                  'products'                 => '├£r├╝nler',
+                  'promotions'               => 'Promosyonlar',
+                  'refunds'                  => '─░ade',
+                  'reporting'                => 'Raporlama',
+                  'reviews'                  => 'Yorumlar',
+                  'roles'                    => 'Roller',
+                  'sales'                    => 'Sat─▒┼şlar',
+                  'search-seo'               => 'Arama ve SEO',
+                  'search-synonyms'          => 'Arama E┼şanlaml─▒lar─▒',
+                  'search-terms'             => 'Arama Terimleri',
+                  'settings'                 => 'Ayarlar',
+                  'shipments'                => 'G├Ânderiler',
+                  'sitemaps'                 => 'Site Haritalar─▒',
+                  'tax-categories'           => 'Vergi Kategorileri',
+                  'tax-rates'                => 'Vergi Oranlar─▒',
+                  'taxes'                    => 'Vergiler',
+                  'tenants'                  => 'Tenants',
+                  'themes'                   => 'Temalar',
+                  'transactions'             => '─░┼şlemler',
+                  'url-rewrites'             => 'URL Yeniden Yazma',
+                  'users'                    => 'Kullan─▒c─▒lar',
+              ],
+  
+              'powered-by' => [
+                  'description' => '',
+              ],
+          ],
+  
+>         'whitelabel' => [
+              'info'  => 'Marka ├Âzelle┼ştirmesi yap─▒n ve Bagisto referanslar─▒n─▒ kald─▒r─▒n.',
+              'title' => 'Whitelabel',
+  
+              'branding' => [
+                  'info'  => 'Marka ayarlar─▒n─▒ yap─▒land─▒r─▒n.',
+                  'title' => 'Marka',
+  
+                  'general' => [
+                      'app-name'           => 'Uygulama Ad─▒',
+                      'company-name'       => '┼Şirket Ad─▒',
+                      'company-url'        => '┼Şirket Web Sitesi URL',
+                      'info'               => 'Uygulama ad─▒, ┼şirket detaylar─▒ ve meta generator etiketi gibi temel m
+arka bilgilerini yap─▒land─▒r─▒n.',
+                      'meta-generator'     => 'Meta Generator Etiketi',
+                      'meta-generator-info' => 'Bu de─şer HTML meta generator etiketinde kullan─▒lacakt─▒r. Bo┼ş b─▒rak
+─▒l─▒rsa varsay─▒lan uygulama ad─▒ kullan─▒l─▒r.',
+                      'title'              => 'Genel Ayarlar',
+                  ],
+  
+                  'footer' => [
+                      'info'                    => 'Alt bilgi markas─▒n─▒ ve "Powered By" metnini yap─▒land─▒r─▒n.',
+                      'powered-by-text'         => 'Alt Bilgi "Powered By" Metni',
+                      'powered-by-text-info'    => 'Alt bilgide g├Âr├╝nt├╝lenecek ├Âzel HTML metni. Bo┼ş b─▒rak─▒l─▒rsa
+ alt bilgi metni gizlenir.',
+                      'show-powered-by'         => '"Powered By" Alt Bilgisini G├Âster',
+                      'show-powered-by-info'    => 'Admin panelinde "Powered By" alt bilgi metnini etkinle┼ştirin veya 
+devre d─▒┼ş─▒ b─▒rak─▒n.',
+                      'title'                   => 'Alt Bilgi Ayarlar─▒',
+                  ],
+              ],
+          ],
+  
+          'datagrid' => [
+              'index' => [
+                  'no-records-selected'              => 'Hi├ğbir kay─▒t se├ğilmedi.',
+                  'must-select-a-mass-action-option' => 'Toplu i┼şlem se├ğene─şi se├ğmelisiniz.',
+                  'must-select-a-mass-action'        => 'Toplu i┼şlem se├ğmelisiniz.',
+              ],
+  
+              'toolbar' => [
+                  'length-of' => ':length nin',
+                  'of'        => 'nin',
+                  'per-page'  => 'Sayfa ba┼ş─▒na',
+                  'results'   => ':total Sonu├ğlar',
+                  'selected'  => ':total Se├ğilen',
+  
+                  'mass-actions' => [
+                      'select-action' => 'Eylem Se├ğ',
+                      'select-option' => 'Se├ğenek Se├ğ',
+                      'submit'        => 'G├Ânder',
+                  ],
+  
+                  'filter' => [
+                      'apply-filters-btn' => 'Filtreleri Uygula',
+                      'back-btn'          => 'Geri',
+                      'create-new-filter' => 'Yeni Filtre Olu┼ştur',
+                      'custom-filters'    => '├ûzel Filtreler',
+                      'delete-error'      => 'Filtre silinirken bir hata olu┼ştu, l├╝tfen tekrar deneyin.',
+                      'delete-success'    => 'Filtre ba┼şar─▒yla silindi.',
+                      'empty-description' => 'Kaydedilecek se├ğili filtre yok. L├╝tfen kaydetmek i├ğin filtreleri se├ği
+n.',
+                      'empty-title'       => 'Kaydedilecek Filtreler Ekle',
+                      'name'              => 'Ad─▒',
+                      'quick-filters'     => 'H─▒zl─▒ Filtreler',
+                      'save-btn'          => 'Kaydet',
+                      'save-filter'       => 'Filtreyi Kaydet',
+                      'saved-success'     => 'Filtre ba┼şar─▒yla kaydedildi.',
+                      'selected-filters'  => 'Se├ğilen Filtreler',
+                      'title'             => 'Filtre',
+                      'update'            => 'G├╝ncelle',
+                      'update-filter'     => 'Filtreyi g├╝ncelle',
+                      'updated-success'   => 'Filtre ba┼şar─▒yla g├╝ncellendi.',
+                  ],
+  
+                  'search' => [
+                      'title' => 'Ara',
+                  ],
+              ],
+  
+              'filters' => [
+                  'select' => 'Se├ğiniz',
+                  'title'  => 'Filtreler',
+  
+                  'dropdown' => [
+                      'searchable' => [
+                          'atleast-two-chars' => 'En az 2 karakter girin...',
+                          'no-results'        => 'Sonu├ğ bulunamad─▒...',
+                      ],
+                  ],
+  
+                  'custom-filters' => [
+                      'clear-all' => 'Hepsini Temizle',
+                      'title'     => '├ûzel Filtreler',
+                  ],
+  
+                  'boolean-options' => [
+                      'false' => 'Yanl─▒┼ş',
+                      'true'  => 'Do─şru',
+                  ],
+  
+                  'date-options' => [
+                      'last-month'        => 'Ge├ğen Ay',
+                      'last-six-months'   => 'Son 6 Ay',
+                      'last-three-months' => 'Son 3 Ay',
+                      'this-month'        => 'Bu Ay',
+                      'this-week'         => 'Bu Hafta',
+                      'this-year'         => 'Bu Y─▒l',
+                      'today'             => 'Bug├╝n',
+                      'yesterday'         => 'D├╝n',
+                  ],
+              ],
+  
+              'table' => [
+                  'actions'              => 'Eylemler',
+                  'no-records-available' => 'Kullan─▒labilir Kay─▒t Yok.',
+              ],
+          ],
+  
+          'modal' => [
+              'confirm' => [
+                  'agree-btn'    => 'Kabul Et',
+                  'disagree-btn' => 'Reddet',
+                  'message'      => 'Bu i┼şlemi ger├ğekle┼ştirmek istedi─şinizden emin misiniz?',
+                  'title'        => 'Emin misiniz?',
+              ],
+          ],
+  
+          'products' => [
+              'search' => [
+                  'add-btn'       => 'Se├ğilen ├£r├╝n├╝ Ekle',
+                  'empty-info'    => 'Arama terimi i├ğin hi├ğbir ├╝r├╝n bulunamad─▒.',
+                  'empty-title'   => 'Hi├ğbir ├╝r├╝n bulunamad─▒',
+                  'product-image' => '├£r├╝n Resmi',
+                  'qty'           => ':qty Mevcut',
+                  'sku'           => 'Stok Kodu - :sku',
+                  'title'         => '├£r├╝nleri Se├ğ',
+              ],
+          ],
+  
+          'media' => [
+              'images' => [
+                  'add-image-btn'     => 'Resim Ekle',
+                  'ai-add-image-btn'  => 'Sihirli AI',
+                  'ai-btn-info'       => 'Resim Olu┼ştur',
+                  'allowed-types'     => 'png, jpeg, jpg',
+                  'not-allowed-error' => 'Yaln─▒zca resim dosyalar─▒ (.jpeg, .jpg, .png, ..) izin verilir.',
+  
+                  'ai-generation' => [
+                      '1024x1024'        => '1024x1024',
+                      '1024x1792'        => '1024x1792',
+                      '1792x1024'        => '1792x1024',
+                      'apply'            => 'Uygula',
+                      'dall-e-2'         => 'Dall.E 2',
+                      'dall-e-3'         => 'Dall.E 3',
+                      'generate'         => 'Olu┼ştur',
+                      'generating'       => 'Olu┼şturuluyor...',
+                      'hd'               => 'HD',
+                      'model'            => 'Model',
+                      'number-of-images' => 'Resim Say─▒s─▒',
+                      'prompt'           => '─░pucu',
+                      'quality'          => 'Kalite',
+                      'regenerate'       => 'Yeniden Olu┼ştur',
+                      'regenerating'     => 'Yeniden Olu┼şturuluyor...',
+                      'size'             => 'Boyut',
+                      'standard'         => 'Standart',
+                      'title'            => 'AI ─░maj Olu┼şturma',
+                  ],
+  
+                  'placeholders'  => [
+                      'front'     => '├ûn',
+                      'next'      => 'Sonraki',
+                      'size'      => 'Boyut',
+                      'use-cases' => 'Kullan─▒m Alanlar─▒',
+                      'zoom'      => 'Yak─▒nla┼şt─▒rma',
+                  ],
+              ],
+  
+              'videos' => [
+                  'add-video-btn'     => 'Video Ekle',
+                  'allowed-types'     => 'mp4, webm, mkv',
+                  'not-allowed-error' => 'Yaln─▒zca video dosyalar─▒ (.mp4, .mov, .ogg ..) izin verilir.',
+              ],
+          ],
+  
+          'tinymce' => [
+              'ai-btn-tile' => 'Sihirli AI',
+  
+              'ai-generation' => [
+                  'apply'                  => 'Uygula',
+                  'deepseek-r1-8b'         => 'DeepSeek R1 (8b)',
+                  'enabled'                => 'Etkin',
+                  'gemini-2-0-flash'       => 'Gemini 2.0 Flash',
+                  'generate'               => 'Olu┼ştur',
+                  'generated-content'      => 'Olu┼şturulan ─░├ğerik',
+                  'generated-content-info' => 'AI i├ğeri─şi yan─▒lt─▒c─▒ olabilir. L├╝tfen olu┼şturulan i├ğeri─şi uygul
+amadan ├Ânce g├Âzden ge├ğirin.',
+                  'generating'             => 'Olu┼şturuluyor...',
+                  'gpt-4-turbo'            => 'OpenAI gpt-4 Turbo',
+                  'gpt-4o'                 => 'OpenAI gpt-4o',
+                  'gpt-4o-mini'            => 'OpenAI gpt-4o mini',
+                  'llama-groq'             => 'Llama 3.3 (Groq)',
+                  'llama3-1-8b'            => 'Llama 3.1 (8B)',
+                  'llama3-2-1b'            => 'Llama 3.2 (1B)',
+                  'llama3-2-3b'            => 'Llama 3.2 (3B)',
+                  'llama3-8b'              => 'Llama 3 (8B)',
+                  'llava-7b'               => 'Llava (7b)',
+          'data-transfer'            => 'Veri aktar─▒m─▒',
+          'delete'                   => 'Sil',
+          'edit'                     => 'D├╝zenle',
+          'email-templates'          => 'E-posta ┼Şablonlar─▒',
+          'events'                   => 'Etkinlikler',
+          'exchange-rates'           => 'D├Âviz Kurlar─▒',
+          'gdpr'                     => 'KVKK',
+          'groups'                   => 'Gruplar',
+          'import'                   => '─░├ğe aktarmak',
+          'imports'                  => '─░thalat',
+          'inventory-sources'        => 'Envanter Kaynaklar─▒',
+          'invoices'                 => 'Faturalar',
+          'locales'                  => 'Yerel Ayarlar',
+          'marketing'                => 'Pazarlama',
+          'newsletter-subscriptions' => 'B├╝lten Abonelikleri',
+          'note'                     => 'Not',
+          'orders'                   => 'Sipari┼şler',
+          'products'                 => '├£r├╝nler',
+          'promotions'               => 'Promosyonlar',
+          'refunds'                  => '─░ade ─░┼şlemleri',
+          'reporting'                => 'Raporlama',
+          'reviews'                  => 'Yorumlar',
+          'roles'                    => 'Roller',
+          'sales'                    => 'Sat─▒┼şlar',
+          'search-seo'               => 'Arama ve SEO',
+          'search-synonyms'          => 'Arama E┼şanlaml─▒lar─▒',
+          'search-terms'             => 'Arama Terimleri',
+          'settings'                 => 'Ayarlar',
+          'shipments'                => 'G├Ânderiler',
+          'sitemaps'                 => 'Site Haritalar─▒',
+          'subscribers'              => 'B├╝lten Aboneleri',
+          'tax-categories'           => 'Vergi Kategorileri',
+          'tax-rates'                => 'Vergi Oranlar─▒',
+          'taxes'                    => 'Vergiler',
+          'themes'                   => 'Tema Se├ğenekleri',
+          'transactions'             => '─░┼şlemler',
+          'url-rewrites'             => 'URL Yeniden Yazma',
+          'users'                    => 'Kullan─▒c─▒lar',
+          'view'                     => 'G├Âr├╝nt├╝le',
+      ],
+  
+      'errors' => [
+          'dashboard' => 'Kontrol Paneli',
+          'go-back'   => 'Geri Git',
+          'support'   => 'Sorun devam ederse, yard─▒m i├ğin <a href=":link" class=":class">:email</a> adresinden biziml
+e ileti┼şime ge├ğin.',
+  
+          '404' => [
+              'description' => 'Oops! Arad─▒─ş─▒n─▒z sayfa tatile ├ğ─▒km─▒┼ş gibi g├Âr├╝n├╝yor. Arad─▒─ş─▒n─▒z─▒ bulam─
+▒yor gibi g├Âr├╝n├╝yoruz.',
+              'title'       => '404 Sayfa Bulunamad─▒',
+          ],
+  
+          '401' => [
+              'description' => 'Oops! Bu sayfaya eri┼şiminiz izin verilmiyor gibi g├Âr├╝n├╝yor. Gerekli kimlik bilgiler
+ini eksik g├Ârd├╝k.',
+              'title'       => '401 Yetkisiz Eri┼şim',
+          ],
+  
+          '403' => [
+              'description' => 'Oops! Bu sayfa eri┼şime kapal─▒ gibi g├Âr├╝n├╝yor. ─░├ğeri─şi g├Âr├╝nt├╝lemek i├ğin ger
+eken izinlere sahip olmad─▒─ş─▒n─▒z g├Âr├╝n├╝yor.',
+              'title'       => '403 Yasak',
+          ],
+  
+          '500' => [
+              'description' => 'Oops! Bir ┼şeyler ters gitti. Arad─▒─ş─▒n─▒z sayfay─▒ y├╝klerken sorun ya┼şad─▒─ş─▒m─▒z
+ g├Âr├╝n├╝yor.',
+              'title'       => '500 ─░├ğ Sunucu Hatas─▒',
+          ],
+  
+          '503' => [
+              'description' => 'Oops! Ge├ğici olarak bak─▒m i├ğin kapal─▒ gibi g├Âr├╝n├╝yoruz. L├╝tfen biraz sonra tekr
+ar deneyin.',
+              'title'       => '503 Hizmet Kullan─▒lam─▒yor',
+          ],
+      ],
+  
+      'export' => [
+          'csv'        => 'CSV',
+          'download'   => '─░ndir',
+          'export'     => 'D─▒┼şa Aktar',
+          'no-records' => 'D─▒┼şa aktar─▒lacak hi├ğbir ┼şey yok',
+          'xls'        => 'XLS',
+          'xlsx'       => 'XLSX',
+      ],
+  
+      'validations' => [
+          'slug-being-used' => 'Bu slug ya kategorilerde ya da ├╝r├╝nlerde kullan─▒l─▒yor.',
+          'slug-reserved'   => 'Bu slug ayr─▒lm─▒┼ş durumda.',
+      ],
+  
+      'footer' => [
+          'copy-right' => '',
+      ],
+  
+      'emails' => [
+          'dear'   => 'Say─▒n :admin_name',
+          'thanks' => 'Herhangi bir yard─▒ma ihtiyac─▒n─▒z varsa, l├╝tfen bize <a href=":link" style=":style">:email</a
+> adresinden ula┼ş─▒n.<br/>Te┼şekk├╝rler!',
+  
+          'admin' => [
+              'forgot-password' => [
+                  'description'    => 'Bu e-postay─▒ hesab─▒n─▒z i├ğin bir ┼şifre s─▒f─▒rlama iste─şi ald─▒─ş─▒m─▒z i├ğ
+in al─▒yorsunuz.',
+                  'greeting'       => '┼Şifrenizi mi unuttunuz!',
+                  'reset-password' => '┼Şifreyi S─▒f─▒rla',
+                  'subject'        => '┼Şifre S─▒f─▒rlama E-postas─▒',
+              ],
+          ],
+  
+          'customers' => [
+              'registration' => [
+                  'description' => 'Yeni bir m├╝┼şteri hesab─▒ ba┼şar─▒yla olu┼şturuldu. Art─▒k e-posta adreslerini ve 
+┼şifre bilgilerini kullanarak giri┼ş yapabilirler. Giri┼ş yapt─▒ktan sonra ge├ğmi┼ş sipari┼şleri inceleme, istek listel
+erini y├Ânetme ve hesap bilgilerini g├╝ncelleme dahil olmak ├╝zere ├ğe┼şitli hizmetlere eri┼şebilecekler.',
+                  'greeting'    => 'Aram─▒za yeni kaydolan yeni m├╝┼şterimiz :customer_name `e s─▒cak bir kar┼ş─▒lama d
+ileriz!',
+                  'subject'     => 'Yeni M├╝┼şteri Kayd─▒',
+              ],
+  
+              'gdpr' => [
+                  'new-delete-request' => 'Veri Silme i├ğin Yeni Talep',
+                  'new-update-request' => 'Veri G├╝ncelleme i├ğin Yeni Talep',
+  
+                  'new-request' => [
+                      'customer-name'  => 'M├╝┼şteri Ad─▒ : ',
+                      'delete-summary' => 'Silme iste─şinin ├Âzeti',
+                      'message'        => 'Mesaj : ',
+                      'request-status' => 'Talep Durumu : ',
+                      'request-type'   => 'Talep T├╝r├╝ : ',
+                      'update-summary' => 'G├╝ncelleme iste─şinin ├Âzeti',
+                  ],
+  
+                  'status-update' => [
+                      'subject'        => 'GDPR Talebi G├╝ncellendi',
+                      'summary'        => 'GDPR Talebinin Durumu G├╝ncellendi',
+                      'request-status' => 'Talep Durumu:',
+                      'request-type'   => 'Talep T├╝r├╝:',
+                      'message'        => 'Mesaj:',
+                  ],
+              ],
+          ],
+  
+          'orders' => [
+              'created' => [
+                  'greeting' => ':created_at tarihinde yerle┼ştirilen yeni bir Sipari┼şiniz var :order_id',
+                  'subject'  => 'Yeni Sipari┼ş Onay─▒',
+                  'summary'  => 'Sipari┼ş ├ûzeti',
+                  'title'    => 'Sipari┼ş Onay─▒!',
+              ],
+  
+              'invoiced' => [
+                  'greeting' => ':created_at tarihinde olu┼şturulan sipari┼şiniz i├ğin faturan─▒z #:invoice_id',
+                  'subject'  => 'Yeni Fatura Onay─▒',
+                  'summary'  => 'Fatura ├ûzeti',
+                  'title'    => 'Fatura Onay─▒!',
+              ],
+  
+              'shipped' => [
+                  'greeting' => ':created_at tarihinde yerle┼ştirilen sipari┼şi g├Ânderdiniz :order_id',
+                  'subject'  => 'Yeni G├Ânderi Onay─▒',
+                  'summary'  => 'G├Ânderi ├ûzeti',
+                  'title'    => 'Sipari┼ş G├Ânderildi!',
+              ],
+  
+              'inventory-source' => [
+                  'greeting' => ':created_at tarihinde yerle┼ştirilen sipari┼şi g├Ânderdiniz :order_id',
+                  'subject'  => 'Yeni G├Ânderi Onay─▒',
+                  'summary'  => 'G├Ânderi ├ûzeti',
+                  'title'    => 'Sipari┼ş G├Ânderildi!',
+              ],
+  
+              'refunded' => [
+                  'greeting' => ':created_at tarihinde yerle┼ştirilen sipari┼şiniz i├ğin iade yapt─▒n─▒z :order_id',
+                  'subject'  => 'Yeni ─░ade Onay─▒',
+                  'summary'  => '─░ade ├ûzeti',
+                  'title'    => 'Sipari┼ş ─░ade Edildi!',
+              ],
+  
+              'canceled' => [
+                  'greeting' => ':created_at tarihinde yerle┼ştirilen sipari┼şi iptal ettiniz :order_id',
+                  'subject'  => 'Yeni Sipari┼ş ─░ptali',
+                  'summary'  => 'Sipari┼ş ├ûzeti',
+                  'title'    => 'Sipari┼ş ─░ptal Edildi!',
+              ],
+  
+              'billing-address'            => 'Fatura Adresi',
+              'carrier'                    => 'Ta┼ş─▒y─▒c─▒',
+              'contact'                    => '─░leti┼şim',
+              'discount'                   => '─░ndirim',
+              'excl-tax'                   => 'Vergi Hari├ğ: ',
+              'grand-total'                => 'Genel Toplam',
+              'name'                       => 'Ad',
+              'payment'                    => '├ûdeme',
+              'price'                      => 'Fiyat',
+              'qty'                        => 'Adet',
+              'shipping-address'           => 'Teslimat Adresi',
+              'shipping-handling-excl-tax' => 'Kargo ─░┼şlemi (Vergi Hari├ğ)',
+              'shipping-handling-incl-tax' => 'Kargo ─░┼şlemi (Vergi Dahil)',
+              'shipping-handling'          => 'Kargo ─░┼şlemi',
+              'shipping'                   => 'Kargo',
+              'sku'                        => 'SKU',
+              'subtotal-excl-tax'          => 'Ara Toplam (Vergi Hari├ğ)',
+              'subtotal-incl-tax'          => 'Ara Toplam (Vergi Dahil)',
+              'subtotal'                   => 'Ara Toplam',
+              'tax'                        => 'Vergi',
+              'tracking-number'            => 'Takip Numaras─▒: :tracking_number',
+          ],
+      ],
+  
+>     'tenants' => [
+          'create' => [
+              'title'                      => 'Yeni Tenant Olu┼ştur',
+              'create-btn'                 => 'Yeni Tenant Olu┼ştur',
+              'save-btn'                   => 'Kaydet',
+              'success'                    => 'Tenant ba┼şar─▒yla olu┼şturuldu.',
+              'success-provisioning'       => 'Tenant ba┼şar─▒yla olu┼şturuldu. Provisioning i┼şlemi arka planda devam 
+ediyor.',
+              'error'                      => 'Tenant olu┼şturulurken bir hata olu┼ştu: :message',
+              'basic-information'          => 'Temel Bilgiler',
+              'domain-settings'            => 'Domain Ayarlar─▒',
+              'database-settings'          => 'Veritaban─▒ Ayarlar─▒',
+              'admin-user'                 => 'Admin Kullan─▒c─▒',
+              'provisioning-settings'      => 'Provisioning Ayarlar─▒',
+              'fields' => [
+                  'name'                      => 'Tenant Ad─▒',
+                  'name-placeholder'          => '├ûrn: Acme Store',
+                  'slug'                      => 'Tenant Slug',
+                  'slug-placeholder'          => '├ûrn: acme-store',
+                  'slug-info'                 => 'URL-safe, k├╝├ğ├╝k harf, rakam ve tire i├ğerebilir',
+                  'store_name'                => 'Ma─şaza Ad─▒',
+                  'store_name-placeholder'    => 'Opsiyonel: Ma─şaza g├Âr├╝nen ad─▒',
+                  'primary_domain'            => 'Birincil Domain',
+                  'primary_domain-placeholder' => '├ûrn: acme.example.test (bo┼ş b─▒rak─▒l─▒rsa otomatik olu┼şturulur)'
+,
+                  'primary_domain-info'      => 'Bo┼ş b─▒rak─▒l─▒rsa slug + base domain kullan─▒l─▒r',
+                  'db_host'                   => 'Veritaban─▒ Host',
+                  'db_host-placeholder'       => '127.0.0.1',
+                  'db_name'                   => 'Veritaban─▒ Ad─▒',
+                  'db_name-placeholder'      => 'Bo┼ş b─▒rak─▒l─▒rsa otomatik: tenant_{id}',
+                  'db_name-info'              => 'Bo┼ş b─▒rak─▒l─▒rsa otomatik olu┼şturulur',
+                  'db_username'               => 'Veritaban─▒ Kullan─▒c─▒ Ad─▒',
+                  'db_username-placeholder'  => 'Bo┼ş b─▒rak─▒l─▒rsa config\'ten kullan─▒l─▒r',
+                  'db_username-info'         => 'Her tenant i├ğin ayr─▒ DB kullan─▒c─▒s─▒ olu┼şturulacak',
+                  'db_username-info-auto'    => 'Bo┼ş b─▒rak─▒l─▒rsa otomatik olu┼şturulur: tenant_{id}_user',
+                  'db_password'               => 'Veritaban─▒ ┼Şifresi',
+                  'db_password-placeholder'  => 'Minimum 8 karakter',
+                  'db_password-info'          => 'Bo┼ş b─▒rak─▒l─▒rsa otomatik olu┼şturulur',
+                  'admin-auto-info'           => 'Bo┼ş b─▒rak─▒l─▒rsa otomatik olu┼şturulur',
+                  'admin_name'                => 'Admin Ad─▒',
+                  'admin_name-placeholder'   => '├ûrn: Admin User',
+                  'admin_name-info'           => 'Bo┼ş b─▒rak─▒l─▒rsa: {Tenant Name} Admin',
+                  'admin_email'               => 'Admin E-posta',
+                  'admin_email-placeholder'  => 'admin@example.com',
+                  'admin_email-info'          => 'Bo┼ş b─▒rak─▒l─▒rsa: admin@{slug}.{base_domain}',
+                  'admin_password'            => 'Admin ┼Şifre',
+                  'admin_password-placeholder' => 'Minimum 8 karakter',
+                  'admin_password-info'        => 'Bo┼ş b─▒rak─▒l─▒rsa otomatik olu┼şturulur (16 karakter)',
+                  'provision_now'             => 'Hemen Provisioning Yap',
+                  'provision_now-info'        => 'A├ğ─▒k: Tenant olu┼şturulur olu┼şturulmaz DB olu┼şturma ve migration 
+i┼şlemleri ba┼şlar',
+              ],
+              'validation' => [
+                  'name' => [
+                      'required' => 'Tenant ad─▒ zorunludur.',
+                  ],
+                  'slug' => [
+                      'required' => 'Tenant slug zorunludur.',
+                      'regex'    => 'Slug sadece k├╝├ğ├╝k harf, rakam ve tire i├ğerebilir.',
+                      'unique'   => 'Bu slug zaten kullan─▒l─▒yor.',
+                  ],
+                  'primary_domain' => [
+                      'unique' => 'Bu domain zaten kullan─▒l─▒yor.',
+                  ],
+                  'admin_email' => [
+                      'required' => 'Admin e-posta zorunludur.',
+                      'email'    => 'Ge├ğerli bir e-posta adresi giriniz.',
+                  ],
+                  'admin_password' => [
+                      'required' => 'Admin ┼şifre zorunludur.',
+                      'min'      => '┼Şifre en az 8 karakter olmal─▒d─▒r.',
+                  ],
+                  'admin_name' => [
+                      'required' => 'Admin ad─▒ zorunludur.',
+                  ],
+                  'db_password' => [
+                      'min' => 'Veritaban─▒ ┼şifresi en az 8 karakter olmal─▒d─▒r.',
+                  ],
+              ],
+          ],
+          'show' => [
+              'quick-links'        => 'H─▒zl─▒ Ba─şlant─▒lar',
+              'admin-panel-link'   => 'Tenant Admin Paneli',
+              'storefront-link'    => 'Tenant Storefront',
+              'open-admin-panel'   => 'Admin Paneli A├ğ',
+              'open-storefront'   => 'Storefront A├ğ',
+              'no-domain-warning'  => 'Domain ekleyin',
+              'admin-user-info'    => 'Admin Kullan─▒c─▒ Bilgileri',
+              'admin-name'         => 'Admin Ad─▒',
+              'admin-email'        => 'Admin E-posta',
+          ],
+      ],
+  ];
+
+

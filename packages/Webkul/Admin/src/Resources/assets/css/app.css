@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "bagisto-admin";
+    font-family: "admin-icons";
     src: url("../fonts/bagisto-admin.woff?jwnnow") format("woff");
     font-weight: normal;
     font-style: normal;
@@ -43,7 +43,7 @@
     [class^="icon-"],
     [class*=" icon-"] {
         /* use !important to prevent issues with browser extensions that change fonts */
-        font-family: "bagisto-admin" !important;
+        font-family: "admin-icons" !important;
         speak: never;
         font-style: normal;
         font-weight: normal;

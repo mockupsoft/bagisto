@@ -6,7 +6,7 @@ return [
             'email'                  => 'Email Address',
             'forget-password-link'   => 'Forget Password ?',
             'password'               => 'Password',
-            'powered-by-description' => 'Powered by :bagisto, an open-source project by :webkul.',
+            'powered-by-description' => '',
             'submit-btn'             => 'Sign In',
             'title'                  => 'Sign In',
         ],
@@ -16,7 +16,7 @@ return [
                 'email'                  => 'Registered Email',
                 'email-not-exist'        => 'Email Not Exists',
                 'page-title'             => 'Forget Password',
-                'powered-by-description' => 'Powered by :bagisto, an open-source project by :webkul.',
+                'powered-by-description' => '',
                 'reset-link-sent'        => 'Reset Password link sent',
                 'sign-in-link'           => 'Back to Sign In ?',
                 'submit-btn'             => 'Reset',
@@ -29,7 +29,7 @@ return [
             'confirm-password'       => 'Confirm Password',
             'email'                  => 'Registered Email',
             'password'               => 'Password',
-            'powered-by-description' => 'Powered by :bagisto, an open-source project by :webkul.',
+            'powered-by-description' => '',
             'submit-btn'             => 'Reset Password',
             'title'                  => 'Reset Password',
         ],
@@ -3012,6 +3012,27 @@ return [
             ],
         ],
 
+        'whitelabel' => [
+            'index' => [
+                'title'       => 'Whitelabel Settings',
+                'description' => 'Customize branding and remove platform references from your application.',
+                'save-btn'   => 'Save Settings',
+                'save-success' => 'Whitelabel settings saved successfully.',
+            ],
+
+            'branding' => [
+                'general' => [
+                    'title' => 'General Settings',
+                    'info'  => 'Configure basic branding information.',
+                ],
+
+                'footer' => [
+                    'title' => 'Footer Settings',
+                    'info'  => 'Configure footer branding and "Powered By" text.',
+                ],
+            ],
+        ],
+
         'exchange-rates' => [
             'index' => [
                 'create-btn'    => 'Create Exchange Rate',
@@ -4675,6 +4696,7 @@ return [
                 'dashboard'                => 'Dashboard',
                 'data-transfer'            => 'Data Transfer',
                 'discount'                 => 'Discount',
+                'whitelabel'               => 'Whitelabel',
                 'email-templates'          => 'Email Templates',
                 'events'                   => 'Events',
                 'exchange-rates'           => 'Exchange Rates',
@@ -4704,6 +4726,7 @@ return [
                 'tax-categories'           => 'Tax Categories',
                 'tax-rates'                => 'Tax Rates',
                 'taxes'                    => 'Taxes',
+                'tenants'                  => 'Tenants',
                 'themes'                   => 'Themes',
                 'transactions'             => 'Transactions',
                 'url-rewrites'             => 'URL Rewrites',
@@ -4711,7 +4734,36 @@ return [
             ],
 
             'powered-by' => [
-                'description' => 'Powered by :bagisto, an open-source project by :webkul.',
+                'description' => '',
+            ],
+        ],
+
+        'whitelabel' => [
+            'info'  => 'Customize branding and remove platform references.',
+            'title' => 'Whitelabel',
+
+            'branding' => [
+                'info'  => 'Configure branding settings.',
+                'title' => 'Branding',
+
+                'general' => [
+                    'app-name'           => 'Application Name',
+                    'company-name'       => 'Company Name',
+                    'company-url'        => 'Company Website URL',
+                    'info'               => 'Configure basic branding information such as application name, company details, and meta generator tag.',
+                    'meta-generator'     => 'Meta Generator Tag',
+                    'meta-generator-info' => 'This value will be used in the HTML meta generator tag. Leave empty to use default application name.',
+                    'title'              => 'General Settings',
+                ],
+
+                'footer' => [
+                    'info'                    => 'Configure footer branding and "Powered By" text.',
+                    'powered-by-text'         => 'Footer "Powered By" Text',
+                    'powered-by-text-info'    => 'Custom HTML text to display in the footer. Leave empty to hide the footer text.',
+                    'show-powered-by'         => 'Show "Powered By" Footer',
+                    'show-powered-by-info'    => 'Enable or disable the "Powered By" footer text in admin panel.',
+                    'title'                   => 'Footer Settings',
+                ],
             ],
         ],
 
@@ -4968,6 +5020,8 @@ return [
         'tax-categories'           => 'Tax Categories',
         'tax-rates'                => 'Tax Rates',
         'taxes'                    => 'Taxes',
+        'tenants'                  => 'Tenants',
+        'manage'                   => 'Manage',
         'themes'                   => 'Themes',
         'transactions'             => 'Transactions',
         'url-rewrites'             => 'URL Rewrites',
@@ -5021,7 +5075,7 @@ return [
     ],
 
     'footer' => [
-        'copy-right' => 'Powered by <a href="https://bagisto.com/" target="_blank">Bagisto</a>, A Community Project by <a href="https://webkul.com/" target="_blank">Webkul</a>',
+        'copy-right' => '',
     ],
 
     'emails' => [
@@ -5131,6 +5185,96 @@ return [
             'subtotal'                   => 'Subtotal',
             'tax'                        => 'Tax',
             'tracking-number'            => 'Tracking Number : :tracking_number',
+        ],
+    ],
+
+    'tenants' => [
+        'create' => [
+            'title'                      => 'Create New Tenant',
+            'create-btn'                 => 'Create Tenant',
+            'save-btn'                   => 'Save',
+            'success'                    => 'Tenant created successfully.',
+            'success-provisioning'       => 'Tenant created successfully. Provisioning is running in the background.',
+            'error'                      => 'An error occurred while creating tenant: :message',
+            'basic-information'          => 'Basic Information',
+            'domain-settings'            => 'Domain Settings',
+            'database-settings'          => 'Database Settings',
+            'admin-user'                 => 'Admin User',
+            'provisioning-settings'      => 'Provisioning Settings',
+            'fields' => [
+                'name'                      => 'Tenant Name',
+                'name-placeholder'          => 'E.g: Acme Store',
+                'slug'                      => 'Tenant Slug',
+                'slug-placeholder'          => 'E.g: acme-store',
+                'slug-info'                 => 'URL-safe, lowercase, numbers and hyphens only',
+                'store_name'                => 'Store Name',
+                'store_name-placeholder'    => 'Optional: Display name for the store',
+                'primary_domain'            => 'Primary Domain',
+                'primary_domain-placeholder' => 'E.g: acme.example.test (auto-generated if empty)',
+                'primary_domain-info'      => 'If empty, slug + base domain will be used',
+                'db_host'                   => 'Database Host',
+                'db_host-placeholder'       => '127.0.0.1',
+                'db_name'                   => 'Database Name',
+                'db_name-placeholder'      => 'Auto: tenant_{id} if empty',
+                'db_name-info'              => 'Auto-generated if empty',
+                'db_username'               => 'Database Username',
+                'db_username-placeholder'  => 'Uses config default if empty',
+                'db_username-info'         => 'A separate DB user will be created for this tenant',
+                'db_username-info-auto'    => 'Auto-generated if empty: tenant_{id}_user',
+                'db_password'               => 'Database Password',
+                'db_password-placeholder'  => 'Minimum 8 characters',
+                'db_password-info'          => 'Auto-generated if empty',
+                'admin-auto-info'           => 'Auto-generated if left empty',
+                'admin_name'                => 'Admin Name',
+                'admin_name-placeholder'   => 'E.g: Admin User',
+                'admin_name-info'           => 'Auto: {Tenant Name} Admin',
+                'admin_email'               => 'Admin Email',
+                'admin_email-placeholder'  => 'admin@example.com',
+                'admin_email-info'          => 'Auto: admin@{slug}.{base_domain}',
+                'admin_password'            => 'Admin Password',
+                'admin_password-placeholder' => 'Minimum 8 characters',
+                'admin_password-info'        => 'Auto-generated if empty (16 characters)',
+                'provision_now'             => 'Provision Now',
+                'provision_now-info'        => 'Enabled: DB creation and migrations will start immediately after tenant creation',
+            ],
+            'validation' => [
+                'name' => [
+                    'required' => 'Tenant name is required.',
+                ],
+                'slug' => [
+                    'required' => 'Tenant slug is required.',
+                    'regex'    => 'Slug can only contain lowercase letters, numbers and hyphens.',
+                    'unique'   => 'This slug is already in use.',
+                ],
+                'primary_domain' => [
+                    'unique' => 'This domain is already in use.',
+                ],
+                'admin_email' => [
+                    'required' => 'Admin email is required.',
+                    'email'    => 'Please enter a valid email address.',
+                ],
+                'admin_password' => [
+                    'required' => 'Admin password is required.',
+                    'min'      => 'Password must be at least 8 characters.',
+                ],
+                'admin_name' => [
+                    'required' => 'Admin name is required.',
+                ],
+                'db_password' => [
+                    'min' => 'Database password must be at least 8 characters.',
+                ],
+            ],
+        ],
+        'show' => [
+            'quick-links'        => 'Quick Links',
+            'admin-panel-link'   => 'Tenant Admin Panel',
+            'storefront-link'    => 'Tenant Storefront',
+            'open-admin-panel'   => 'Open Admin Panel',
+            'open-storefront'   => 'Open Storefront',
+            'no-domain-warning'  => 'Add Domain First',
+            'admin-user-info'    => 'Admin User Information',
+            'admin-name'         => 'Admin Name',
+            'admin-email'        => 'Admin Email',
         ],
     ],
 ];

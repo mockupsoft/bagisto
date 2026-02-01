@@ -1,6 +1,6 @@
 # Agent Workflow Dokümantasyonu
 
-Bu doküman, Bagisto projesi için repo-native agent workflow sistemini tanımlar. Sistem, Claude Code 2.1'in "Sub Agents /skills" davranışını taklit eder ve OpenCode (CLI/Desktop) ile çalışacak şekilde tasarlanmıştır.
+Bu doküman, e-ticaret platformu için repo-native agent workflow sistemini tanımlar. Sistem, Claude Code 2.1'in "Sub Agents /skills" davranışını taklit eder ve OpenCode (CLI/Desktop) ile çalışacak şekilde tasarlanmıştır.
 
 ## İçindekiler
 
@@ -19,8 +19,7 @@ Bu doküman, Bagisto projesi için repo-native agent workflow sistemini tanımla
 
 Bu repo şu şekilde çalışır:
 
-- **Fork:** `mockupsoft/bagisto` - Geliştirme burada yapılır
-- **Upstream:** `bagisto/bagisto` - Referans ve uyumluluk kaynağı
+- **Repository:** `mockupsoft/ecommerce` - Geliştirme burada yapılır
 - **Workflow Referansı:** `darrenhinde/OpenAgents` → `tools/openagents-upstream` (git submodule)
 
 > **KRİTİK NOT:** `tools/openagents-upstream` çalışma zamanı (runtime) bağımlılığı **DEĞİLDİR**. Yalnızca referans amaçlı upstream kopyadır. Composer veya npm bağımlılığı olarak eklenmez.
@@ -127,7 +126,7 @@ Claude yalnızca **açıkça talep edildiğinde** kullanılır. Varsayılan olar
 
 ---
 
-## Neden Upstream Bagisto'ya Sadık Kalıyoruz?
+## Neden Upstream'e Sadık Kalıyoruz?
 
 ### 1. Fork Stratejisi
 

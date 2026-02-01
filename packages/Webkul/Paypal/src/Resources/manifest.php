@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'name'    => 'Webkul Bagisto Paypal',
+    'name'    => 'E-Commerce Paypal',
     'version' => core()->version(),
 ];

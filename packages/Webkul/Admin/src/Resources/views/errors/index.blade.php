@@ -9,17 +9,25 @@
         <div class="flex max-w-[745px] items-center gap-5">
             <div class="w-full">
                 @php
-                    $logoUrl = core()->getConfigData('general.design.admin_logo.logo_image') 
-                                ? Storage::url(core()->getConfigData('general.design.admin_logo.logo_image')) 
-                                : bagisto_asset('images/logo.svg');
+                    $appName = core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name');
+                    $whitelabelLogo = core()->getConfigData('whitelabel.branding.logos.admin_logo_light');
+                    $defaultLogo = core()->getConfigData('general.design.admin_logo.logo_image');
                 @endphp
-
-                <img
-                    class="mb-6 h-10"
-                    src="{{ $logoUrl }}"
-                    id="logo-image"
-                    alt="{{ config('app.name') }}"
-                />
+                @if ($whitelabelLogo)
+                    <img
+                        class="mb-6 h-10"
+                        src="{{ asset($whitelabelLogo) }}"
+                        id="logo-image"
+                        alt="{{ $appName }}"
+                    />
+                @elseif ($defaultLogo)
+                    <img
+                        class="mb-6 h-10"
+                        src="{{ Storage::url($defaultLogo) }}"
+                        id="logo-image"
+                        alt="{{ $appName }}"
+                    />
+                @endif
 
 				<div class="text-[38px] font-bold text-gray-800 dark:text-white">
                     {{ $errorCode }}
@@ -63,7 +71,11 @@
             </div>
 
             <div class="w-full">
-                <img src="{{ bagisto_asset('images/error.svg') }}" />
+                <div class="flex h-full items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-6xl font-bold text-gray-300 dark:text-gray-700">{{ $errorCode }}</div>
+                    </div>
+                </div>
             </div>
         </div>
 	</div>

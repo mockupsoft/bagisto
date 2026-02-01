@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateTenantRequest;
 use App\Jobs\ProvisionTenantJob;
 use App\Models\MerchantUser;
 use App\Models\Tenant\Domain;
 use App\Models\Tenant\Tenant;
 use App\Services\Tenant\DomainVerificationService;
+use App\Services\Tenant\TenantCreateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Queue;
@@ -15,21 +17,53 @@ use Illuminate\View\View;
 
 class TenantManagementController extends Controller
 {
-    public function index(): View
+    public function __construct(
+        protected TenantCreateService $tenantCreateService
+    ) {
+    }
+    public function index()
     {
-        $tenants = Tenant::query()
-            ->with(['database', 'primaryDomain'])
-            ->orderByDesc('id')
-            ->paginate(25);
+        if (request()->ajax()) {
+            return datagrid(\App\DataGrids\Admin\TenantDataGrid::class)->process();
+        }
 
-        return view('admin.tenants.index', compact('tenants'));
+        return view('admin.tenants.index');
+    }
+
+    public function create(): View
+    {
+        return view('admin.tenants.create');
+    }
+
+    public function store(CreateTenantRequest $request): RedirectResponse
+    {
+        try {
+            $tenant = $this->tenantCreateService->create($request->validated());
+
+            $message = $request->input('provision_now', true)
+                ? trans('admin::app.tenants.create.success-provisioning')
+                : trans('admin::app.tenants.create.success');
+
+            return redirect()
+                ->route('admin.tenants.show', $tenant)
+                ->with('success', $message);
+        } catch (\Exception $e) {
+            return back()
+                ->withInput()
+                ->with('error', trans('admin::app.tenants.create.error', [
+                    'message' => $e->getMessage(),
+                ]));
+        }
     }
 
     public function show(Tenant $tenant): View
     {
         $tenant->load(['database', 'domains']);
+        
+        // Load merchant user (admin credentials)
+        $merchantUser = \App\Models\MerchantUser::where('tenant_id', $tenant->id)->first();
 
-        return view('admin.tenants.show', compact('tenant'));
+        return view('admin.tenants.show', compact('tenant', 'merchantUser'));
     }
 
     public function retryProvisioning(Tenant $tenant): RedirectResponse

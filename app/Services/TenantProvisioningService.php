@@ -99,6 +99,13 @@ class TenantProvisioningService
             return $tenant;
         });
 
+<<<<<<< HEAD
+        dispatch(new ProvisionTenantJob(
+            tenantId: $tenant->id,
+            adminEmail: $adminEmail,
+            adminPasswordHash: $adminPasswordHash,
+            adminName: $adminName
+=======
         $merchantUser = \App\Models\MerchantUser::updateOrCreate(
             ['email' => $adminEmail],
             [

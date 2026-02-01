@@ -2,7 +2,7 @@
 
 <html
     lang="{{ app()->getLocale() }}"
-    dir="{{ core()->getCurrentLocale()?->direction ?? 'ltr' }}"
+    dir="{{ core()->getCurrentLocale()->direction }}"
 >
 
 <head>
@@ -29,7 +29,7 @@
     >
     <meta 
         name="generator" 
-        content="Bagisto"
+        content="{{ core()->getConfigData('whitelabel.branding.general.meta_generator') ?: config('app.name') }}"
     >
 
     @stack('meta')
@@ -53,13 +53,6 @@
             rel="shortcut icon"
             sizes="16x16"
         />
-    @else
-        <link
-            type="image/x-icon"
-            href="{{ bagisto_asset('images/favicon.ico') }}"
-            rel="shortcut icon"
-            sizes="16x16"
-        />
     @endif
 
     @stack('styles')
@@ -74,7 +67,6 @@
 <body>
     {!! view_render_event('bagisto.admin.layout.body.before') !!}
 
-    <!-- Built With Bagisto -->
     <div id="app">
         <!-- Flash Message Blade Component -->
         <x-admin::flash-group />
@@ -100,8 +92,51 @@
          * been registered in the app. No matter what `app.mount()` should be
          * called in the last.
          */
-        window.addEventListener("load", function(event) {
-            app.mount("#app");
+        function mountVueApp() {
+            if (typeof window.app !== 'undefined' && window.app) {
+                try {
+                    const appElement = document.getElementById('app');
+                    if (appElement) {
+                        if (appElement.__vue_app__) {
+                            console.warn('Vue app already mounted');
+                            return;
+                        }
+                        app.mount("#app");
+                        console.log('Vue app mounted successfully');
+                    } else {
+                        console.error('App element (#app) not found');
+                    }
+                } catch (error) {
+                    console.error('Vue app mount error:', error);
+                }
+            } else {
+                console.error('Vue app is not defined. JavaScript may not have loaded correctly.');
+                // Retry after a short delay
+                setTimeout(function() {
+                    if (typeof window.app !== 'undefined' && window.app) {
+                        mountVueApp();
+                    } else {
+                        console.error('Vue app still not available after retry. Please check browser console for JavaScript errors.');
+                    }
+                }, 500);
+            }
+        }
+
+        // Debug: Check if JavaScript is loading
+        console.log('Admin layout script loaded. DOM readyState:', document.readyState);
+        console.log('Checking for window.app...', typeof window.app);
+
+        // Try to mount immediately if DOM is ready
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(mountVueApp, 100);
+        } else {
+            window.addEventListener("load", mountVueApp);
+        }
+
+        // Fallback: try mounting after DOMContentLoaded
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log('DOMContentLoaded fired');
+            setTimeout(mountVueApp, 200);
         });
     </script>
 

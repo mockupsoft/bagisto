@@ -55,12 +55,6 @@ class DomainVerificationService
     {
         $method = $method ?: self::METHOD_DNS_TXT;
 
-<<<<<<< HEAD
-        $domain->forceFill([
-            'verification_token' => Str::random(40),
-            'verification_method' => $method,
-            'verification_value' => null,
-=======
         $token = Str::random(40);
         $value = 'saas-verify=' . $token;
 
@@ -68,7 +62,6 @@ class DomainVerificationService
             'verification_token' => $token,
             'verification_method' => $method,
             'verification_value' => $value,
->>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
             'verification_started_at' => Carbon::now(),
             'last_checked_at' => null,
             'last_failure_reason' => null,
@@ -97,11 +90,7 @@ class DomainVerificationService
      */
     public function getHttpInstruction(Domain $domain): array
     {
-<<<<<<< HEAD
-        $host = $this->normalizeDomain($domain->domain);
-=======
         $host = rtrim($this->normalizeDomain($domain->domain), '/');
->>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
 
         return [
             'method' => self::METHOD_HTTP_FILE,
@@ -133,17 +122,11 @@ class DomainVerificationService
             $this->start($domain, $method);
         }
 
-<<<<<<< HEAD
-        $domain->forceFill([
-            'verification_method' => $method,
-            'verification_value' => $this->expectedVerificationValue($domain),
-=======
         $expected = $this->expectedVerificationValue($domain);
 
         $domain->forceFill([
             'verification_method' => $method,
             'verification_value' => $expected,
->>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
         ])->save();
 
         $ok = false;
@@ -210,36 +193,6 @@ class DomainVerificationService
      */
     protected function verifyHttp(Domain $domain): array
     {
-<<<<<<< HEAD
-        $host = $this->normalizeDomain($domain->domain);
-        $expected = $this->expectedVerificationValue($domain);
-
-        $urls = [
-            'https://' . $host . self::HTTP_WELL_KNOWN_PATH,
-            'http://' . $host . self::HTTP_WELL_KNOWN_PATH,
-        ];
-
-        foreach ($urls as $url) {
-            $response = Http::timeout(5)->acceptText()->get($url);
-
-            if (! $response->successful()) {
-                continue;
-            }
-
-            $body = trim((string) $response->body());
-
-            if ($body === $expected || str_contains($body, $expected) || $body === $domain->verification_token) {
-                return [true, null];
-            }
-        }
-
-        return [false, 'http_file_mismatch'];
-    }
-
-    protected function expectedVerificationValue(Domain $domain): string
-    {
-        return 'saas-verify=' . (string) $domain->verification_token;
-=======
         $instruction = $this->getHttpInstruction($domain);
         $expected = $instruction['value'];
 
@@ -422,7 +375,6 @@ class DomainVerificationService
         $domain->forceFill(['verification_value' => $value])->save();
 
         return $value;
->>>>>>> 569dce1395ed17891afb6474c2bcc58b0db46e45
     }
 
     public function normalizeDomain(string $domain): string

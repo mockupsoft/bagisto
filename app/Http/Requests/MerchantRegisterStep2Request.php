@@ -14,9 +14,9 @@ class MerchantRegisterStep2Request extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:60'],
-            'last_name' => ['required', 'string', 'max:60'],
-            'phone' => ['nullable', 'string', 'max:30'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
         ];
     }
 }

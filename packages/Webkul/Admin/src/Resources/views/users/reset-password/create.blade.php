@@ -7,17 +7,25 @@
     <div class="flex h-[100vh] items-center justify-center">
         <div class="flex flex-col items-center gap-5">
             <!-- Logo -->
-            @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+            @php
+                $isDarkMode = request()->cookie('dark_mode');
+                $whitelabelLogo = $isDarkMode 
+                    ? core()->getConfigData('whitelabel.branding.logos.admin_logo_dark')
+                    : core()->getConfigData('whitelabel.branding.logos.admin_logo_light');
+                $defaultLogo = core()->getConfigData('general.design.admin_logo.logo_image');
+                $appName = core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name');
+            @endphp
+            @if ($whitelabelLogo)
                 <img
                     class="h-10 w-[110px]"
-                    src="{{ Storage::url($logo) }}"
-                    alt="{{ config('app.name') }}"
+                    src="{{ asset($whitelabelLogo) }}"
+                    alt="{{ $appName }}"
                 />
-            @else
+            @elseif ($defaultLogo)
                 <img
-                    class="w-max" 
-                    src="{{ bagisto_asset('images/logo.svg') }}"
-                    alt="{{ config('app.name') }}"
+                    class="h-10 w-[110px]"
+                    src="{{ asset($defaultLogo) }}"
+                    alt="{{ $appName }}"
                 />
             @endif
 
@@ -116,12 +124,16 @@
             </div>
 
             <!-- Powered By -->
-            <div class="text-sm font-normal">
-                @lang('admin::app.users.reset-password.powered-by-description', [
-                    'bagisto' => '<a class="text-blue-600 hover:underline" href="https://bagisto.com/en/">Bagisto</a>',
-                    'webkul' => '<a class="text-blue-600 hover:underline" href="https://webkul.com/">Webkul</a>',
-                ])
-            </div>
+            @if (core()->getConfigData('whitelabel.branding.footer.show_powered_by') !== false)
+                <div class="text-sm font-normal">
+                    @php
+                        $poweredByText = core()->getConfigData('whitelabel.branding.footer.powered_by_text');
+                    @endphp
+                    @if ($poweredByText)
+                        {!! $poweredByText !!}
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 </x-admin::layouts.anonymous>

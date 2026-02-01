@@ -95,6 +95,17 @@ return [
     ],
 
     /**
+     * Tenants Management (Patch 12-15)
+     */
+    [
+        'key'        => 'tenants',
+        'name'       => 'admin::app.components.layouts.sidebar.tenants',
+        'route'      => 'admin.tenants.index',
+        'sort'       => 3.5,
+        'icon'       => 'icon-customer-2',
+    ],
+
+    /**
      * Customers.
      */
     [
@@ -357,24 +368,13 @@ return [
     ],
 
     /**
-     * Tenants.
-     */
-    [
-        'key'        => 'tenants',
-        'name'       => 'admin::app.components.layouts.sidebar.tenants',
-        'route'      => 'admin.tenants.index',
-        'sort'       => 9,
-        'icon'       => 'icon-users',
-    ],
-
-    /**
      * Configuration.
      */
     [
         'key'        => 'configuration',
         'name'       => 'admin::app.components.layouts.sidebar.configure',
         'route'      => 'admin.configuration.index',
-        'sort'       => 10,
+        'sort'       => 9,
         'icon'       => 'icon-configuration',
     ],
 ];

@@ -1,42 +1,81 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Merchant Registration - Step 1</title>
-</head>
-<body>
-    <h1>Merchant Registration (Step 1/3)</h1>
+@php
+    $step1Data = $data['step1'] ?? [];
+@endphp
 
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+@component('auth.register.layout', ['currentStep' => 1, 'data' => $data])
+    <h2 class="mb-6 text-2xl font-bold text-navyBlue">
+        Authentication Credentials
+    </h2>
+
+    <x-shop::form :action="route('merchant.register.postStep1')">
+        <!-- Email -->
+        <x-shop::form.control-group>
+            <x-shop::form.control-group.label class="required">
+                Email Address
+            </x-shop::form.control-group.label>
+
+            <x-shop::form.control-group.control
+                type="email"
+                class="px-6 py-4 max-md:py-3 max-sm:py-2"
+                name="email"
+                rules="required|email"
+                :value="old('email', $step1Data['email'] ?? '')"
+                label="Email Address"
+                placeholder="email@example.com"
+                aria-required="true"
+            />
+
+            <x-shop::form.control-group.error control-name="email" />
+        </x-shop::form.control-group>
+
+        <!-- Password -->
+        <x-shop::form.control-group>
+            <x-shop::form.control-group.label class="required">
+                Password
+            </x-shop::form.control-group.label>
+
+            <x-shop::form.control-group.control
+                type="password"
+                class="px-6 py-4 max-md:py-3 max-sm:py-2"
+                name="password"
+                rules="required|min:8"
+                value=""
+                label="Password"
+                placeholder="Password"
+                aria-required="true"
+            />
+
+            <x-shop::form.control-group.error control-name="password" />
+        </x-shop::form.control-group>
+
+        <!-- Confirm Password -->
+        <x-shop::form.control-group>
+            <x-shop::form.control-group.label class="required">
+                Confirm Password
+            </x-shop::form.control-group.label>
+
+            <x-shop::form.control-group.control
+                type="password"
+                class="px-6 py-4 max-md:py-3 max-sm:py-2"
+                name="password_confirmation"
+                rules="required|confirmed:@password"
+                value=""
+                label="Confirm Password"
+                placeholder="Confirm Password"
+                aria-required="true"
+            />
+
+            <x-shop::form.control-group.error control-name="password_confirmation" />
+        </x-shop::form.control-group>
+
+        <!-- Continue Button -->
+        <div class="mt-8">
+            <button
+                class="primary-button m-0 mx-auto block w-full max-w-[374px] rounded-2xl px-11 py-4 text-center text-base max-md:max-w-full max-md:rounded-lg max-md:py-3 max-sm:py-1.5"
+                type="submit"
+            >
+                Continue
+            </button>
         </div>
-    @endif
-
-    <form method="POST" action="{{ route('merchant.register.postStep1') }}">
-        @csrf
-
-        <div>
-            <label>Email</label>
-            <input type="email" name="email" value="{{ old('email', data_get($data, 'step1.email')) }}" required />
-        </div>
-
-        <div>
-            <label>Password</label>
-            <input type="password" name="password" required />
-        </div>
-
-        <div>
-            <label>Confirm Password</label>
-            <input type="password" name="password_confirmation" required />
-        </div>
-
-        <button type="submit">Continue</button>
-    </form>
-</body>
-</html>
+    </x-shop::form>
+@endcomponent

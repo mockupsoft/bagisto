@@ -1,7 +1,7 @@
 {
-    "name": "bagisto/bagisto",
+    "name": "mockupsoft/ecommerce",
     "type": "project",
-    "description": "Bagisto Laravel E-Commerce",
+    "description": "Laravel E-Commerce Platform",
     "keywords": [
         "framework",
         "laravel"

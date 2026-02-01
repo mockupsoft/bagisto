@@ -72,6 +72,22 @@ class ProvisionTenantJob implements ShouldQueue
             ]
         );
 
+        // Refresh to get latest data (in case it was created by TenantCreateService)
+        $tenantDb->refresh();
+
+        // Ensure database_name is set (in case record existed but was empty)
+        if (empty($tenantDb->database_name)) {
+            $tenantDb->database_name = $dbName;
+        }
+
+        // If using per-tenant user but password is empty, generate one
+        $defaultUsername = $config['username'] ?? 'root';
+        if ($tenantDb->database_username !== $defaultUsername && empty($tenantDb->database_password)) {
+            // Generate random password for per-tenant user
+            $tenantDb->database_password = \Illuminate\Support\Str::random(16);
+            $tenantDb->save();
+        }
+
         $tenantDb->status = 'provisioning';
         $tenantDb->last_error = null;
         $tenantDb->save();
@@ -91,15 +107,51 @@ class ProvisionTenantJob implements ShouldQueue
                 )
             );
 
+            // Create database user if per-tenant user (before configuring connection)
+            $defaultUsername = $config['username'] ?? 'root';
+            if ($tenantDb->database_username !== $defaultUsername) {
+                // Ensure password is set for per-tenant user
+                if (empty($tenantDb->database_password)) {
+                    $tenantDb->database_password = \Illuminate\Support\Str::random(16);
+                    $tenantDb->save();
+                }
+                $this->createDatabaseUserIfNeeded($tenantDb, $config);
+            }
+
             $configurator->configure($tenantDb);
             DB::purge('tenant');
             DB::reconnect('tenant');
 
-            Artisan::call('migrate', [
+            // Verify connection before migration
+            try {
+                DB::connection('tenant')->getPdo();
+            } catch (\Exception $e) {
+                throw new \RuntimeException('Failed to connect to tenant database: ' . $e->getMessage());
+            }
+
+            // Run migrations
+            $migrationsPath = $config['migrations_path'] ?? 'database/migrations/tenant';
+            
+            // Check if migrations path exists
+            $fullPath = base_path($migrationsPath);
+            if (!is_dir($fullPath)) {
+                \Log::warning('Tenant migrations path does not exist', [
+                    'path' => $fullPath,
+                    'tenant_id' => $tenant->id,
+                ]);
+                // Continue anyway - migrations might be in packages
+            }
+
+            $exitCode = Artisan::call('migrate', [
                 '--database' => 'tenant',
-                '--path' => $config['migrations_path'] ?? 'database/migrations/tenant',
+                '--path' => $migrationsPath,
                 '--force' => true,
             ]);
+
+            if ($exitCode !== 0) {
+                $output = Artisan::output();
+                throw new \RuntimeException('Migration failed with exit code ' . $exitCode . ': ' . $output);
+            }
 
             if ($config['seed_enabled'] ?? false) {
                 $catalogSeeder->seed();
@@ -181,5 +233,66 @@ class ProvisionTenantJob implements ShouldQueue
             'created_at' => $now,
             'updated_at' => $now,
         ]);
+    }
+
+    /**
+     * Create database user if custom credentials are provided.
+     */
+    protected function createDatabaseUserIfNeeded(TenantDatabase $tenantDb, array $config): void
+    {
+        // Check if custom username is provided (different from config default)
+        $defaultUsername = $config['username'] ?? 'root';
+        
+        if ($tenantDb->database_username === $defaultUsername) {
+            // Using default username, no need to create user
+            return;
+        }
+
+        // Custom username provided, create user
+        if (empty($tenantDb->database_username) || empty($tenantDb->database_password)) {
+            return;
+        }
+
+        try {
+            $templateConnection = $config['connection_template'] ?? 'mysql';
+            $dbName = $tenantDb->database_name;
+            
+            // Escape identifiers
+            $escapedUsername = str_replace(['`', "'"], ['``', "''"], $tenantDb->database_username);
+            $escapedPassword = str_replace("'", "''", $tenantDb->database_password);
+            $escapedDbName = str_replace('`', '``', $dbName);
+            
+            // Create user if not exists (idempotent)
+            $createUserSql = sprintf(
+                "CREATE USER IF NOT EXISTS '%s'@'%%' IDENTIFIED BY '%s'",
+                $escapedUsername,
+                $escapedPassword
+            );
+            
+            DB::connection($templateConnection)->statement($createUserSql);
+            
+            // Grant privileges (idempotent - can be run multiple times)
+            $grantSql = sprintf(
+                "GRANT ALL PRIVILEGES ON `%s`.* TO '%s'@'%%'",
+                $escapedDbName,
+                $escapedUsername
+            );
+            
+            DB::connection($templateConnection)->statement($grantSql);
+            
+            // Flush privileges
+            DB::connection($templateConnection)->statement('FLUSH PRIVILEGES');
+            
+        } catch (Throwable $e) {
+            // Log error but don't fail provisioning
+            \Log::warning('Failed to create database user during provisioning', [
+                'tenant_id' => $tenantDb->tenant_id,
+                'username' => $tenantDb->database_username,
+                'error' => $e->getMessage(),
+            ]);
+            
+            // Note: We don't throw here to allow provisioning to continue
+            // The user might have been created manually or the error might be non-critical
+        }
     }
 }

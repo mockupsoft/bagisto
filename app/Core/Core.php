@@ -46,6 +46,23 @@ class Core extends BaseCore
         return $this->fallbackChannelCode();
     }
 
+    /**
+     * Returns current locale with tenant-safe fallback.
+     *
+     * @return \Webkul\Core\Contracts\Locale
+     */
+    public function getCurrentLocale()
+    {
+        $locale = parent::getCurrentLocale();
+
+        if ($locale) {
+            return $locale;
+        }
+
+        // Fallback: Create a minimal locale object if none exists
+        return $this->fallbackLocale();
+    }
+
     protected function fallbackChannelCode(): string
     {
         $firstChannel = $this->channelRepository->first();
@@ -53,20 +70,22 @@ class Core extends BaseCore
         return $firstChannel ? $firstChannel->code : 'default';
     }
 
-    /**
-     * Returns current locale with null-safe fallback for admin routes.
-     */
-    public function getCurrentLocale()
+    protected function fallbackLocale()
     {
-        $locale = parent::getCurrentLocale();
+        // Try to get first available locale
+        $firstLocale = $this->localeRepository->first();
 
-        if (! $locale) {
-            // Fallback to default locale if current locale is null (e.g., admin routes without tenant context)
-            $defaultLocale = $this->localeRepository->findOneByField('code', config('app.locale'));
-
-            return $defaultLocale ?: $this->localeRepository->first();
+        if ($firstLocale) {
+            return $firstLocale;
         }
 
-        return $locale;
+        // Last resort: Create a minimal locale model instance
+        $localeCode = app()->getLocale() ?: config('app.fallback_locale', 'en');
+
+        return \Webkul\Core\Models\Locale::make([
+            'code' => $localeCode,
+            'name' => ucfirst($localeCode),
+            'direction' => 'ltr',
+        ]);
     }
 }

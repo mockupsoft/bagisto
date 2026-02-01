@@ -41,9 +41,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'tenant.resolve' => ResolveTenant::class,
             'merchant.onboarding' => EnsureMerchantOnboardingSession::class,
+            'admin.locale' => \App\Http\Middleware\SetAdminLocale::class,
         ]);
 
         $middleware->appendToGroup('web', 'tenant.resolve');
+        $middleware->appendToGroup('web', 'admin.locale');
 
         /**
          * Add the overridden middleware at the end of the list.
@@ -56,5 +58,12 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Set authentication redirect for admin routes
+        $exceptions->renderable(function (\Illuminate\Auth\AuthenticationException $e, \Illuminate\Http\Request $request) {
+            if ($request->is(config('app.admin_url').'/*')) {
+                return redirect()->guest(route('admin.session.create'));
+            }
+            
+            return redirect()->guest(route('shop.customer.session.index'));
+        });
     })->create();

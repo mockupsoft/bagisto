@@ -14,8 +14,17 @@ class MerchantRegisterStep1Request extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string', 'min:10', 'confirmed'],
+            'email' => ['required', 'email', 'max:255', 'unique:merchant_users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'Bu email adresi zaten kullanılıyor.',
+            'password.min' => 'Şifre en az 8 karakter olmalıdır.',
+            'password.confirmed' => 'Şifreler eşleşmiyor.',
         ];
     }
 }

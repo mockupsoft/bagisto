@@ -112,6 +112,49 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        /*
+         * Main application database connection (alias for mysql)
+         * This is used as the default connection for core application data.
+         */
+        'app' => [
+            'driver'         => 'mysql',
+            'url'            => env('DB_URL'),
+            'host'           => env('DB_HOST', '127.0.0.1'),
+            'port'           => env('DB_PORT', '3306'),
+            'database'       => env('DB_DATABASE', 'laravel'),
+            'username'       => env('DB_USERNAME', 'root'),
+            'password'       => env('DB_PASSWORD', ''),
+            'unix_socket'    => env('DB_SOCKET', ''),
+            'charset'        => env('DB_CHARSET', 'utf8mb4'),
+            'collation'      => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix'         => env('DB_PREFIX', ''),
+            'prefix_indexes' => true,
+            'strict'         => false,
+            'engine'         => null,
+            'options'        => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        /*
+         * Tenant database connection (dynamically configured at runtime)
+         * This connection is configured by TenantConnectionConfigurator
+         * based on TenantDatabase model data.
+         */
+        'tenant' => [
+            'driver'         => 'mysql',
+            'host'           => env('SAAS_TENANT_DB_HOST', '127.0.0.1'),
+            'port'           => env('SAAS_TENANT_DB_PORT', '3306'),
+            'database'       => env('SAAS_TENANT_DB_DATABASE', ''),
+            'username'       => env('SAAS_TENANT_DB_USERNAME', 'root'),
+            'password'       => env('SAAS_TENANT_DB_PASSWORD', ''),
+            'prefix'         => env('SAAS_TENANT_DB_PREFIX', ''),
+            'charset'        => env('SAAS_TENANT_DB_CHARSET', 'utf8mb4'),
+            'collation'      => env('SAAS_TENANT_DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'strict'         => false,
+            'engine'         => null,
+        ],
+
     ],
 
     /*

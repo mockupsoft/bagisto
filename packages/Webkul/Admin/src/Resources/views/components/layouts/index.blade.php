@@ -35,7 +35,7 @@
     >
     <meta 
         name="generator" 
-        content="Bagisto"
+        content="{{ core()->getConfigData('whitelabel.branding.general.meta_generator') ?: config('app.name') }}"
     >
 
     @stack('meta')
@@ -52,11 +52,16 @@
         rel="stylesheet"
     />
 
-    <link
-        rel="preload"
-        as="image"
-        href="{{ url('cache/logo/bagisto.png') }}"
-    >
+    @php
+        $logo = core()->getConfigData('general.design.admin_logo.logo_image');
+    @endphp
+    @if ($logo)
+        <link
+            rel="preload"
+            as="image"
+            href="{{ Storage::url($logo) }}"
+        >
+    @endif
 
     @if ($favicon = core()->getConfigData('general.design.admin_logo.favicon'))
         <link
@@ -65,13 +70,6 @@
             rel="shortcut icon"
             sizes="16x16"
         >
-    @else
-        <link
-            type="image/x-icon"
-            href="{{ bagisto_asset('images/favicon.ico') }}"
-            rel="shortcut icon"
-            sizes="16x16"
-        />
     @endif
 
     @stack('styles')
@@ -86,7 +84,6 @@
 <body class="h-full dark:bg-gray-950">
     {!! view_render_event('bagisto.admin.layout.body.before') !!}
 
-    <!-- Built With Bagisto -->
     <div
         id="app"
         class="h-full"
@@ -128,14 +125,18 @@
                 </div>
 
                 <!-- Powered By -->
-                <div class="mt-auto">
-                    <div class="border-t bg-white py-2 text-center text-xs sm:text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                        @lang('admin::app.components.layouts.powered-by.description', [
-                            'bagisto' => '<a class="text-blue-600 hover:underline dark:text-darkBlue" href="https://bagisto.com/en/">Bagisto</a>',
-                            'webkul' => '<a class="text-blue-600 hover:underline dark:text-darkBlue" href="https://webkul.com/">Webkul</a>',
-                        ])
+                @if (core()->getConfigData('whitelabel.branding.footer.show_powered_by') !== false)
+                    <div class="mt-auto">
+                        <div class="border-t bg-white py-2 text-center text-xs sm:text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                            @php
+                                $poweredByText = core()->getConfigData('whitelabel.branding.footer.powered_by_text');
+                            @endphp
+                            @if ($poweredByText)
+                                {!! $poweredByText !!}
+                            @endif
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
 
@@ -155,8 +156,51 @@
          * been registered in the app. No matter what `app.mount()` should be
          * called in the last.
          */
-        window.addEventListener("load", function(event) {
-            app.mount("#app");
+        function mountVueApp() {
+            if (typeof window.app !== 'undefined' && window.app) {
+                try {
+                    const appElement = document.getElementById('app');
+                    if (appElement) {
+                        if (appElement.__vue_app__) {
+                            console.warn('Vue app already mounted');
+                            return;
+                        }
+                        app.mount("#app");
+                        console.log('Vue app mounted successfully');
+                    } else {
+                        console.error('App element (#app) not found');
+                    }
+                } catch (error) {
+                    console.error('Vue app mount error:', error);
+                }
+            } else {
+                console.error('Vue app is not defined. JavaScript may not have loaded correctly.');
+                // Retry after a short delay
+                setTimeout(function() {
+                    if (typeof window.app !== 'undefined' && window.app) {
+                        mountVueApp();
+                    } else {
+                        console.error('Vue app still not available after retry. Please check browser console for JavaScript errors.');
+                    }
+                }, 500);
+            }
+        }
+
+        // Debug: Check if JavaScript is loading
+        console.log('Admin layout script loaded. DOM readyState:', document.readyState);
+        console.log('Checking for window.app...', typeof window.app);
+
+        // Try to mount immediately if DOM is ready
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(mountVueApp, 100);
+        } else {
+            window.addEventListener("load", mountVueApp);
+        }
+
+        // Fallback: try mounting after DOMContentLoaded
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log('DOMContentLoaded fired');
+            setTimeout(mountVueApp, 200);
         });
     </script>
 

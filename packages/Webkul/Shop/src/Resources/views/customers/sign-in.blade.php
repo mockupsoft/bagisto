@@ -25,12 +25,25 @@
                 class="m-[0_auto_20px_auto]"
                 aria-label="@lang('shop::app.customers.login-form.bagisto')"
             >
-                <img
-                    src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                    alt="{{ config('app.name') }}"
-                    width="131"
-                    height="29"
-                >
+                @php
+                    $shopLogo = core()->getConfigData('whitelabel.branding.logos.shop_logo_light');
+                    $channelLogo = core()->getCurrentChannel()->logo_url;
+                @endphp
+                @if ($shopLogo)
+                    <img
+                        src="{{ asset($shopLogo) }}"
+                        alt="{{ config('app.name') }}"
+                        width="131"
+                        height="29"
+                    >
+                @elseif ($channelLogo)
+                    <img
+                        src="{{ $channelLogo }}"
+                        alt="{{ config('app.name') }}"
+                        width="131"
+                        height="29"
+                    >
+                @endif
             </a>
         </div>
 

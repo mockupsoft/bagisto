@@ -2704,4 +2704,110 @@ return [
             ],
         ],
     ],
+
+    /**
+     * Whitelabel.
+     */
+    [
+        'key'  => 'whitelabel',
+        'name' => 'admin::app.configuration.index.whitelabel.title',
+        'info' => 'admin::app.configuration.index.whitelabel.info',
+        'sort' => 9,
+    ], [
+        'key'  => 'whitelabel.branding',
+        'name' => 'admin::app.configuration.index.whitelabel.branding.title',
+        'info' => 'admin::app.configuration.index.whitelabel.branding.info',
+        'icon' => 'settings/store.svg',
+        'sort' => 1,
+    ], [
+        'key'    => 'whitelabel.branding.general',
+        'name'   => 'admin::app.configuration.index.whitelabel.branding.general.title',
+        'info'   => 'admin::app.configuration.index.whitelabel.branding.general.info',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'       => 'app_name',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.general.app-name',
+                'type'       => 'text',
+                'default'    => env('APP_NAME', 'E-Commerce Platform'),
+                'validation' => 'required|max:100',
+            ], [
+                'name'       => 'company_name',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.general.company-name',
+                'type'       => 'text',
+                'default'    => '',
+                'validation' => 'max:200',
+            ], [
+                'name'       => 'company_url',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.general.company-url',
+                'type'       => 'text',
+                'default'    => '',
+                'validation' => 'max:255|url',
+            ], [
+                'name'    => 'meta_generator',
+                'title'   => 'admin::app.configuration.index.whitelabel.branding.general.meta-generator',
+                'type'    => 'text',
+                'default' => '',
+                'info'    => 'admin::app.configuration.index.whitelabel.branding.general.meta-generator-info',
+            ],
+        ],
+    ], [
+        'key'    => 'whitelabel.branding.footer',
+        'name'   => 'admin::app.configuration.index.whitelabel.branding.footer.title',
+        'info'   => 'admin::app.configuration.index.whitelabel.branding.footer.info',
+        'sort'   => 2,
+        'fields' => [
+            [
+                'name'    => 'show_powered_by',
+                'title'   => 'admin::app.configuration.index.whitelabel.branding.footer.show-powered-by',
+                'type'    => 'boolean',
+                'default' => true,
+                'info'    => 'admin::app.configuration.index.whitelabel.branding.footer.show-powered-by-info',
+            ], [
+                'name'       => 'powered_by_text',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.footer.powered-by-text',
+                'type'       => 'textarea',
+                'default'    => '',
+                'validation' => 'max:500',
+                'info'       => 'admin::app.configuration.index.whitelabel.branding.footer.powered-by-text-info',
+                'depends'    => 'show_powered_by:true',
+        ],
+    ], [
+        'key'    => 'whitelabel.branding.logos',
+        'name'   => 'admin::app.configuration.index.whitelabel.branding.logos.title',
+        'info'   => 'admin::app.configuration.index.whitelabel.branding.logos.info',
+        'sort'   => 3,
+        'fields' => [
+            [
+                'name'       => 'admin_logo_light',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.logos.admin.logo-light',
+                'type'       => 'image',
+                'validation' => 'image|mimes:jpeg,jpg,png,svg,webp|max:2048',
+                'channel_based' => false,
+                'locale_based' => false,
+            ], [
+                'name'       => 'admin_logo_dark',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.logos.admin.logo-dark',
+                'type'       => 'image',
+                'validation' => 'image|mimes:jpeg,jpg,png,svg,webp|max:2048',
+                'channel_based' => false,
+                'locale_based' => false,
+            ], [
+                'name'       => 'shop_logo_light',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.logos.shop.logo-light',
+                'type'       => 'image',
+                'validation' => 'image|mimes:jpeg,jpg,png,svg,webp|max:2048',
+                'channel_based' => false,
+                'locale_based' => false,
+            ], [
+                'name'       => 'shop_logo_dark',
+                'title'      => 'admin::app.configuration.index.whitelabel.branding.logos.shop.logo-dark',
+                'type'       => 'image',
+                'validation' => 'image|mimes:jpeg,jpg,png,svg,webp|max:2048',
+                'channel_based' => false,
+                'locale_based' => false,
+            ],
+        ],
+    ],
+    ],
 ];

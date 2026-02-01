@@ -231,6 +231,6 @@ Route::prefix('settings')->group(function () {
     Route::controller(WhitelabelController::class)->prefix('whitelabel')->group(function () {
         Route::get('', 'index')->name('admin.settings.whitelabel.index');
 
-        Route::post('', 'update')->name('admin.settings.whitelabel.update');
+        Route::post('', 'store')->name('admin.settings.whitelabel.store');
     });
 });

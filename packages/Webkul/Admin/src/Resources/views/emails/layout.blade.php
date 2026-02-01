@@ -15,17 +15,22 @@
                 <!-- Email Header -->
                 <div style="margin-bottom: 65px;">
                     <a href="{{ route('shop.home.index') }}">
-                        @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+                        @php
+                            $appName = core()->getConfigData('whitelabel.branding.general.app_name') ?: config('app.name');
+                            $whitelabelLogo = core()->getConfigData('whitelabel.branding.logos.admin_logo_light');
+                            $defaultLogo = core()->getConfigData('general.design.admin_logo.logo_image');
+                        @endphp
+                        @if ($whitelabelLogo)
                             <img
-                                src="{{ Storage::url($logo) }}"
-                                alt="{{ config('app.name') }}"
+                                src="{{ asset($whitelabelLogo) }}"
+                                alt="{{ $appName }}"
                                 style="height: 40px; width: 110px;"
                             />
-                        @else
+                        @elseif ($defaultLogo)
                             <img
-                                src="{{ bagisto_asset('images/logo.svg', 'admin') }}"
-                                alt="{{ config('app.name') }}"
-                                style="width: 156px;height: 40px;"
+                                src="{{ Storage::url($defaultLogo) }}"
+                                alt="{{ $appName }}"
+                                style="height: 40px; width: 110px;"
                             />
                         @endif
                     </a>
