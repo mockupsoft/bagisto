@@ -348,6 +348,23 @@ return [
         'route'      => 'admin.settings.data_transfer.imports.index',
         'sort'       => 1,
         'icon'       => '',
+    ], [
+        'key'        => 'settings.whitelabel',
+        'name'       => 'admin::app.components.layouts.sidebar.whitelabel',
+        'route'      => 'admin.settings.whitelabel.index',
+        'sort'       => 11,
+        'icon'       => '',
+    ],
+
+    /**
+     * Tenants.
+     */
+    [
+        'key'        => 'tenants',
+        'name'       => 'admin::app.components.layouts.sidebar.tenants',
+        'route'      => 'admin.tenants.index',
+        'sort'       => 9,
+        'icon'       => 'icon-users',
     ],
 
     /**
@@ -357,7 +374,7 @@ return [
         'key'        => 'configuration',
         'name'       => 'admin::app.components.layouts.sidebar.configure',
         'route'      => 'admin.configuration.index',
-        'sort'       => 9,
+        'sort'       => 10,
         'icon'       => 'icon-configuration',
     ],
 ];

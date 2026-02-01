@@ -859,6 +859,56 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Tenants
+    |--------------------------------------------------------------------------
+    |
+    | All ACLs related to tenants will be placed here.
+    |
+    */
+    [
+        'key'   => 'tenants',
+        'name'  => 'admin::app.acl.tenants',
+        'route' => 'admin.tenants.index',
+        'sort'  => 9,
+    ], [
+        'key'   => 'tenants.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => 'admin.tenants.create',
+        'sort'  => 1,
+    ], [
+        'key'   => 'tenants.view',
+        'name'  => 'admin::app.acl.view',
+        'route' => 'admin.tenants.show',
+        'sort'  => 2,
+    ], [
+        'key'   => 'tenants.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => 'admin.tenants.toggle',
+        'sort'  => 3,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Settings - Whitelabel
+    |--------------------------------------------------------------------------
+    |
+    | All ACLs related to whitelabel settings will be placed here.
+    |
+    */
+    [
+        'key'   => 'settings.whitelabel',
+        'name'  => 'admin::app.acl.whitelabel',
+        'route' => 'admin.settings.whitelabel.index',
+        'sort'  => 12,
+    ], [
+        'key'   => 'settings.whitelabel.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => 'admin.settings.whitelabel.update',
+        'sort'  => 1,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Configuration
     |--------------------------------------------------------------------------
     |
@@ -869,6 +919,6 @@ return [
         'key'   => 'configuration',
         'name'  => 'admin::app.acl.configure',
         'route' => 'admin.configuration.index',
-        'sort'  => 9,
+        'sort'  => 10,
     ],
 ];

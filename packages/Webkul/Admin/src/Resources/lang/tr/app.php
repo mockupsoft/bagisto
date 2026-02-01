@@ -4704,10 +4704,12 @@ return [
                 'tax-categories'           => 'Vergi Kategorileri',
                 'tax-rates'                => 'Vergi Oranları',
                 'taxes'                    => 'Vergiler',
+                'tenants'                   => 'Tenants',
                 'themes'                   => 'Temalar',
                 'transactions'             => 'İşlemler',
                 'url-rewrites'             => 'URL Yeniden Yazma',
                 'users'                    => 'Kullanıcılar',
+                'whitelabel'               => 'Whitelabel',
             ],
 
             'powered-by' => [
@@ -4968,11 +4970,13 @@ return [
         'tax-categories'           => 'Vergi Kategorileri',
         'tax-rates'                => 'Vergi Oranları',
         'taxes'                    => 'Vergiler',
+        'tenants'                  => 'Tenants',
         'themes'                   => 'Tema Seçenekleri',
         'transactions'             => 'İşlemler',
         'url-rewrites'             => 'URL Yeniden Yazma',
         'users'                    => 'Kullanıcılar',
         'view'                     => 'Görüntüle',
+        'whitelabel'               => 'Whitelabel',
     ],
 
     'errors' => [
