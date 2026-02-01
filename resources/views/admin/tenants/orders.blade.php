@@ -1,0 +1,31 @@
+<x-admin::layouts>
+    <x-slot:title>
+        Tenant Orders - {{ $tenant->name }}
+    </x-slot>
+
+    <div class="flex gap-4 items-center justify-between">
+        <div class="flex gap-4 items-center">
+            <a
+                href="{{ route('admin.tenants.index') }}"
+                class="icon-arrow-left text-2xl cursor-pointer"
+            ></a>
+
+            <h1 class="text-xl font-bold">
+                Orders - {{ $tenant->name }}
+            </h1>
+        </div>
+
+        <div class="flex gap-2">
+            <a
+                href="{{ route('admin.tenants.show', $tenant->id) }}"
+                class="secondary-button"
+            >
+                Back to Tenant
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <x-admin::datagrid :src="route('admin.tenants.orders.index', $tenant->id)" />
+    </div>
+</x-admin::layouts>
